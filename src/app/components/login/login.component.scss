@@ -1,6 +1,10 @@
 @import "tailwindcss";
+.main-container {
+  background-image: url("/backgrounds/blue-gradient1.jpg");
+}
 
 .signup-form {
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;

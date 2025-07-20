@@ -1,0 +1,120 @@
+<!-- Блок 1: Заголовок -->
+<div class="pricing-header text-center container mx-auto px-6 py-16 md:py-20">
+  <h1 class="text-4xl md:text-5xl font-bold mb-4">Simple & Honest Pricing</h1>
+  <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+    Use our core features for free, or support development to get some nice
+    perks. No subscriptions, just a single payment.
+  </p>
+</div>
+
+<!-- Блок 2: Картки з планами -->
+<div class="pricing-cards container mx-auto px-6 pb-16">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+    <!-- Картка "Free" -->
+    <mat-card class="plan-card shadow-lg">
+      <mat-card-header>
+        <mat-card-title class="text-2xl font-semibold">Free</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="price-section">
+          <span class="text-5xl font-bold">$0</span>
+          <span class="text-gray-500">/ Forever</span>
+        </div>
+        <p class="my-6 text-gray-700">
+          For all your essential day-to-day tasks.
+        </p>
+
+        <mat-divider></mat-divider>
+
+        <ul class="features-list">
+          <li><mat-icon>check</mat-icon>Unlimited Tasks</li>
+          <li><mat-icon>check</mat-icon>Cross-device Sync</li>
+          <li><mat-icon>check</mat-icon>Material Design Interface</li>
+        </ul>
+      </mat-card-content>
+      <mat-card-actions class="card-actions">
+        <a
+          mat-stroked-button
+          color="primary"
+          class="w-full"
+          routerLink="/signup"
+          >Get Started</a
+        >
+      </mat-card-actions>
+    </mat-card>
+
+    <!-- Картка "Supporter" -->
+    <mat-card class="plan-card supporter-card shadow-lg">
+      <mat-card-header>
+        <mat-card-title class="text-2xl font-semibold"
+          >Supporter</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <div class="price-section">
+          <span class="text-5xl font-bold">$5</span>
+          <span class="text-gray-500">/ One-time</span>
+        </div>
+        <p class="my-6 text-gray-700">
+          For those who want to support the project and get extra perks.
+        </p>
+
+        <mat-divider></mat-divider>
+
+        <ul class="features-list">
+          <li><mat-icon>check</mat-icon>Everything in Free, plus:</li>
+          <li><mat-icon>check</mat-icon>Supporter Badge in your profile</li>
+          <li><mat-icon>check</mat-icon>Early access to beta features</li>
+        </ul>
+      </mat-card-content>
+      <mat-card-actions class="card-actions">
+        <a mat-flat-button color="primary" class="w-full" href="#"
+          >Become a Supporter</a
+        >
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+<!-- Блок 3: Часті питання (FAQ) з Expansion Panel -->
+<div class="faq-section bg-gray-50">
+  <div class="container mx-auto px-6 py-16 md:py-20 max-w-3xl">
+    <h2 class="text-3xl font-bold text-center mb-8">
+      Frequently Asked Questions
+    </h2>
+
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Is it really a one-time payment? </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="text-gray-600 pt-2">
+          Yes! You pay once and get all the Supporter perks forever. No hidden
+          fees, no subscriptions.
+        </p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            What happens if I don't become a Supporter?
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="text-gray-600 pt-2">
+          Nothing at all! The free version is fully functional and will always
+          remain so. The Supporter plan is just a way to show your appreciation
+          and get a few nice extras.
+        </p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Where does my money go? </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="text-gray-600 pt-2">
+          Your contribution directly supports server costs, coffee for the
+          developer, and future development of the app. Thank you!
+        </p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

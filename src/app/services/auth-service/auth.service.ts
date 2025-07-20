@@ -99,6 +99,9 @@ export class AuthService {
       case 'auth/invalid-email':
         message = 'Invalid email address';
         break;
+      case 'auth/invalid-credential':
+        message = 'Invalid credentials';
+        break;
       case 'auth/popup-closed-by-user':
         message = 'Sign-in popup was closed';
         break;

@@ -105,4 +105,4 @@ Navigate to `http://localhost:4200/`.
 
 ### License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the GNU GENERAL PUBLIC LICENSE Version 3. See `LICENSE` for more information.
