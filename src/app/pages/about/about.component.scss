@@ -1,0 +1,21 @@
+.social-links {
+  a {
+    transform: scale(1.2);
+    margin-right: 8px;
+  }
+}
+
+.journey-card {
+  padding: 3rem 2rem;
+  box-shadow: none;
+}
+
+.journey-icon {
+  transform: scale(3);
+  height: 30px;
+  color: var(--mat-sys-primary);
+}
+
+::ng-deep .mat-mdc-mini-fab {
+  box-shadow: none !important;
+}

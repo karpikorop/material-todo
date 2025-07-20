@@ -4,6 +4,7 @@ import { PublicLayoutComponent } from './layouts/public-layout/public-layout.com
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { PricingComponent } from './pages/pricing/pricing.component';
+import { DownloadsComponent } from './pages/downloads/downloads.component';
 
 export const PUBLIC_ROUTES: Routes = [
   {
@@ -13,6 +14,7 @@ export const PUBLIC_ROUTES: Routes = [
       { path: '', component: HomeComponent },
       { path: 'about', component: AboutComponent },
       { path: 'pricing', component: PricingComponent },
+      { path: 'downloads', component: DownloadsComponent },
     ],
   },
 ];

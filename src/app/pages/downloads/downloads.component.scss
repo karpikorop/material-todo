@@ -1,0 +1,21 @@
+.download-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 24px;
+}
+
+.status-icon {
+  transform: scale(7);
+  height: 24px;
+  color: var(--mat-sys-primary);
+  opacity: 1;
+}
+
+.download-button {
+  padding: 18px 32px !important;
+  font-size: 16px !important;
+  border-radius: 28px !important;
+}

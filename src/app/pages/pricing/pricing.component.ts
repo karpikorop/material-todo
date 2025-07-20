@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-pricing',
@@ -13,6 +14,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatDividerModule,
     MatIconModule,
     MatExpansionModule,
+    RouterLink,
   ],
   templateUrl: './pricing.component.html',
   styleUrls: ['./pricing.component.scss'],

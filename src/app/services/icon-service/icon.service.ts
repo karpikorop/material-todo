@@ -9,6 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 // The icon names should match the file names without the .svg extension.
 export enum IconsNames {
   GitHub = 'github-mark',
+  LinkedIn = 'linkedin',
 }
 
 // To use an icon in a component, you can use the mat-icon directive with the svgIcon attribute.
