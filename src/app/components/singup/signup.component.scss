@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 1rem;
+  padding: 3rem 2rem 3rem 2rem;
+  outline: 1px solid;
+  @apply outline-gray-300 shadow-lg;
+}

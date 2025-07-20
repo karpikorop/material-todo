@@ -1,0 +1,22 @@
+<div class="snackbar-container" [ngClass]="data.type">
+  <!-- Іконка, яка змінюється залежно від типу сповіщення -->
+  <div class="icon-container">
+    <mat-icon *ngIf="data.type === 'success'">check_circle</mat-icon>
+    <mat-icon *ngIf="data.type === 'error'">error</mat-icon>
+    <mat-icon *ngIf="data.type === 'info'">chat</mat-icon>
+    <mat-icon *ngIf="data.type === 'warning'">exclamation</mat-icon>
+  </div>
+
+  <!-- Контейнер для тексту -->
+  <div class="text-container">
+    <strong class="title">{{ data.title }}</strong>
+    <p class="message">{{ data.message }}</p>
+  </div>
+
+  <!-- Кнопка для закриття -->
+  <div class="action-container">
+    <button mat-icon-button (click)="dismiss()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

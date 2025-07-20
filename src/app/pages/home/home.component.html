@@ -1,0 +1,79 @@
+<section class="hero-section text-center">
+  <div class="mx-auto px-6 py-20 md:py-32">
+    <h1 class="text-4xl md:text-6xl font-bold mb-4">
+      Organize your life. Simple and elegant.
+    </h1>
+    <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+      A free, lightweight, and open-source task manager, built with Material
+      Design principles to help you focus on what matters.
+    </p>
+    <div class="cta-buttons">
+      <a
+        mat-flat-button
+        color="primary"
+        routerLink="/signup"
+        class="cta-button"
+      >
+        Start for free
+      </a>
+      <a mat-stroked-button (click)="scrollToFeatures()" class="cta-button">
+        Learn more
+      </a>
+    </div>
+  </div>
+</section>
+
+<section #features class="feature-section">
+  <div class="mx-auto px-6 py-20 md:py-24">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+      <div class="feature-item">
+        <mat-icon class="feature-icon">rocket_launch</mat-icon>
+        <h3 class="text-2xl font-semibold mt-4 mb-2">Lightning Fast</h3>
+        <p class="text-gray-600">
+          No extra features or long loading times. Our app is designed to be as
+          fast as possible and not distract you from what's important—your
+          tasks.
+        </p>
+      </div>
+
+      <div class="feature-item">
+        <mat-icon class="feature-icon">code</mat-icon>
+        <h3 class="text-2xl font-semibold mt-4 mb-2">Free & Open Source</h3>
+        <p class="text-gray-600">
+          Use all features without any payments. Our code is open source, so you
+          can be confident in its security and reliability.
+        </p>
+      </div>
+
+      <div class="feature-item">
+        <mat-icon class="feature-icon">design_services</mat-icon>
+        <h3 class="text-2xl font-semibold mt-4 mb-2">Clean & Intuitive</h3>
+        <p class="text-gray-600">
+          Built according to Google's Material Design guidelines. Enjoy a clean,
+          understandable, and adaptive interface on any device.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="journey-section text-center">
+  <div class="container mx-auto px-6 py-20 md:py-24">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4">
+      Under Active Development
+    </h2>
+    <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+      This application is constantly improving, with an Android app coming in
+      the future. Follow our progress, report issues, or contribute on GitHub.
+    </p>
+
+    <a
+      mat-stroked-button
+      href="https://github.com/karpikorop/material-todo.git"
+      target="_blank"
+      class="cta-button github-button"
+      ><mat-icon svgIcon="github-mark"></mat-icon>
+      <span>View on GitHub</span>
+    </a>
+  </div>
+</section>

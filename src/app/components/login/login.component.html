@@ -1,0 +1,53 @@
+<div class="absolute">
+  <button mat-button routerLink="/" class="top-4 left-4">
+    Back
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</div>
+
+<div class="grid place-items-center h-full w-full">
+  <form class="signup-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="w-full text-left mb-5">
+      <h2 class="mb-3 font-bold text-lg">Login to your account</h2>
+      <label>Enter your info below to login to your account</label>
+    </div>
+
+    <mat-form-field class="w-full">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" name="email" formControlName="email" />
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        type="password"
+        name="password"
+        formControlName="password"
+      />
+    </mat-form-field>
+
+    <button mat-flat-button color="accent" class="w-full mb-5" type="submit">
+      Login
+    </button>
+
+    <div class="divider mb-5">or</div>
+
+    <button
+      mat-stroked-button
+      color="primary"
+      class="w-full"
+      type="button"
+      (click)="loginWithGoogle()"
+    >
+      Login with Google
+    </button>
+
+    <p class="mt-5 text-center">
+      Don't have an account?
+      <a routerLink="/signup" class="underline hover:text-sky-900"
+        >Sign up here</a
+      >
+    </p>
+  </form>
+</div>
