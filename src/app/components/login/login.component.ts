@@ -46,7 +46,6 @@ export class LoginComponent {
     const data = this.loginForm.value;
     await this.authService.logIn(data.email, data.password).then(
       (userCredential: UserCredential) => {
-        console.log('User signed up successfully:', userCredential);
         this.router.navigate(['/app/todos']);
       },
       (error) => {
@@ -58,8 +57,7 @@ export class LoginComponent {
 
   protected loginWithGoogle(): void {
     this.authService.loginWithGoogle().then(
-      (userCredential: UserCredential) => {
-        console.log('User logged in with Google:', userCredential);
+      () => {
         this.router.navigate(['/app/todos']);
       },
       (error) => {

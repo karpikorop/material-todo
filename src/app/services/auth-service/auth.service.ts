@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { inject } from '@angular/core';
 import {
@@ -16,6 +15,7 @@ import {
   sendEmailVerification,
 } from '@angular/fire/auth';
 import { NotificationService } from '../notification-service/notification.service';
+import { shareReplay, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -24,9 +24,15 @@ export class AuthService {
   private auth: Auth = inject(Auth);
   private notificationService = inject(NotificationService);
 
-  private user$: Observable<User | null> = authState(this.auth);
+  public user$: Observable<User | null> = authState(this.auth).pipe(
+    tap((user) => {
+      console.log('authState in AuthService emitted:', user);
+    }),
+    shareReplay(1)
+  );
 
   constructor() {
+    console.log('AuthService constructor - Injected Auth:', this.auth);
     this.user$.subscribe((user) => {
       if (user) {
         console.log('User logged in:', user);
@@ -34,6 +40,10 @@ export class AuthService {
         console.log('User logged out.');
       }
     });
+  }
+
+  get currentUser$(): Observable<User | null> {
+    return this.user$;
   }
 
   public signUp(email: string, password: string): Promise<UserCredential> {
@@ -49,10 +59,6 @@ export class AuthService {
         this.handleAuthError(error);
         throw error;
       });
-  }
-
-  get currentUser$(): Observable<User | null> {
-    return this.user$;
   }
 
   public logIn(email: string, password: string): Promise<UserCredential> {

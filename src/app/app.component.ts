@@ -3,6 +3,8 @@ import { RouterOutlet } from '@angular/router';
 import { IconService } from './services/icon-service/icon.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { OnInit } from '@angular/core';
+import { inject } from '@angular/core';
+import { UserService } from './services/user-service/user.service';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +13,11 @@ import { OnInit } from '@angular/core';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private iconService: IconService,
-    private matIconReg: MatIconRegistry
-  ) {
+  private iconService: IconService = inject(IconService);
+  private matIconReg: MatIconRegistry = inject(MatIconRegistry);
+  private userService = inject(UserService); // Ensure userService constructor is called
+
+  constructor() {
     this.iconService.registerIcons();
   }
   ngOnInit(): void {
