@@ -6,7 +6,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { environment } from '../enviroments/enviroment';
+import { environment } from '../environments/environment';
 import { IS_MOBILE } from './services/layout-service/layout.tokens';
 import { LayoutService } from './services/layout-service/layout.service';
 
