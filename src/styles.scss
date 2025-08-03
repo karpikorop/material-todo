@@ -69,3 +69,11 @@ body {
     border-radius: 1em !important;
   }
 }
+
+// Not working, copy from here to component.css
+// Specific fix for aligning the icon in the close sidenav button
+.mat-mdc-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

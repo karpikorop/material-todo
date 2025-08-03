@@ -7,12 +7,12 @@
 }
 
 .task-input {
-  flex-grow: 1; // Займає весь доступний простір
+  flex-grow: 1;
   border: none;
   outline: none;
   background-color: transparent;
   font-size: 1em;
-  padding: 10px 0; // Додаємо вертикальні відступи для комфорту
+  padding: 10px 0;
 
   &::placeholder {
     color: #999;
@@ -23,4 +23,11 @@
   display: grid;
   grid-template-columns: auto auto;
   gap: 8px;
+}
+
+// Specific fix for aligning the icon in the close sidenav button
+.mat-mdc-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -7,6 +7,17 @@
   />
 
   <div class="action-buttons">
+    @if (isMobileView()) {
+    <button
+      matMiniFab
+      color="primary"
+      type="submit"
+      [disabled]="addTodoForm.invalid"
+      matTooltip="Add task"
+    >
+      <mat-icon>add_circle</mat-icon>
+    </button>
+    }@else {
     <button
       matButton="filled"
       type="submit"
@@ -14,8 +25,10 @@
       matTooltip="Add task"
     >
       <span>Add Task</span>
+
       <mat-icon>add_circle</mat-icon>
     </button>
+    }
 
     <button
       mat-icon-button

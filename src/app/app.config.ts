@@ -7,6 +7,8 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { environment } from '../enviroments/enviroment';
+import { IS_MOBILE } from './services/layout-service/layout.tokens';
+import { LayoutService } from './services/layout-service/layout.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,5 +19,10 @@ export const appConfig: ApplicationConfig = {
     provideFirestore(() => getFirestore()),
     provideAnimations(),
     provideHttpClient(withFetch()),
+    {
+      provide: IS_MOBILE,
+      useFactory: (layoutService: LayoutService) => layoutService.isMobileView,
+      deps: [LayoutService],
+    },
   ],
 };

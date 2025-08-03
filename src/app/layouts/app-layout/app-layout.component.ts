@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterOutlet } from '@angular/router';
+import { IS_MOBILE } from '../../services/layout-service/layout.tokens';
 
 @Component({
   selector: 'app-app-layout',
@@ -20,14 +20,8 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app-layout.component.scss',
 })
 export class AppLayoutComponent {
-  protected isMobileView = signal(false);
-  protected sidenavOpen = signal(true);
+  protected isMobileView = inject(IS_MOBILE);
+  protected sidenavOpen = signal(this.isMobileView() ? false : true);
 
-  constructor(private breakpointObserver: BreakpointObserver) {
-    this.breakpointObserver
-      .observe(['(max-width: 700px)'])
-      .subscribe((result) => {
-        this.isMobileView.set(result.matches);
-      });
-  }
+  constructor() {}
 }

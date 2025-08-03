@@ -5,7 +5,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterLink } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { signal } from '@angular/core';
 import { NgIf } from '@angular/common';
 import {
@@ -15,6 +14,8 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+import { IS_MOBILE } from '../../services/layout-service/layout.tokens';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -58,17 +59,11 @@ import {
   ],
 })
 export class HeaderComponent {
-  protected isMobileView = signal<boolean>(false);
   protected showDropdown = signal<boolean>(false);
   protected menu_icon = signal<'menu' | 'close'>('menu');
+  protected isMobileView = inject(IS_MOBILE);
 
-  constructor(private breakpointObserver: BreakpointObserver) {
-    this.breakpointObserver
-      .observe(['(max-width: 700px)'])
-      .subscribe((result) => {
-        this.isMobileView.set(result.matches);
-      });
-  }
+  constructor() {}
 
   toggleDropdown() {
     this.showDropdown.set(!this.showDropdown());

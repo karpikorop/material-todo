@@ -18,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { IS_MOBILE } from '../../services/layout-service/layout.tokens';
 
 @Component({
   selector: 'app-add-todo',
@@ -41,6 +42,7 @@ export class AddTodoComponent {
   private todoService = inject(TodoService);
   private authService = inject(AuthService);
   private notificationService = inject(NotificationService);
+  protected isMobileView = inject(IS_MOBILE);
 
   addTodoForm: FormGroup = this.fb.group({
     title: ['', Validators.required],
