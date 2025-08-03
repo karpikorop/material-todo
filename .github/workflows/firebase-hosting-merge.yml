@@ -11,7 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # This is the new step you need to add
+      - name: Create Environment File
+        run: |
+          echo "export const environment = { production: true, firebase: ${{ secrets.FIREBASE_CONFIG }} };" > src/environments/environment.ts
+
+      # This step remains the same
       - run: npm ci && npm run build
+
+      # This step also remains, but ensure the secret name matches yours
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
