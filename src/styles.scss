@@ -26,18 +26,17 @@ body {
   height: 1px;
   display: flex;
   align-items: center;
-}
-.divider-with-text::before,
-.divider-with-text::after {
-  flex: 1;
-  content: "";
-  height: 1px;
-  margin: 0.5rem;
-  background-color: var(--border-color);
+  &::before,
+  &::after {
+    flex: 1;
+    content: "";
+    height: 1px;
+    margin: 0.5rem;
+    background-color: var(--border-color);
+  }
 }
 
 //NOTIFICATION STYLES
-
 .success-snackbar-container .mdc-snackbar__surface {
   background-color: #4caf50 !important;
   color: white !important;
