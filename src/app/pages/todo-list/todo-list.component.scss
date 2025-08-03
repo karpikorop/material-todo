@@ -1,0 +1,36 @@
+:host {
+  display: block;
+  height: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.todo-list-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.list-header {
+  padding-bottom: 16px;
+}
+
+.tasks-scroll-container {
+  //flex-grow: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.add-todo-container {
+  flex-shrink: 0;
+}
+
+.empty-state,
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #999;
+}

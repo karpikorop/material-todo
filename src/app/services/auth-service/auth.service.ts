@@ -11,7 +11,6 @@ import {
   signOut,
   GoogleAuthProvider,
   UserCredential,
-  linkWithPopup,
   sendEmailVerification,
 } from '@angular/fire/auth';
 import { NotificationService } from '../notification-service/notification.service';

@@ -17,6 +17,7 @@ import { switchMap } from 'rxjs/operators';
 export interface Project {
   id: string; // Firestore ID
   name: string;
+  icon: string;
   createdAt: number;
   userId: string;
 }
@@ -57,6 +58,7 @@ export class ProjectService {
       name: 'Inbox',
       createdAt: Date.now(),
       userId: userId,
+      icon: 'inbox',
     };
     const projectsRef = collection(this.firestore, `users/${userId}/projects`);
     await addDoc(projectsRef, inboxProject);
@@ -72,6 +74,7 @@ export class ProjectService {
       name: name,
       createdAt: Date.now(),
       userId: userId,
+      icon: 'folder',
     };
     const projectsRef = collection(this.firestore, `users/${userId}/projects`);
     await addDoc(projectsRef, newProject);

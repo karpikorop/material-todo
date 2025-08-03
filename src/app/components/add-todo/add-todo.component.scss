@@ -1,0 +1,26 @@
+.add-todo-form {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  gap: 8px;
+}
+
+.task-input {
+  flex-grow: 1; // Займає весь доступний простір
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 1em;
+  padding: 10px 0; // Додаємо вертикальні відступи для комфорту
+
+  &::placeholder {
+    color: #999;
+  }
+}
+
+.action-buttons {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 8px;
+}

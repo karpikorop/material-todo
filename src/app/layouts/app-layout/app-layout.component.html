@@ -1,1 +1,24 @@
-<p>app-layout works!</p>
+<mat-sidenav-container class="example-container h-screen" autosize>
+  <mat-sidenav
+    [mode]="isMobileView() ? 'over' : 'side'"
+    [opened]="sidenavOpen()"
+    (openedChange)="sidenavOpen.set($event)"
+  >
+    <app-sidebar (close)="sidenavOpen.set(false)"></app-sidebar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    @if (!sidenavOpen() || isMobileView()) {
+    <div class="absolute">
+      <button
+        mat-icon-button
+        (click)="sidenavOpen.set(true)"
+        class="top-4 left-4"
+      >
+        <mat-icon>side_navigation</mat-icon>
+      </button>
+    </div>
+    }
+
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

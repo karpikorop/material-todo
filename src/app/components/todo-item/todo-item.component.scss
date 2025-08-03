@@ -1,0 +1,56 @@
+:host {
+  display: block;
+}
+
+.todo-item-container {
+  padding: 8px 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+}
+
+.top-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.title {
+  flex-grow: 1;
+  transition: color 0.2s ease-in-out;
+}
+
+.due-date {
+  font-size: 0.8em;
+  color: #666;
+}
+
+.actions {
+  display: flex;
+}
+
+.done {
+  .title {
+    text-decoration: line-through;
+    color: #999;
+  }
+}
+
+.details-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 48px;
+  margin-top: 4px;
+  font-size: 0.8em;
+  color: #777;
+
+  mat-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+  }
+}

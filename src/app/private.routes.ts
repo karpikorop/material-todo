@@ -8,8 +8,16 @@ export const PRIVATE_ROUTES: Routes = [
     path: '',
     component: AppLayoutComponent,
     children: [
-      { path: '', redirectTo: 'todos', pathMatch: 'full' },
-      { path: 'todos', component: TodoListComponent },
+      {
+        path: '',
+        redirectTo: 'project/inbox',
+        pathMatch: 'full',
+      },
+      {
+        path: 'project/:id',
+        component: TodoListComponent,
+      },
+      //{ path: 'settings', component: SettingsComponent },
     ],
   },
 ];

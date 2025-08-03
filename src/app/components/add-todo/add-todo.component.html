@@ -1,0 +1,29 @@
+<form [formGroup]="addTodoForm" (ngSubmit)="onSubmit()" class="add-todo-form">
+  <input
+    class="task-input"
+    formControlName="title"
+    placeholder="Add a new task..."
+    autocomplete="off"
+  />
+
+  <div class="action-buttons">
+    <button
+      matButton="filled"
+      type="submit"
+      [disabled]="addTodoForm.invalid"
+      matTooltip="Add task"
+    >
+      <span>Add Task</span>
+      <mat-icon>add_circle</mat-icon>
+    </button>
+
+    <button
+      mat-icon-button
+      type="button"
+      matTooltip="Add details"
+      (click)="openDetailsDialog()"
+    >
+      <mat-icon>edit_note</mat-icon>
+    </button>
+  </div>
+</form>

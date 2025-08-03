@@ -1,1 +1,31 @@
-<p>todo-list works!</p>
+<div class="todo-list-container mt-20">
+  <header class="list-header">
+    <h1 class="text-3xl font-bold">Tasks</h1>
+  </header>
+
+  <div class="tasks-scroll-container">
+    @if (todos$ | async; as todos) { @if (todos.length > 0) { @for (todo of
+    todos; track todo.id) {
+    <app-todo-item
+      [todo]="todo"
+      (update)="handleUpdate({ todoId: todo.id, data: $event })"
+      (delete)="handleDelete($event)"
+    >
+    </app-todo-item>
+    } } @else {
+    <div class="empty-state">
+      <p>All tasks completed. Well done!</p>
+    </div>
+    } } @else {
+    <div class="loading-state">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    }
+  </div>
+
+  <div class="add-todo-container">
+    @if (projectId$ | async; as projectId) {
+    <app-add-todo [projectId]="projectId"></app-add-todo>
+    }
+  </div>
+</div>
