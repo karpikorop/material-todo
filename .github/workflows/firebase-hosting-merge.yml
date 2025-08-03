@@ -16,7 +16,7 @@ jobs:
       - name: Create Environment File
         run: |
           mkdir -p src/environments
-          echo "export const environment = { production: true, firebase: ${{ secrets.FIREBASE_CONFIG }} };" > src/environments/environment.ts
+          echo "export const environment = { production: true, firebase: ${{ secrets.FIREBASE_CONFIG }} };" > src/environments/environment.prod.ts
 
       # This step remains the same
       - run: npm ci && npm run build
