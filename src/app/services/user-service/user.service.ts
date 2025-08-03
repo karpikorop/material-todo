@@ -67,7 +67,7 @@ export class UserService {
         username: user.displayName || user.email!.split('@')[0],
         avatarUrl:
           user.photoURL ||
-          'https://placehold.co/100x100/E8E8E8/BDBDBD?text=Avatar',
+          'https://placehold.co/100x100/E8E8E8/BDBDBD?text=Ava',
         supporter: false,
       };
       await setDoc(userRef, userData);

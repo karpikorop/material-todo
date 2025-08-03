@@ -38,36 +38,28 @@ body {
 
 //NOTIFICATION STYLES
 
-.success-snackbar-container {
-  .mdc-snackbar__surface {
-    background-color: var(--color-green-500) !important; // Зелений
-    color: white !important;
-    border-radius: 1em !important;
-  }
+.success-snackbar-container .mdc-snackbar__surface {
+  background-color: #4caf50 !important;
+  color: white !important;
+  border-radius: 1em !important;
 }
 
-.error-snackbar-container {
-  .mdc-snackbar__surface {
-    background-color: var(--color-rose-500) !important;
-    color: white !important;
-    border-radius: 1em !important;
-  }
+.error-snackbar-container .mdc-snackbar__surface {
+  background-color: #f44336 !important;
+  color: white !important;
+  border-radius: 1em !important;
 }
 
-.warning-snackbar-container {
-  .mdc-snackbar__surface {
-    background-color: var(--color-orange-500) !important;
-    color: white !important;
-    border-radius: 1em !important;
-  }
+.warning-snackbar-container .mdc-snackbar__surface {
+  background-color: #ff9800 !important;
+  color: white !important;
+  border-radius: 1em !important;
 }
 
-.info-snackbar-container {
-  .mdc-snackbar__surface {
-    background-color: var(--color-sky-500) !important;
-    color: white !important;
-    border-radius: 1em !important;
-  }
+.info-snackbar-container .mdc-snackbar__surface {
+  background-color: #2196f3 !important;
+  color: white !important;
+  border-radius: 1em !important;
 }
 
 // Not working, copy from here to component.css

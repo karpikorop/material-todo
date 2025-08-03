@@ -6,9 +6,9 @@ import {
   doc,
   addDoc,
   updateDoc,
-  deleteDoc,
   query,
   orderBy,
+  setDoc,
 } from '@angular/fire/firestore';
 import { AuthService } from '../auth-service/auth.service';
 import { Observable, of } from 'rxjs';
@@ -60,8 +60,8 @@ export class ProjectService {
       userId: userId,
       icon: 'inbox',
     };
-    const projectsRef = collection(this.firestore, `users/${userId}/projects`);
-    await addDoc(projectsRef, inboxProject);
+    const inboxRef = doc(this.firestore, `users/${userId}/projects/inbox`);
+    await setDoc(inboxRef, inboxProject);
   }
 
   /**

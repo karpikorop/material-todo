@@ -24,14 +24,10 @@ export class AuthService {
   private notificationService = inject(NotificationService);
 
   public user$: Observable<User | null> = authState(this.auth).pipe(
-    tap((user) => {
-      console.log('authState in AuthService emitted:', user);
-    }),
     shareReplay(1)
   );
 
   constructor() {
-    console.log('AuthService constructor - Injected Auth:', this.auth);
     this.user$.subscribe((user) => {
       if (user) {
         console.log('User logged in:', user);
