@@ -1,7 +1,7 @@
 import * as admin from 'firebase-admin';
-import { onCall } from 'firebase-functions/v2/https';
+import {onCall} from 'firebase-functions/v2/https';
 
-import { ProjectFunctions } from './projects/projects.function';
+import {ProjectFunctions} from './projects/projects.function';
 
 admin.initializeApp();
 

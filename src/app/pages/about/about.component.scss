@@ -16,6 +16,7 @@
   color: var(--mat-sys-primary);
 }
 
-::ng-deep .mat-mdc-mini-fab {
+.mat-mdc-mini-fab {
   box-shadow: none !important;
+  background-color: transparent !important;
 }

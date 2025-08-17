@@ -1,24 +1,24 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component, EventEmitter, Input, Output, inject, ViewChild, ElementRef} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { take } from 'rxjs/operators';
+import {take} from 'rxjs/operators';
 
 // Сервіси
-import { TodoService } from '../../services/todo-service/todo.service';
-import { AuthService } from '../../services/auth-service/auth.service';
-import { NotificationService } from '../../services/notification-service/notification.service';
+import {TodoService} from '../../services/todo-service/todo.service';
+import {AuthService} from '../../services/auth-service/auth.service';
+import {NotificationService} from '../../services/notification-service/notification.service';
 
 // Angular Material Imports
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { IS_MOBILE } from '../../services/layout-service/layout.tokens';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {IS_MOBILE} from '../../tokens';
 
 @Component({
   selector: 'app-add-todo',
@@ -35,8 +35,9 @@ import { IS_MOBILE } from '../../services/layout-service/layout.tokens';
   styleUrl: './add-todo.component.scss',
 })
 export class AddTodoComponent {
-  @Input({ required: true }) projectId!: string;
+  @Input({required: true}) projectId!: string;
   @Output() todoAdded = new EventEmitter<void>();
+  @ViewChild('taskInput') taskInput!: ElementRef<HTMLInputElement>;
 
   private fb = inject(FormBuilder);
   private todoService = inject(TodoService);
@@ -47,6 +48,12 @@ export class AddTodoComponent {
   addTodoForm: FormGroup = this.fb.group({
     title: ['', Validators.required],
   });
+
+  public focusInput(): void {
+    if (this.taskInput && this.taskInput.nativeElement) {
+      this.taskInput.nativeElement.focus();
+    }
+  }
 
   onSubmit(): void {
     if (this.addTodoForm.invalid) {

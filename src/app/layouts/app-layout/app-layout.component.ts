@@ -5,7 +5,7 @@ import {signal} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {RouterOutlet} from '@angular/router';
-import {IS_MOBILE} from '../../services/layout-service/layout.tokens';
+import {IS_MOBILE} from '../../tokens';
 
 @Component({
   selector: 'app-app-layout',

@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { inject } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {inject} from '@angular/core';
 import {
   CustomSnackbarComponent,
   CustomSnackbarData,
@@ -17,21 +17,21 @@ export class NotificationService {
   }
 
   public showSuccess(message: string) {
-    this.showCustomNotification({ title: 'Success', message, type: 'success' });
+    this.showCustomNotification({title: 'Success', message, type: 'success'});
   }
 
   public showError(message: string) {
     console.error(message);
-    this.showCustomNotification({ title: 'Error', message, type: 'error' });
+    this.showCustomNotification({title: 'Error', message, type: 'error'});
   }
 
   public showWarning(message: string) {
     console.warn(message);
-    this.showCustomNotification({ title: 'Warning', message, type: 'warning' });
+    this.showCustomNotification({title: 'Warning', message, type: 'warning'});
   }
 
   public showInfo(message: string) {
-    this.showCustomNotification({ title: 'Info', message, type: 'info' });
+    this.showCustomNotification({title: 'Info', message, type: 'info'});
   }
 
   public show(data: CustomSnackbarData) {
@@ -45,7 +45,7 @@ export class NotificationService {
         message: data.message,
         type: data.type || 'info',
       },
-      duration: 4000,
+      duration: data.duration ?? 4000,
       horizontalPosition: 'right',
       verticalPosition: 'top',
       panelClass: `${data.type}-snackbar-container`,

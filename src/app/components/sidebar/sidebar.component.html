@@ -6,7 +6,7 @@
       [matMenuTriggerFor]="userMenu"
     >
       <div *ngIf="userProfile$ | async as user" class="user-profile-content">
-        <img [src]="user.avatarUrl" alt="User Avatar" class="user-avatar" />
+        <img [src]="user.avatarUrl" alt="User Avatar" class="user-avatar"/>
         <span class="username">{{ user.username }}</span>
       </div>
     </button>
@@ -21,12 +21,12 @@
     </button>
   </div>
 
-  <mat-menu #userMenu="matMenu">
+  <mat-menu #userMenu="matMenu" panelClass="user-menu-panel">
     <button mat-menu-item routerLink="/app/settings">
       <mat-icon>settings</mat-icon>
       <span>Settings</span>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item routerLink="">
       <mat-icon>logout</mat-icon>
       <span>Logout</span>
     </button>

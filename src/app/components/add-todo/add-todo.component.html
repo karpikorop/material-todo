@@ -1,5 +1,6 @@
 <form [formGroup]="addTodoForm" (ngSubmit)="onSubmit()" class="add-todo-form">
   <input
+    #taskInput
     class="task-input"
     formControlName="title"
     placeholder="Add a new task..."
@@ -8,26 +9,26 @@
 
   <div class="action-buttons">
     @if (isMobileView()) {
-    <button
-      matMiniFab
-      color="primary"
-      type="submit"
-      [disabled]="addTodoForm.invalid"
-      matTooltip="Add task"
-    >
-      <mat-icon>add_circle</mat-icon>
-    </button>
-    }@else {
-    <button
-      matButton="filled"
-      type="submit"
-      [disabled]="addTodoForm.invalid"
-      matTooltip="Add task"
-    >
-      <span>Add Task</span>
+      <button
+        matMiniFab
+        color="primary"
+        type="submit"
+        [disabled]="addTodoForm.invalid"
+        matTooltip="Add task"
+      >
+        <mat-icon>add_circle</mat-icon>
+      </button>
+    } @else {
+      <button
+        matButton="filled"
+        type="submit"
+        [disabled]="addTodoForm.invalid"
+        matTooltip="Add task"
+      >
+        <span>Add Task</span>
 
-      <mat-icon>add_circle</mat-icon>
-    </button>
+        <mat-icon>add_circle</mat-icon>
+      </button>
     }
 
     <button

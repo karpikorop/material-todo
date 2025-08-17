@@ -1,7 +1,16 @@
+@use '@angular/material' as mat;
 @import "tailwindcss";
 
 :root {
   --border-color: rgba(0, 0, 0, 0.2);
+}
+
+
+html {
+
+  @include mat.theme((
+    color: mat.$green-palette,
+  ));
 }
 
 html,
@@ -68,4 +77,58 @@ body {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+}
+
+
+//MAT MENU STYLES
+/* styles.scss (global) or wrap in :host ::ng-deep if inside component SCSS */
+.user-menu-panel {
+  background: #fff;
+  border-radius: 12px;
+  padding: 4px 0; /* outer vertical breathing space */
+  min-width: 200px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12),
+  0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Inner content container */
+.user-menu-panel .mat-mdc-menu-content {
+  padding: 6px; /* adds horizontal padding */
+}
+
+/* Menu items */
+.user-menu-panel .mat-mdc-menu-item {
+  border-radius: 8px;
+  margin: 2px 0;
+  padding: 8px 12px;
+  transition: background-color .15s, color .15s;
+}
+
+/* Hover / focus */
+.user-menu-panel .mat-mdc-menu-item:not([disabled]):hover,
+.user-menu-panel .mat-mdc-menu-item:not([disabled]).cdk-program-focused {
+  background: #eef7ff;
+}
+
+/* Active (mousedown) */
+.user-menu-panel .mat-mdc-menu-item:not([disabled]):active {
+  background: #d9ecff;
+}
+
+/* Icon + text tweaks */
+.user-menu-panel .mat-mdc-menu-item .mat-icon {
+  font-size: 20px;
+  margin-right: 12px;
+  color: var(--mat-sys-primary);
+}
+
+.user-menu-panel .mat-mdc-menu-item .mdc-list-item__primary-text {
+  font-weight: 500;
+}
+
+/* Optional subtle separator between logical groups */
+.user-menu-panel .menu-section-separator {
+  height: 1px;
+  margin: 6px 4px;
+  background: linear-gradient(to right, transparent, #e3e6eb, transparent);
 }

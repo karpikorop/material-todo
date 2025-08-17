@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable, map, take, firstValueFrom} from 'rxjs';
@@ -37,6 +37,8 @@ export class TodoListComponent {
   private notificationService = inject(NotificationService);
   private readonly functions = inject(Functions);
 
+  @ViewChild(AddTodoComponent) addTodoComponent!: AddTodoComponent;
+
   protected projectId$: Observable<string> = this.route.params.pipe(
     map((params) => params['id']),
     shareReplay(1)
@@ -48,6 +50,14 @@ export class TodoListComponent {
   );
 
   constructor() {
+  }
+
+  // Lifecycle hook to focus the input field after the view is checked
+  // Focus is set to the input field of the AddTodoComponent
+  ngAfterViewChecked(): void {
+    if (this.addTodoComponent) {
+      this.addTodoComponent.focusInput();
+    }
   }
 
   protected updateTodo(event: {

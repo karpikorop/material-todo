@@ -10,8 +10,8 @@
 
 .journey-section {
   min-height: 50vh;
-  background-color: #ffffff;
 }
+
 .feature-section {
   background-color: var(--color-gray-50);
   min-height: 50vh;
@@ -30,9 +30,11 @@
   align-items: center;
   justify-content: center;
 }
+
 .mat-icon {
   height: 1.5em;
 }
+
 .feature-item {
   padding: 16px;
 }
