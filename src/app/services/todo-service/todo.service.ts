@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {
   Firestore,
   collection,
@@ -13,9 +13,9 @@ import {
   writeBatch,
   getDocs,
 } from '@angular/fire/firestore';
-import { AuthService } from '../auth-service/auth.service';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import {AuthService} from '../auth-service/auth.service';
+import {Observable, of} from 'rxjs';
+import {switchMap} from 'rxjs/operators';
 
 export interface Todo {
   id: string; // Firestore ID
@@ -38,35 +38,32 @@ export class TodoService {
   private firestore: Firestore = inject(Firestore);
   private authService: AuthService = inject(AuthService);
 
-  constructor() {}
+  constructor() {
+  }
 
   /**
    * Retrieves a real-time list of tasks for a specific project.
-   * @param projectId - The ID of the project to get tasks from.
+   * @param projectId - The ID (string) of the project to get tasks from.
    */
-  getTodosByProject(projectId: Observable<string>): Observable<Todo[]> {
+  getTodosByProject(projectId: string): Observable<Todo[]> {
+    if (!projectId) {
+      return of([]);
+    }
+
     return this.authService.currentUser$.pipe(
       switchMap((user) => {
         if (!user) {
           return of([]);
         }
-        return projectId.pipe(
-          switchMap((pId) => {
-            if (!pId) {
-              return of([]);
-            }
-            const todosRef = collection(
-              this.firestore,
-              `users/${user.uid}/todos`
-            );
-            const q = query(
-              todosRef,
-              where('projectId', '==', pId),
-              orderBy('createdAt', 'asc')
-            );
-            return collectionData(q, { idField: 'id' }) as Observable<Todo[]>;
-          })
+
+        const todosRef = collection(this.firestore, `users/${user.uid}/todos`);
+        const q = query(
+          todosRef,
+          where('projectId', '==', projectId),
+          orderBy('createdAt', 'asc')
         );
+
+        return collectionData(q, {idField: 'id'}) as Observable<Todo[]>;
       })
     );
   }
@@ -121,7 +118,7 @@ export class TodoService {
     newProjectId: string
   ): Promise<void> {
     const todoRef = doc(this.firestore, `users/${userId}/todos/${todoId}`);
-    return updateDoc(todoRef, { projectId: newProjectId });
+    return updateDoc(todoRef, {projectId: newProjectId});
   }
 
   /**

@@ -13,6 +13,7 @@ import {
 import { AuthService } from '../auth-service/auth.service';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { Functions, httpsCallable } from '@angular/fire/functions';
 
 export interface Project {
   id: string; // Firestore ID
@@ -28,6 +29,7 @@ export interface Project {
 export class ProjectService {
   private firestore: Firestore = inject(Firestore);
   private authService: AuthService = inject(AuthService);
+  private readonly functions: Functions = inject(Functions);
 
   // Observable containing the list of projects for the current user,
   // sorted by creation time.
@@ -100,19 +102,26 @@ export class ProjectService {
 
   /**
    * Deletes a project and all tasks associated with it.
+   * Uses cloud function to perform the deletion.
    * @param userId - ID of the current user
    * @param projectId - ID of the project to delete
    */
   async deleteProject(userId: string, projectId: string): Promise<void> {
-    // NOTE: Deleting subcollections is a complex operation.
-    // This code will only delete the project document itself.
-    // To delete tasks, you will need Cloud Functions
-    // or batch deletion on the client.
-
-    const projectRef = doc(
-      this.firestore,
-      `users/${userId}/projects/${projectId}`
+    const deleteProjectFn = httpsCallable(
+      this.functions,
+      'deleteProjectAndTodos'
     );
-    // await deleteDoc(projectRef);
+
+    try {
+      console.log(`Calling cloud function to delete project: ${projectId}`);
+      const result = await deleteProjectFn({ projectId: projectId });
+      console.log('Cloud function executed:', result.data);
+    } catch (error) {
+      console.error(
+        'An unknown error occurred while calling the function:',
+        error
+      );
+      throw error;
+    }
   }
 }

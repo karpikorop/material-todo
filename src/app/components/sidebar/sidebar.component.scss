@@ -17,13 +17,6 @@
   padding: 8px;
 }
 
-// Specific fix for aligning the icon in the close sidenav button
-.mat-mdc-icon-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .user-profile-content {
   display: flex;
   align-items: center;
@@ -56,6 +49,7 @@
 
 .active-project-link {
   background-color: #ddf1ff;
+
   span {
     color: var(--mat-sys-primary);
   }

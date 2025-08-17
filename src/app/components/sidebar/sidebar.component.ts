@@ -1,7 +1,7 @@
-import { Component, inject, output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { map, Observable, take } from 'rxjs';
+import {Component, inject, output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterLink, RouterLinkActive} from '@angular/router';
+import {Observable, take} from 'rxjs';
 import {
   UserService,
   UserProfile,
@@ -11,13 +11,13 @@ import {
   Project,
 } from '../../services/project-service/project.service';
 
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatMenuModule } from '@angular/material/menu';
-import { AuthService } from '../../services/auth-service/auth.service';
-import { NotificationService } from '../../services/notification-service/notification.service';
+import {MatListModule} from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatMenuModule} from '@angular/material/menu';
+import {AuthService} from '../../services/auth-service/auth.service';
+import {NotificationService} from '../../services/notification-service/notification.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -47,7 +47,8 @@ export class SidebarComponent {
     this.userService.currentUserProfile$;
   protected projects$: Observable<Project[]> = this.projectService.projects$;
 
-  constructor() {}
+  constructor() {
+  }
 
   addNewProject(): void {
     const newProjectName = prompt('Enter a name for the new project:');

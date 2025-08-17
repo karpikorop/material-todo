@@ -1,11 +1,11 @@
-import { Component, inject } from '@angular/core';
-import { SidebarComponent } from '../../components/sidebar/sidebar.component';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { signal } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { RouterOutlet } from '@angular/router';
-import { IS_MOBILE } from '../../services/layout-service/layout.tokens';
+import {Component, inject} from '@angular/core';
+import {SidebarComponent} from '../../components/sidebar/sidebar.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {signal} from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {RouterOutlet} from '@angular/router';
+import {IS_MOBILE} from '../../services/layout-service/layout.tokens';
 
 @Component({
   selector: 'app-app-layout',
@@ -21,7 +21,8 @@ import { IS_MOBILE } from '../../services/layout-service/layout.tokens';
 })
 export class AppLayoutComponent {
   protected isMobileView = inject(IS_MOBILE);
-  protected sidenavOpen = signal(this.isMobileView() ? false : true);
+  protected sidenavOpen = signal(!this.isMobileView());
 
-  constructor() {}
+  constructor() {
+  }
 }
