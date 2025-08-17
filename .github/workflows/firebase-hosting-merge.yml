@@ -25,20 +25,14 @@ jobs:
       - name: Build Angular App
         run: npm ci && npm run build
 
-      # --- Install Function Dependencies ---
       - name: Install Function Dependencies
         run: cd functions && npm ci
 
-      # --- Build Functions ---
       - name: Build Functions
         run: cd functions && npm run build
 
       - name: Deploy to Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TO_NOTE_ANGULAR_APP }}'
-          channelId: live
-          projectId: to-note-angular-app
-          # --- Add args to deploy both services ---
-          args: deploy --only hosting,functions
+        run: |
+          npx firebase-tools deploy --only hosting,functions --project to-note-angular-app --non-interactive
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TO_NOTE_ANGULAR_APP }}
