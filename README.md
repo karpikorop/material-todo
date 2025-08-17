@@ -2,7 +2,9 @@
 
 A free, lightweight, and open-source task manager, built with the latest version of Angular and designed according to Material Design principles. Organize your life with an elegant and intuitive interface that works beautifully on any device.
 
----
+You can use the live version of the application [here](https://to-note-angular-app.web.app)
+
+---  
 
 ### Key Features
 
@@ -18,7 +20,7 @@ A free, lightweight, and open-source task manager, built with the latest version
 
 - **Open Source:** Transparent, community-driven, and completely free to use.
 
----
+---  
 
 ### Tech Stack
 
@@ -26,21 +28,13 @@ A free, lightweight, and open-source task manager, built with the latest version
 
 - **UI Components:** [Angular Material](https://material.angular.io/ "null")
 
-- **Backend & Database:** [Firebase](https://firebase.google.com/ "null") (Authentication & Firestore)
+- **Backend & Database:** [Firebase](https://firebase.google.com/ "null") (Authentication, Firestore and Functions)
 
 - **Styling:** SCSS & [Tailwind CSS](https://tailwindcss.com/ "null")
 
 - **State Management:** Angular Signals
 
----
-
-## For Users
-
-You can use the live version of the application here:
-
-[Link to your live application]
-
----
+---  
 
 ## For Developers
 
@@ -54,7 +48,7 @@ Interested in running the project locally or contributing? Follow these steps.
 
 - A Google account for creating a Firebase project.
 
----
+---  
 
 ### 2. Firebase Setup (Crucial Step)
 
@@ -66,32 +60,81 @@ This project requires a Firebase backend to function. You will need to set up yo
 
 3. Copy your Firebase configuration object into the `src/environments/environment.ts` and `src/environments/environment.prod.ts` files.
 
----
+---  
 
 ### 3. Local Installation & Setup
 
 1. **Clone the repository:**
 
-```
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-cd YOUR_REPO_NAME
-```
+```  
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git  
+cd YOUR_REPO_NAME  
+```  
 
 2. **Install dependencies:**
 
-```
-npm install
-```
+```  
+npm install  
+```  
 
 3. **Run the development server:**
 
+```  
+ng serve  
+```  
+
+Navigate to `http://localhost:4200/`.
+  
+---  
+
+### 4. Emulator Workflow
+
+This project is configured to use the **Firebase Local Emulator Suite** for a safe, offline development environment. The necessary configuration (`firebase.json`) is already included in the repository.
+
+#### Running the Development Environment
+
+Before starting the emulators don't forget to build the functions.
+
+**Start Emulators:**
+
+```zsh
+firebase emulators:start --only functions,auth,firestore
 ```
+
+_Note: The first time you run this, Firebase will automatically download the required emulator software._
+
+**Edit environment file**
+
+To use emulators don't forget to edit
+`src/environments/environment.development.ts`
+and set `useEmulators: true`.
+
+**Start Angular App:** In a second terminal, run:
+
+```zsh
 ng serve
 ```
 
-Navigate to `http://localhost:4200/`.
+_(The Emulator UI can be viewed at `http://127.0.0.1:4000`)_
 
----
+#### **Cloud Functions**
+
+Functions are written in TypeScript and must be compiled before running emulator to JavaScript.
+
+- **To Build:**
+
+```zsh
+cd functions
+npm run build 
+//or 
+npm build:watch
+```
+
+- **To Deploy:** (run from the project root)
+
+```zsh
+firebase deploy --only functions
+```
 
 ### Developer Notes
 
@@ -101,7 +144,7 @@ Navigate to `http://localhost:4200/`.
 
 - **Project Structure:** The project uses a feature-based folder structure (`pages`, `components`, `layouts`, `services`) to keep code organized and scalable.
 
----
+---  
 
 ### License
 

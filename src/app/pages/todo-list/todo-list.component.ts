@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ActivatedRoute} from '@angular/router';
-import {Observable, map, take} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Observable, map, take, firstValueFrom} from 'rxjs';
 
 import {TodoItemComponent} from '../../components/todo-item/todo-item.component';
 import {AddTodoComponent} from '../../components/add-todo/add-todo.component';
@@ -31,6 +31,7 @@ import {shareReplay, switchMap} from 'rxjs/operators';
 })
 export class TodoListComponent {
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private todoService = inject(TodoService);
   private authService = inject(AuthService);
   private notificationService = inject(NotificationService);
@@ -84,12 +85,18 @@ export class TodoListComponent {
     if (!confirmed) {
       return;
     }
+    const currentProjectId = await firstValueFrom(this.projectId$);
+    if (!currentProjectId) {
+      this.notificationService.showError('Could not find project ID.');
+      return;
+    }
     const deleteProjectFn = httpsCallable(this.functions, 'deleteProjectAndTodos');
 
     try {
-      console.log(`Calling cloud function to delete project: ${this.projectId$}`);
-      const result = await deleteProjectFn({projectId: this.projectId$});
+      console.log(`Calling cloud function to delete project: ${currentProjectId}`);
+      const result = await deleteProjectFn({projectId: currentProjectId});
       console.log('Cloud function executed successfully:', result.data);
+      this.router.navigate(['/app/project', 'inbox']);
     } catch (error: any) {
       console.error(`Error from cloud function (${error.code}):`, error.message);
       throw error;

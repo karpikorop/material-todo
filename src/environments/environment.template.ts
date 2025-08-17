@@ -2,6 +2,7 @@
 // Rename this file to `environment.ts`.
 export const environment = {
   production: false,
+  useEmulators: false, // Set to true if you want to use Firebase emulators
   firebase: {
     apiKey: '',
     authDomain: '',
