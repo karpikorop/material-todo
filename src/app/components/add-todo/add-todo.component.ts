@@ -7,18 +7,15 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import {take} from 'rxjs/operators';
-
-// Сервіси
 import {TodoService} from '../../services/todo-service/todo.service';
 import {AuthService} from '../../services/auth-service/auth.service';
 import {NotificationService} from '../../services/notification-service/notification.service';
-
-// Angular Material Imports
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {IS_MOBILE} from '../../tokens';
+import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-add-todo',
@@ -30,6 +27,7 @@ import {IS_MOBILE} from '../../tokens';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatTooltip,
   ],
   templateUrl: './add-todo.component.html',
   styleUrl: './add-todo.component.scss',

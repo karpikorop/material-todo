@@ -1,20 +1,17 @@
 .example-spacer {
   flex: 1 1 auto;
 }
-.mat-toolbar {
-  background: rgb(255, 255, 255);
-}
 
 .drop-down {
   width: 100%;
-  background-color: rgb(255, 255, 255);
   padding: 1rem 1.5rem;
-  outline: 1px solid var(--border-color);
+  background-color: var(--mat-sys-surface);
 }
 
 .divider::after {
   content: none;
 }
+
 .drop-down-button {
   width: 100%;
 }

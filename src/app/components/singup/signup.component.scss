@@ -1,6 +1,7 @@
 @import "tailwindcss";
+
 .main-container {
-  background-image: url("/backgrounds/blue-gradient1.jpg");
+  background-color: var(--mat-sys-secondary-container);
 }
 
 .signup-form {

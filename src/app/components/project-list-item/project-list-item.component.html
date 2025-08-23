@@ -1,0 +1,34 @@
+<div
+  [routerLink]="['/app/project', project().id]"
+  routerLinkActive="active-project-link"
+  class="project-item mb-2 mt-2"
+>
+  <div class="project-title pl-4">
+    <mat-icon class="mat-icon-filled mr-2">{{ project().icon }}</mat-icon>
+    {{ project().name }}
+  </div>
+  <button
+    matIconButton
+    class="menu-button"
+    [matMenuTriggerFor]="projectMenu"
+    (click)="$event.stopPropagation()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+</div>
+<mat-menu #projectMenu="matMenu">
+  <button mat-menu-item matTooltip="Not Active For Now">
+    <mat-icon>style</mat-icon>
+    <span>Change Icon</span>
+  </button>
+  <button mat-menu-item matTooltip="Not Active For Now">
+    <mat-icon
+      ><span class="material-symbols-rounded"> text_format </span></mat-icon
+    >
+    <span>Rename</span>
+  </button>
+  <button mat-menu-item (click)="deleteProject()">
+    <mat-icon>delete</mat-icon>
+    <span>Delete</span>
+  </button>
+</mat-menu>

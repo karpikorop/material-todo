@@ -1,0 +1,55 @@
+.project-item {
+  cursor: pointer;
+  font-size: 0.875rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: transparent;
+}
+.project-item:hover:not(.active-project-link) {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.project-item span[matListItemTitle] {
+  font-size: 0.875rem;
+}
+
+.project-item mat-icon {
+  height: 1.25rem;
+  width: 1.25rem;
+  font-size: 1.25rem;
+}
+
+.project-title {
+  display: flex;
+}
+
+.active-project-link {
+  background-color: var(--mat-sys-secondary);
+  color: var(--mat-sys-on-secondary);
+  mat-icon {
+    color: var(--mat-sys-on-secondary);
+  }
+}
+
+.menu-button {
+  margin-right: 0.5rem;
+  height: 2rem;
+  width: 2rem;
+  font-size: 2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.1s ease, visibility 0.1s ease;
+}
+
+.project-item:hover .menu-button {
+  opacity: 1;
+  visibility: visible;
+}
+
+.menu-button[aria-expanded="true"] {
+  opacity: 1;
+  visibility: visible;
+}

@@ -21,8 +21,8 @@
     </button>
   </div>
 
-  <mat-menu #userMenu="matMenu" panelClass="user-menu-panel">
-    <button mat-menu-item routerLink="/app/settings">
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item matTooltip="Not Active For Now">
       <mat-icon>settings</mat-icon>
       <span>Settings</span>
     </button>
@@ -35,16 +35,13 @@
   <div class="divider ml-4 mr-4"></div>
 
   <mat-nav-list class="project-list">
-    <a
-      mat-list-item
-      *ngFor="let project of projects$ | async"
-      [routerLink]="['/app/project', project.id]"
-      routerLinkActive="active-project-link"
-      class="mb-2 mt-2"
-    >
-      <mat-icon matListItemIcon>{{ project.icon }}</mat-icon>
-      <span matListItemTitle>{{ project.name }}</span>
-    </a>
+    @if (projects$ | async; as projects) {
+      @for (project of projects; track project.id) {
+        <project-list-item [project]="project"></project-list-item>
+      } @empty {
+        <div class="empty">No projects yet</div>
+      }
+    }
   </mat-nav-list>
 
   <div class="add-project-action">

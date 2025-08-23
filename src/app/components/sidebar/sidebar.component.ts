@@ -1,6 +1,6 @@
 import {Component, inject, output} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterLink, RouterLinkActive} from '@angular/router';
+import {RouterLink} from '@angular/router';
 import {Observable, take} from 'rxjs';
 import {
   UserService,
@@ -18,6 +18,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatMenuModule} from '@angular/material/menu';
 import {AuthService} from '../../services/auth-service/auth.service';
 import {NotificationService} from '../../services/notification-service/notification.service';
+import {ProjectListItemComponent} from '../project-list-item/project-list-item.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-sidebar',
@@ -25,12 +27,13 @@ import {NotificationService} from '../../services/notification-service/notificat
   imports: [
     CommonModule,
     RouterLink,
-    RouterLinkActive,
     MatListModule,
     MatIconModule,
     MatButtonModule,
     MatDividerModule,
     MatMenuModule,
+    ProjectListItemComponent,
+    MatTooltipModule,
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',

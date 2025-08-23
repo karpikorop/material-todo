@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {
   Firestore,
   doc,
@@ -7,11 +7,11 @@ import {
   updateDoc,
   getDoc,
 } from '@angular/fire/firestore';
-import { User } from '@angular/fire/auth';
-import { AuthService } from '../auth-service/auth.service';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { ProjectService } from '../project-service/project.service';
+import {User} from '@angular/fire/auth';
+import {AuthService} from '../auth-service/auth.service';
+import {Observable, of} from 'rxjs';
+import {switchMap} from 'rxjs/operators';
+import {ProjectService} from '../project-service/project.service';
 
 export interface UserProfile {
   id: string;
@@ -43,9 +43,9 @@ export class UserService {
     );
 
   constructor() {
-    this.authService.user$.subscribe((user) => {
+    this.authService.user$.subscribe(async (user) => {
       if (user) {
-        this.checkAndCreateUserProfile(user);
+        await this.checkAndCreateUserProfile(user);
       }
     });
   }

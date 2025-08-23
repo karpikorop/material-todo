@@ -136,6 +136,12 @@ npm build:watch
 firebase deploy --only functions
 ```
 
+---
+
+### Theming
+
+The application uses Angular Material's theming capabilities.
+
 ### Developer Notes
 
 - **Notifications:** To display user notifications, inject and use the `NotificationService`. It provides methods like `showSuccess('Title', 'Message')` and `showError('Title', 'Message')`.

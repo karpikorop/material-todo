@@ -1,11 +1,10 @@
-// Стилі для секцій
 .hero-section,
 .journey-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 95vh; // Робить головний екран високим
+  min-height: 95vh;
 }
 
 .journey-section {
@@ -13,11 +12,10 @@
 }
 
 .feature-section {
-  background-color: var(--color-gray-50);
+  background-color: var(--mat-sys-secondary-container);
   min-height: 50vh;
 }
 
-// Стилі для кнопок заклику до дії
 .cta-button {
   margin: 8px;
   padding: 18px 32px !important;
@@ -45,5 +43,5 @@
   width: 64px;
   font-size: 64px;
   margin: 2rem 0;
-  color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-secondary-container);
 }

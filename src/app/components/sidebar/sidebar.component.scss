@@ -27,6 +27,7 @@
   height: 1.5rem;
   border-radius: 50%;
   margin-right: 12px;
+  box-shadow: var(--mat-sys-level1);
 }
 
 .username {
@@ -45,16 +46,4 @@
 
 .add-project-action {
   padding: 16px;
-}
-
-.active-project-link {
-  background-color: var(--mat-sys-secondary);
-
-  span {
-    color: var(--mat-sys-on-secondary);
-  }
-
-  .mat-icon {
-    color: var(--mat-sys-on-secondary);
-  }
 }

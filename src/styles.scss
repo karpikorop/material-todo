@@ -1,32 +1,34 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
+@use "./app/styles/_theme-colors" as app;
 @import "tailwindcss";
 
-:root {
-  --border-color: rgba(0, 0, 0, 0.2);
-}
+@include mat.core();
 
+// Angular material theme variables
+// https://material.angular.dev/guide/system-variables
 
 html {
-
-  @include mat.theme((
-    color: mat.$green-palette,
-  ));
-}
-
-html,
-body {
-  height: 100%;
+  @include mat.theme(
+    (
+      color: app.$primary-palette,
+    )
+  );
 }
 
 body {
   margin: 0;
+  background-color: var(--mat-sys-surface);
   @apply font-sans antialiased;
+}
+
+.mat-icon-filled {
+  font-variation-settings: "FILL" 1;
 }
 
 //DIVIDER
 .divider {
   height: 1px;
-  background-color: var(--border-color);
+  background-color: var(--mat-sys-outline-variant);
   display: flex;
   align-items: center;
 }
@@ -43,7 +45,7 @@ body {
     content: "";
     height: 1px;
     margin: 0.5rem;
-    background-color: var(--border-color);
+    background-color: var(--mat-sys-outline-variant);
   }
 }
 
@@ -55,7 +57,7 @@ body {
 }
 
 .error-snackbar-container .mdc-snackbar__surface {
-  background-color: #f44336 !important;
+  background-color: var(--mat-sys-error) !important;
   color: white !important;
   border-radius: 1em !important;
 }
@@ -67,18 +69,17 @@ body {
 }
 
 .info-snackbar-container .mdc-snackbar__surface {
-  background-color: #2196f3 !important;
+  background-color: #386568 !important;
   color: white !important;
   border-radius: 1em !important;
 }
 
-// Specific fix for aligning the icon in the close sidenav button
+// Specific fix for aligning the material icon button
 .mat-mdc-icon-button {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
 }
-
 
 //MAT MENU STYLES
 /* styles.scss (global) or wrap in :host ::ng-deep if inside component SCSS */
@@ -87,8 +88,7 @@ body {
   border-radius: 12px;
   padding: 4px 0; /* outer vertical breathing space */
   min-width: 200px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12),
-  0 2px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 /* Inner content container */
@@ -101,7 +101,7 @@ body {
   border-radius: 8px;
   margin: 2px 0;
   padding: 8px 12px;
-  transition: background-color .15s, color .15s;
+  transition: background-color 0.15s, color 0.15s;
 }
 
 /* Hover / focus */

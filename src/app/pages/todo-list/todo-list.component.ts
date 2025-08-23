@@ -1,19 +1,19 @@
-import {Component, inject, ViewChild} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Observable, map, take, firstValueFrom} from 'rxjs';
+import { Component, inject, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, map, take, firstValueFrom } from 'rxjs';
 
-import {TodoItemComponent} from '../../components/todo-item/todo-item.component';
-import {AddTodoComponent} from '../../components/add-todo/add-todo.component';
-import {Todo, TodoService} from '../../services/todo-service/todo.service';
-import {AuthService} from '../../services/auth-service/auth.service';
-import {NotificationService} from '../../services/notification-service/notification.service';
+import { TodoItemComponent } from '../../components/todo-item/todo-item.component';
+import { AddTodoComponent } from '../../components/add-todo/add-todo.component';
+import { Todo, TodoService } from '../../services/todo-service/todo.service';
+import { AuthService } from '../../services/auth-service/auth.service';
+import { NotificationService } from '../../services/notification-service/notification.service';
 
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {Functions, httpsCallable} from '@angular/fire/functions';
-import {shareReplay, switchMap} from 'rxjs/operators';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { Functions, httpsCallable } from '@angular/fire/functions';
+import { shareReplay, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-todo-list',
@@ -49,8 +49,7 @@ export class TodoListComponent {
     shareReplay(1)
   );
 
-  constructor() {
-  }
+  constructor() {}
 
   // Lifecycle hook to focus the input field after the view is checked
   // Focus is set to the input field of the AddTodoComponent
@@ -91,24 +90,38 @@ export class TodoListComponent {
   }
 
   protected async deleteProject() {
+    const currentProjectId = await firstValueFrom(this.projectId$);
+    if (!currentProjectId) {
+      this.notificationService.showError('Could not get project ID.');
+      return;
+    }
+    // TODO improve check for inbox project
+    if (currentProjectId === 'inbox') {
+      this.notificationService.showError('Cannot delete Inbox project.');
+      return;
+    }
     const confirmed = window.confirm('Delete this project and all its tasks?');
     if (!confirmed) {
       return;
     }
-    const currentProjectId = await firstValueFrom(this.projectId$);
-    if (!currentProjectId) {
-      this.notificationService.showError('Could not find project ID.');
-      return;
-    }
-    const deleteProjectFn = httpsCallable(this.functions, 'deleteProjectAndTodos');
+
+    const deleteProjectFn = httpsCallable(
+      this.functions,
+      'deleteProjectAndTodos'
+    );
 
     try {
-      console.log(`Calling cloud function to delete project: ${currentProjectId}`);
-      const result = await deleteProjectFn({projectId: currentProjectId});
+      console.log(
+        `Calling cloud function to delete project: ${currentProjectId}`
+      );
+      const result = await deleteProjectFn({ projectId: currentProjectId });
       console.log('Cloud function executed successfully:', result.data);
-      this.router.navigate(['/app/project', 'inbox']);
+      await this.router.navigate(['/app/project', 'inbox']);
     } catch (error: any) {
-      console.error(`Error from cloud function (${error.code}):`, error.message);
+      console.error(
+        `Error from cloud function (${error.code}):`,
+        error.message
+      );
       throw error;
     }
   }

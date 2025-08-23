@@ -14,7 +14,7 @@ import {
   sendEmailVerification,
 } from '@angular/fire/auth';
 import { NotificationService } from '../notification-service/notification.service';
-import { shareReplay, tap } from 'rxjs/operators';
+import { shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +30,7 @@ export class AuthService {
   constructor() {
     this.user$.subscribe((user) => {
       if (user) {
-        console.log('User logged in:', user);
+        console.log('User logged in');
       } else {
         console.log('User logged out.');
       }
