@@ -1,4 +1,4 @@
-<app-header (openSidenav)="sidenav.open()"></app-header>
+<app-header></app-header>
 
 <mat-sidenav-container #sidenav class="h-max">
   <mat-sidenav #sidenav>
@@ -8,5 +8,7 @@
       <a mat-list-item routerLink="/pricing">Pricing</a>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content> <router-outlet></router-outlet> </mat-sidenav-content>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
 </mat-sidenav-container>

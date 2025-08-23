@@ -16,7 +16,15 @@
   color: var(--mat-sys-primary);
 }
 
+.team-section {
+  background-color: var(--mat-sys-surface-variant);
+}
+
 .mat-mdc-mini-fab {
   box-shadow: none !important;
   background-color: transparent !important;
+}
+
+img {
+  box-shadow: var(--mat-sys-level1);
 }

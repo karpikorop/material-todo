@@ -6,7 +6,6 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {RouterLink} from '@angular/router';
 import {MatListModule} from '@angular/material/list';
 import {signal} from '@angular/core';
-import {NgIf} from '@angular/common';
 import {
   trigger,
   state,
@@ -26,7 +25,6 @@ import {inject} from '@angular/core';
     MatSidenavModule,
     RouterLink,
     MatListModule,
-    NgIf,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

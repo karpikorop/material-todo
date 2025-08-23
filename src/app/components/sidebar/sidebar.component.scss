@@ -1,7 +1,7 @@
 :host {
   display: block;
   height: 100%;
-  background-color: var(--mat-sys-secondary-container);
+  background-color: var(--mat-sys-surface-variant);
 }
 
 .sidebar-container {
@@ -40,8 +40,7 @@
 .project-list {
   //flex-grow: 1;
   overflow-y: auto;
-  padding: 10px;
-  padding-bottom: 0;
+  padding: 10px 10px 0;
 }
 
 .add-project-action {

@@ -47,11 +47,12 @@ export class AddTodoComponent {
     title: ['', Validators.required],
   });
 
+  /* TODO Works bad on the mobile
   public focusInput(): void {
     if (this.taskInput && this.taskInput.nativeElement) {
       this.taskInput.nativeElement.focus();
     }
-  }
+  }*/
 
   onSubmit(): void {
     if (this.addTodoForm.invalid) {

@@ -3,7 +3,6 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {RouterLink} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
-import {IconsNames} from '../../services/icon-service/icon.service';
 
 @Component({
   selector: 'app-about',

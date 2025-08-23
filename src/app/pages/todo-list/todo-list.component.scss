@@ -13,7 +13,7 @@
 }
 
 .list-header {
-  padding-bottom: 16px;
+  padding: 0 1rem 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
 }
@@ -21,7 +21,6 @@
 .tasks-scroll-container {
   //flex-grow: 1;
   overflow-y: auto;
-  padding: 8px 0;
 }
 
 .add-todo-container {

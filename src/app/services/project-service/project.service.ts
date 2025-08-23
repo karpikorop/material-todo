@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {
   Firestore,
   collection,
@@ -10,10 +10,10 @@ import {
   orderBy,
   setDoc,
 } from '@angular/fire/firestore';
-import { AuthService } from '../auth-service/auth.service';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { Functions, httpsCallable } from '@angular/fire/functions';
+import {AuthService} from '../auth-service/auth.service';
+import {Observable, of} from 'rxjs';
+import {switchMap} from 'rxjs/operators';
+import {Functions, httpsCallable} from '@angular/fire/functions';
 
 export interface Project {
   id: string; // Firestore ID
@@ -31,8 +31,10 @@ export class ProjectService {
   private authService: AuthService = inject(AuthService);
   private readonly functions: Functions = inject(Functions);
 
-  // Observable containing the list of projects for the current user,
-  // sorted by creation time.
+  /**
+   * Observable containing the list of projects for the current user,
+   * sorted by creation time (ascending).
+   */
   projects$: Observable<Project[]> = this.authService.currentUser$.pipe(
     switchMap((user) => {
       if (user) {
@@ -42,14 +44,12 @@ export class ProjectService {
         );
         const q = query(projectsRef, orderBy('createdAt', 'asc'));
 
-        return collectionData(q, { idField: 'id' }) as Observable<Project[]>;
+        return collectionData(q, {idField: 'id'}) as Observable<Project[]>;
       } else {
         return of([]);
       }
     })
   );
-
-  constructor() {}
 
   /**
    * Creates a default "Inbox" project for a new user.
@@ -114,7 +114,7 @@ export class ProjectService {
 
     try {
       console.log(`Calling cloud function to delete project: ${projectId}`);
-      const result = await deleteProjectFn({ projectId: projectId });
+      const result = await deleteProjectFn({projectId: projectId});
       console.log('Cloud function executed:', result.data);
     } catch (error) {
       console.error(

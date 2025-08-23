@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   padding: 3rem 2rem !important;
+  background-color: var(--mat-sys-surface-variant);
   @apply shadow-lg;
 }
 
@@ -42,11 +43,13 @@
 
 // faq section styles
 .faq-section {
-  background-color: var(--mat-sys-secondary-container);
+  background-color: var(--mat-sys-surface-variant);
+
   .mat-expansion-panel {
     box-shadow: none !important;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 8px !important;
+
     &:not(:last-child) {
       margin-bottom: 8px;
     }

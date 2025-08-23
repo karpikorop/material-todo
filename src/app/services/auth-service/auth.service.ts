@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { inject } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {inject} from '@angular/core';
 import {
   Auth,
   User,
@@ -13,8 +13,8 @@ import {
   UserCredential,
   sendEmailVerification,
 } from '@angular/fire/auth';
-import { NotificationService } from '../notification-service/notification.service';
-import { shareReplay } from 'rxjs/operators';
+import {NotificationService} from '../notification-service/notification.service';
+import {shareReplay} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -65,13 +65,15 @@ export class AuthService {
     );
   }
 
-  public loginWithGoogle(): Promise<UserCredential> {
+  public async loginWithGoogle(): Promise<UserCredential> {
     const provider = new GoogleAuthProvider();
 
-    return signInWithPopup(this.auth, provider).catch((error) => {
+    try {
+      return await signInWithPopup(this.auth, provider);
+    } catch (error) {
       this.handleAuthError(error);
       throw error;
-    });
+    }
   }
 
   public logout(): Promise<void> {

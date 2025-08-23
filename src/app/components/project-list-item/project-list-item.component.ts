@@ -1,13 +1,15 @@
-import { Component, inject, input } from '@angular/core';
-import { Project } from '../../services/project-service/project.service';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
-import { MatIconButton } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { NotificationService } from '../../services/notification-service/notification.service';
-import { Functions, httpsCallable } from '@angular/fire/functions';
-import { Router } from '@angular/router';
+import {Component, inject, input} from '@angular/core';
+import {Project} from '../../services/project-service/project.service';
+import {RouterLink, RouterLinkActive} from '@angular/router';
+import {MatIconModule} from '@angular/material/icon';
+import {MatIconButton} from '@angular/material/button';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {NotificationService} from '../../services/notification-service/notification.service';
+import {Functions, httpsCallable} from '@angular/fire/functions';
+import {Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import {ConfirmationDialogComponent} from '../dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'project-list-item',
@@ -26,6 +28,7 @@ export class ProjectListItemComponent {
   private notificationService = inject(NotificationService);
   private functions = inject(Functions);
   private router = inject(Router);
+  private dialog = inject(MatDialog);
 
   public project = input.required<Project>();
 
@@ -35,30 +38,38 @@ export class ProjectListItemComponent {
       this.notificationService.showError('Cannot delete Inbox project.');
       return;
     }
-    const confirmed = window.confirm(
-      `Delete project ${this.project().name} and all its tasks?`
-    );
-    if (!confirmed) {
-      return;
-    }
 
-    try {
-      const deleteProjectFn = httpsCallable(
-        this.functions,
-        'deleteProjectAndTodos'
-      );
-      console.log(
-        `Calling cloud function to delete project: ${this.project().name}`
-      );
-      const result = await deleteProjectFn({ projectId: this.project().id });
-      console.log('Cloud function executed successfully:', result.data);
-      await this.router.navigate(['/app/project', 'inbox']);
-    } catch (error: any) {
-      console.error(
-        `Error from cloud function (${error.code}):`,
-        error.message
-      );
-      throw error;
-    }
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: 'Delete Project',
+        message: `Are you sure you want to delete ${this.project().name} project?`,
+        mainButtonText: 'Delete',
+      },
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(async (result: boolean) => {
+      if (!result) {
+        return;
+      }
+      try {
+        const deleteProjectFn = httpsCallable(
+          this.functions,
+          'deleteProjectAndTodos'
+        );
+        console.log(
+          `Calling cloud function to delete project: ${this.project().name}`
+        );
+        const result = await deleteProjectFn({projectId: this.project().id});
+        console.log('Cloud function executed successfully:', result.data);
+        await this.router.navigate(['/app/project', 'inbox']);
+      } catch (error: any) {
+        console.error(
+          `Error from cloud function (${error.code}):`,
+          error.message
+        );
+        throw error;
+      }
+    });
   }
 }

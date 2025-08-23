@@ -20,6 +20,8 @@ import {AuthService} from '../../services/auth-service/auth.service';
 import {NotificationService} from '../../services/notification-service/notification.service';
 import {ProjectListItemComponent} from '../project-list-item/project-list-item.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDialog} from '@angular/material/dialog';
+import {StringInputDialogComponent} from '../dialogs/project-name-dialog/string-input-dialog.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -43,6 +45,7 @@ export class SidebarComponent {
   private notificationService = inject(NotificationService);
   private authService = inject(AuthService);
   private projectService = inject(ProjectService);
+  private dialog = inject(MatDialog);
 
   public close = output();
 
@@ -54,31 +57,42 @@ export class SidebarComponent {
   }
 
   addNewProject(): void {
-    const newProjectName = prompt('Enter a name for the new project:');
 
-    if (newProjectName && newProjectName.trim() !== '') {
-      this.authService.currentUser$.pipe(take(1)).subscribe((user) => {
-        if (user) {
-          this.projectService
-            .addProject(newProjectName.trim(), user.uid)
-            .then(() => {
-              this.notificationService.showSuccess(
-                `Project "${newProjectName}" created!`
-              );
-            })
-            .catch((error) => {
-              console.error('Error adding project:', error);
-              this.notificationService.showError(
-                'Failed to create the project.'
-              );
-            });
-        } else {
-          this.notificationService.showError(
-            'You must be logged in to add a project.'
-          );
-        }
-      });
-    }
+    const dialogRef = this.dialog.open(StringInputDialogComponent, {
+      data: {
+        title: 'Add new project',
+        message: 'Enter project name',
+        placeholder: 'Project name',
+        mainButtonText: 'Add project',
+      },
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((newProjectName: string) => {
+      if (newProjectName && newProjectName.trim() !== '') {
+        this.authService.currentUser$.pipe(take(1)).subscribe((user) => {
+          if (user) {
+            this.projectService
+              .addProject(newProjectName.trim(), user.uid)
+              .then(() => {
+                this.notificationService.showSuccess(
+                  `Project "${newProjectName}" created!`
+                );
+              })
+              .catch((error) => {
+                console.error('Error adding project:', error);
+                this.notificationService.showError(
+                  'Failed to create the project.'
+                );
+              });
+          } else {
+            this.notificationService.showError(
+              'You must be logged in to add a project.'
+            );
+          }
+        });
+      }
+    })
   }
 
   protected onClose(): void {

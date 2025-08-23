@@ -1,16 +1,15 @@
 <div class="todo-list-container mt-20">
   <header class="list-header">
     <h1 class="text-3xl font-bold">Tasks</h1>
-    <button mat-icon-button color="warn" aria-label="Delete">
-      <mat-icon (click)="deleteProject()">delete</mat-icon>
+    <button matIconButton color="warn" aria-label="Delete Project" (click)="deleteProject()">
+      <mat-icon>delete</mat-icon>
     </button>
   </header>
 
   <div class="tasks-scroll-container">
     @if (todos$ | async; as todos) {
       @if (todos.length > 0) {
-        @for (todo of
-          todos; track todo.id) {
+        @for (todo of todos; track todo.id) {
           <app-todo-item
             [todo]="todo"
             (update)="updateTodo({ todoId: todo.id, data: $event })"

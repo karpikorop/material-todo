@@ -1,0 +1,10 @@
+<h2 mat-dialog-title cdkFocusInitial>{{ data.title }}</h2>
+<mat-dialog-content>
+  <p class="pb-2">{{ data.message }}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button matButton (click)="onCancel()">Cancel</button>
+  <button matButton="filled" (click)="onSubmit()">
+    {{ data.mainButtonText || "Confirm" }}
+  </button>
+</mat-dialog-actions>
