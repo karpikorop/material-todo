@@ -9,6 +9,8 @@ import {
   query,
   orderBy,
   setDoc,
+  Timestamp,
+  serverTimestamp,
 } from '@angular/fire/firestore';
 import {AuthService} from '../auth-service/auth.service';
 import {Observable, of} from 'rxjs';
@@ -19,7 +21,7 @@ export interface Project {
   id: string; // Firestore ID
   name: string;
   icon: string;
-  createdAt: number;
+  createdAt: Timestamp;
   userId: string;
 }
 
@@ -58,7 +60,7 @@ export class ProjectService {
   async createDefaultInbox(userId: string): Promise<void> {
     const inboxProject: Omit<Project, 'id'> = {
       name: 'Inbox',
-      createdAt: Date.now(),
+      createdAt: serverTimestamp() as Timestamp, // unreliable
       userId: userId,
       icon: 'inbox',
     };
@@ -74,7 +76,7 @@ export class ProjectService {
   async addProject(name: string, userId: string): Promise<void> {
     const newProject: Omit<Project, 'id'> = {
       name: name,
-      createdAt: Date.now(),
+      createdAt: serverTimestamp() as Timestamp, // unreliable
       userId: userId,
       icon: 'folder',
     };

@@ -11,11 +11,12 @@ import {
   where,
   orderBy,
   writeBatch,
-  getDocs,
+  getDocs, Timestamp, serverTimestamp,
 } from '@angular/fire/firestore';
 import {AuthService} from '../auth-service/auth.service';
 import {Observable, of} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
+import {Project} from '../project-service/project.service';
 
 export interface Todo {
   id: string; // Firestore ID
@@ -23,10 +24,10 @@ export interface Todo {
   description?: string;
   status: 'todo' | 'done' | 'archived';
   priority?: 'low' | 'medium' | 'high';
-  createdAt: number;
-  updatedAt: number;
-  dueDate?: number;
-  reminderDate?: number;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+  dueDate?: Timestamp;
+  reminderDate?: Timestamp;
   projectId: string;
   userId: string;
 }
@@ -74,16 +75,16 @@ export class TodoService {
    * @param userId - Current user's ID
    */
   async addTodo(
-    todoData: Omit<Todo, 'id' | 'userId'>,
+    todoData: Omit<Todo, 'id' | 'userId' | 'createdAt' | 'updatedAt' | 'status'>,
     userId: string
   ): Promise<void> {
     const todosRef = collection(this.firestore, `users/${userId}/todos`);
-    const newTodo = {
+    const newTodo: Omit<Todo, 'id'> = {
+      status: 'todo', // default status, can be overridden by passed todoData
       ...todoData,
       userId: userId,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-      status: 'todo',
+      createdAt: serverTimestamp() as Timestamp,
+      updatedAt: serverTimestamp() as Timestamp,
     };
     await addDoc(todosRef, newTodo);
   }

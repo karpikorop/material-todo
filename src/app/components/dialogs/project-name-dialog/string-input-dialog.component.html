@@ -1,9 +1,9 @@
-<h2 mat-dialog-title cdkFocusInitial>{{ data.title }}</h2>
+<h2 mat-dialog-title>{{ data.title }}</h2>
 <mat-dialog-content>
   <p class="pb-2">{{ data.message }}</p>
   <mat-form-field appearance="outline" class="w-full">
     <input matInput [(ngModel)]="returnString" [placeholder]="data.placeholder" #nameInput
-           [maxlength]="data.maxLength || 20">
+           [maxlength]="data.maxLength || 20" cdkFocusInitial>
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

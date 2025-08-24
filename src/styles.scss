@@ -2,16 +2,23 @@
 @use "./app/styles/_theme-colors" as app;
 @import "tailwindcss";
 
-@include mat.core();
 
 // Angular material theme variables
 // https://material.angular.dev/guide/system-variables
 
 html {
   @include mat.theme(
-    (
-      color: app.$primary-palette,
-    )
+      (
+        color:
+        (
+          primary: app.$primary-palette,
+          tertiary: app.$tertiary-palette,
+          theme-type: light,
+        ),
+        typography: (
+          font-family: var(--font-sans),
+        ),
+      )
   );
 }
 
@@ -69,7 +76,7 @@ body {
 }
 
 .info-snackbar-container .mdc-snackbar__surface {
-  background-color: #386568 !important;
+  background-color: var(--mat-sys-tertiary) !important;
   color: white !important;
   border-radius: 1em !important;
 }

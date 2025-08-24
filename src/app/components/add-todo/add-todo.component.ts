@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import {take} from 'rxjs/operators';
-import {TodoService} from '../../services/todo-service/todo.service';
+import {Todo, TodoService} from '../../services/todo-service/todo.service';
 import {AuthService} from '../../services/auth-service/auth.service';
 import {NotificationService} from '../../services/notification-service/notification.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -16,6 +16,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {IS_MOBILE} from '../../tokens';
 import {MatTooltip} from '@angular/material/tooltip';
+import {serverTimestamp, Timestamp} from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-add-todo',
@@ -64,9 +65,6 @@ export class AddTodoComponent {
         const newTodoData = {
           title: this.addTodoForm.value.title,
           projectId: this.projectId,
-          status: 'todo' as const,
-          createdAt: Date.now(),
-          updatedAt: Date.now(),
         };
 
         this.todoService

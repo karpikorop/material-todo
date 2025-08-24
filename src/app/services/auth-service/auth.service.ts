@@ -41,28 +41,27 @@ export class AuthService {
     return this.user$;
   }
 
-  public signUp(email: string, password: string): Promise<UserCredential> {
-    return createUserWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-        sendEmailVerification(userCredential.user);
-        this.notificationService.showInfo(
-          'Verification email sent. Please check your inbox. Check spam folder if not found.'
-        );
-        return userCredential;
-      })
-      .catch((error) => {
-        this.handleAuthError(error);
-        throw error;
-      });
+  public async signUp(email: string, password: string): Promise<UserCredential> {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+      await sendEmailVerification(userCredential.user);
+      this.notificationService.showInfo(
+        'Verification email sent. Please check your inbox. Check spam folder if not found.'
+      );
+      return userCredential;
+    } catch (error) {
+      this.handleAuthError(error);
+      throw error;
+    }
   }
 
-  public logIn(email: string, password: string): Promise<UserCredential> {
-    return signInWithEmailAndPassword(this.auth, email, password).catch(
-      (error) => {
-        this.handleAuthError(error);
-        throw error;
-      }
-    );
+  public async logIn(email: string, password: string): Promise<UserCredential> {
+    try {
+      return await signInWithEmailAndPassword(this.auth, email, password);
+    } catch (error) {
+      this.handleAuthError(error);
+      throw error;
+    }
   }
 
   public async loginWithGoogle(): Promise<UserCredential> {

@@ -106,7 +106,7 @@ _Note: The first time you run this, Firebase will automatically download the req
 **Edit environment file**
 
 To use emulators don't forget to edit
-`src/environments/environment.development.ts`
+`src/environments/environment.ts`
 and set `useEmulators: true`.
 
 **Start Angular App:** In a second terminal, run:
@@ -124,10 +124,13 @@ Functions are written in TypeScript and must be compiled before running emulator
 - **To Build:**
 
 ```zsh
-cd functions
-npm run build 
-//or 
-npm build:watch
+cd functions && npm run build 
+```
+
+or
+
+```zsh
+cd functions && npm build:watch
 ```
 
 - **To Deploy:** (run from the project root)
@@ -140,15 +143,33 @@ firebase deploy --only functions
 
 ### Theming
 
-The application uses Angular Material's theming capabilities.
+This project uses a custom Angular Material theme. To generate and apply a new color palette run the generator in your terminal.
+
+```zsh
+ng generate @angular/material:theme-color
+```
+
+The CLI will then prompt you for a primary color and path for a theme file(src/app/styles recommended).
+
+Import the theme inside global styles.scss like:
+
+```scss
+@use "./app/styles/_theme-colors" as app;
+```
+
+and apply using:
+
+```scss
+@include mat.theme(color: app. $primary-palette);
+```
 
 ### Developer Notes
 
-- **Notifications:** To display user notifications, inject and use the `NotificationService`. It provides methods like `showSuccess('Title', 'Message')` and `showError('Title', 'Message')`.
+- **Notifications:** To display user notifications, inject and use the `NotificationService`. It provides methods like `showSuccess('Message')` and `showError('Message')`.
 
 - **Custom Icons:** To use custom SVG icons, place them in the `public/icons/` directory and register them via the `IconService`.
 
-- **Project Structure:** The project uses a feature-based folder structure (`pages`, `components`, `layouts`, `services`) to keep code organized and scalable.
+- **Reusable Dialogs:** For common tasks like getting user input or confirmation, use the provided generic material dialog components inside (src/app/components/dialogs), or create a custom one for more complex scenarios.
 
 ---  
 

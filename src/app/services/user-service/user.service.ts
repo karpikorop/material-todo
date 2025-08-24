@@ -5,7 +5,7 @@ import {
   docData,
   setDoc,
   updateDoc,
-  getDoc,
+  getDoc, Timestamp, serverTimestamp,
 } from '@angular/fire/firestore';
 import {User} from '@angular/fire/auth';
 import {AuthService} from '../auth-service/auth.service';
@@ -19,6 +19,7 @@ export interface UserProfile {
   username: string;
   avatarUrl: string;
   supporter: boolean;
+  createdAt: Timestamp;
 }
 
 @Injectable({
@@ -69,6 +70,7 @@ export class UserService {
           user.photoURL ||
           'https://placehold.co/100x100/E8E8E8/BDBDBD?text=Ava',
         supporter: false,
+        createdAt: serverTimestamp() as Timestamp, // unreliable
       };
       await setDoc(userRef, userData);
       await this.projectService.createDefaultInbox(user.uid);
