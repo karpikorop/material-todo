@@ -16,7 +16,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {IS_MOBILE} from '../../tokens';
 import {MatTooltip} from '@angular/material/tooltip';
-import {serverTimestamp, Timestamp} from '@angular/fire/firestore';
+
 
 @Component({
   selector: 'app-add-todo',

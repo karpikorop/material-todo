@@ -3,7 +3,7 @@
   <p class="pb-2">{{ data.message }}</p>
   <mat-form-field appearance="outline" class="w-full">
     <input matInput [(ngModel)]="returnString" [placeholder]="data.placeholder" #nameInput
-           [maxlength]="data.maxLength || 20" cdkFocusInitial>
+           [maxlength]="data.maxLength || 20" cdkFocusInitial (keydown.enter)="onSubmit()">
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

@@ -29,6 +29,7 @@ export class ProjectListItemComponent {
   private functions = inject(Functions);
   private router = inject(Router);
   private dialog = inject(MatDialog);
+  protected isHidden = false;
 
   public project = input.required<Project>();
 
@@ -53,6 +54,11 @@ export class ProjectListItemComponent {
         return;
       }
       try {
+        // TODO improve the router, maybe create a Router Service
+        if (this.router.url.includes(`/app/project/${this.project().id}`)) {
+          await this.router.navigate(['/app/project', 'inbox']);
+        }
+        this.isHidden = true;
         const deleteProjectFn = httpsCallable(
           this.functions,
           'deleteProjectAndTodos'
@@ -62,13 +68,10 @@ export class ProjectListItemComponent {
         );
         const result = await deleteProjectFn({projectId: this.project().id});
         console.log('Cloud function executed successfully:', result.data);
-        await this.router.navigate(['/app/project', 'inbox']);
+
       } catch (error: any) {
-        console.error(
-          `Error from cloud function (${error.code}):`,
-          error.message
-        );
-        throw error;
+        this.notificationService.showError('Failed to delete project. Please try again later.', error);
+        this.isHidden = false;
       }
     });
   }

@@ -12,16 +12,16 @@ import {
 export class NotificationService {
   private _snackBar = inject(MatSnackBar);
 
-  public showMessage(message: string) {
-    this.showNotification(message);
-  }
-
   public showSuccess(message: string) {
     this.showCustomNotification({title: 'Success', message, type: 'success'});
   }
 
-  public showError(message: string) {
-    console.error(message);
+  public showError(message: string, error?: any) {
+    if (error) {
+      console.error(message, error);
+    } else {
+      console.error(message);
+    }
     this.showCustomNotification({title: 'Error', message, type: 'error'});
   }
 

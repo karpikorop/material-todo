@@ -1,6 +1,6 @@
 # Material Todo - A Modern Angular Task Manager
 
-A free, lightweight, and open-source task manager, built with the latest version of Angular and designed according to Material Design principles. Organize your life with an elegant and intuitive interface that works beautifully on any device.
+A free, lightweight, and open-source task manager, built with the latest version of Angular and designed according to Material Design principles.
 
 You can use the live version of the application [here](https://to-note-angular-app.web.app)
 
@@ -24,7 +24,7 @@ You can use the live version of the application [here](https://to-note-angular-a
 
 ### Tech Stack
 
-- **Framework:** [Angular](https://angular.dev/ "null") (v20)
+- **Framework:** [Angular](https://angular.dev/ "null") (v20.x.x) with Standalone Components
 
 - **UI Components:** [Angular Material](https://material.angular.io/ "null")
 
@@ -170,6 +170,8 @@ and apply using:
 - **Custom Icons:** To use custom SVG icons, place them in the `public/icons/` directory and register them via the `IconService`.
 
 - **Reusable Dialogs:** For common tasks like getting user input or confirmation, use the provided generic material dialog components inside (src/app/components/dialogs), or create a custom one for more complex scenarios.
+
+- **Mobile Detection:** Use the `IS_MOBILE` token to determine if the app is in mobile view.
 
 ---  
 

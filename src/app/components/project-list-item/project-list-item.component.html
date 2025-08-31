@@ -2,6 +2,7 @@
   [routerLink]="['/app/project', project().id]"
   routerLinkActive="active-project-link"
   class="project-item mb-2 mt-2"
+  [hidden]="isHidden"
 >
   <div class="project-title pl-4">
     <mat-icon class="mat-icon-filled mr-2">{{ project().icon }}</mat-icon>
@@ -23,7 +24,7 @@
   </button>
   <button mat-menu-item matTooltip="Not Active For Now">
     <mat-icon
-      ><span class="material-symbols-rounded"> text_format </span></mat-icon
+    ><span class="material-symbols-rounded"> text_format </span></mat-icon
     >
     <span>Rename</span>
   </button>

@@ -73,7 +73,7 @@ export class ProjectService {
    * @param name - Name of the new project
    * @param userId - ID of the current user
    */
-  async addProject(name: string, userId: string): Promise<void> {
+  async addProject(name: string, userId: string): Promise<string> {
     const newProject: Omit<Project, 'id'> = {
       name: name,
       createdAt: serverTimestamp() as Timestamp, // unreliable
@@ -81,7 +81,8 @@ export class ProjectService {
       icon: 'folder',
     };
     const projectsRef = collection(this.firestore, `users/${userId}/projects`);
-    await addDoc(projectsRef, newProject);
+    const docRef = await addDoc(projectsRef, newProject);
+    return docRef.id;
   }
 
   /**

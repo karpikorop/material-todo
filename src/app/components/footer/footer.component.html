@@ -1,0 +1,49 @@
+<div class="toolbar p-4">
+  <!-- Mobile Layout: Stack everything vertically -->
+  <div class="flex flex-col items-center gap-4 w-full md:hidden">
+    <div class="text-center">
+      <p class="text-sm font-medium">
+        &copy; {{ currentYear }} Material Todo. Licensed under GPL v3.
+      </p>
+      <p class="text-xs text-slate-400">
+        Built with Angular & Material Design.
+      </p>
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-center gap-2 text-center">
+      <a matButton routerLink="/privacy-policy" class="min-w-0">Privacy Policy</a>
+      <span class="text-slate-500 hidden sm:inline">|</span>
+      <a matButton href="https://github.com/karpikorop/material-todo/blob/main/LICENSE" class="min-w-0">License</a>
+    </div>
+
+    <div class="flex items-center">
+      <a matIconButton href="https://github.com" target="_blank" aria-label="GitHub repository link">
+        <mat-icon svgIcon="github">code</mat-icon>
+      </a>
+    </div>
+  </div>
+
+  <!-- Desktop Layout: Three columns -->
+  <div class="hidden md:grid md:grid-cols-3 md:items-center md:w-full">
+    <div class="text-left">
+      <p class="text-sm font-medium">
+        &copy; {{ currentYear }} Material Todo. Licensed under GPL v3.
+      </p>
+      <p class="text-xs text-slate-400">
+        Built with Angular & Material Design.
+      </p>
+    </div>
+
+    <div class="flex items-center justify-center gap-2">
+      <a matButton routerLink="/privacy-policy">Privacy Policy</a>
+      <span class="text-slate-500">|</span>
+      <a matButton href="https://github.com/karpikorop/material-todo/blob/main/LICENSE">License</a>
+    </div>
+
+    <div class="flex items-center justify-end">
+      <a matIconButton href="https://github.com" target="_blank" aria-label="GitHub repository link">
+        <mat-icon svgIcon="github"></mat-icon>
+      </a>
+    </div>
+  </div>
+</div>

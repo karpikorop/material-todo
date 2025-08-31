@@ -138,7 +138,5 @@ export class TodoListComponent {
         }
       }
     })
-
-
   }
 }

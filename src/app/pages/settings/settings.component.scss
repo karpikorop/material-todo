@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  height: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.avatar-section {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.avatar-placeholder {
+  border-radius: 50%;
+  box-shadow: var(--mat-sys-level1);
+}
+
+.nickname-section,
+.email-section {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}

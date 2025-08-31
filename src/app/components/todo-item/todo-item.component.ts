@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
-import { Todo } from '../../services/todo-service/todo.service';
-import { inject } from '@angular/core';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { NotificationService } from '../../services/notification-service/notification.service';
+import {Component, EventEmitter, Input, Output, signal} from '@angular/core';
+import {CommonModule, DatePipe} from '@angular/common';
+import {Todo} from '../../services/todo-service/todo.service';
+import {inject} from '@angular/core';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {NotificationService} from '../../services/notification-service/notification.service';
 
 @Component({
   selector: 'app-todo-item',
@@ -24,30 +24,30 @@ import { NotificationService } from '../../services/notification-service/notific
 })
 export class TodoItemComponent {
   private notificationService = inject(NotificationService);
-  @Input({ required: true }) todo!: Todo;
+  @Input({required: true}) todo!: Todo;
 
   @Output() update = new EventEmitter<Partial<Omit<Todo, 'id'>>>();
   @Output() delete = new EventEmitter<string>();
 
-  isHovered = signal(false);
+  protected isHovered = signal(false);
 
-  onStatusChange(checked: boolean): void {
+  protected onStatusChange(checked: boolean): void {
     const newStatus = checked ? 'done' : 'todo';
-    this.update.emit({ status: newStatus });
+    this.update.emit({status: newStatus});
   }
 
-  onDelete(): void {
+  protected onDelete(): void {
     this.delete.emit(this.todo.id);
   }
 
-  onEdit(): void {
+  protected onEdit(): void {
     this.notificationService.showInfo(
       'Edit functionality is not implemented yet.'
     );
     console.log('Edit clicked for todo:', this.todo.id);
   }
 
-  onSetTime(): void {
+  protected onSetTime(): void {
     this.notificationService.showInfo(
       'Set time functionality is not implemented yet.'
     );

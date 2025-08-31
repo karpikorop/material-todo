@@ -32,11 +32,11 @@ export class StringInputDialogComponent {
   private dialogRef = inject(MatDialogRef<StringInputDialogComponent>);
   protected readonly data: InputDialogData = inject<InputDialogData>(MAT_DIALOG_DATA);
 
-  onCancel(): void {
+  protected onCancel(): void {
     this.dialogRef.close();
   }
 
-  onSubmit(): void {
+  protected onSubmit(): void {
     if (this.returnString?.trim()) {
       this.dialogRef.close(this.returnString.trim());
     }

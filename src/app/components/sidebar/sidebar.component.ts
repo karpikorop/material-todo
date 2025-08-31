@@ -1,6 +1,6 @@
 import {Component, inject, output} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {Observable, take} from 'rxjs';
 import {
   UserService,
@@ -21,7 +21,7 @@ import {NotificationService} from '../../services/notification-service/notificat
 import {ProjectListItemComponent} from '../project-list-item/project-list-item.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialog} from '@angular/material/dialog';
-import {StringInputDialogComponent} from '../dialogs/project-name-dialog/string-input-dialog.component';
+import {StringInputDialogComponent} from '../dialogs/string-input-dialog/string-input-dialog.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -46,8 +46,9 @@ export class SidebarComponent {
   private authService = inject(AuthService);
   private projectService = inject(ProjectService);
   private dialog = inject(MatDialog);
+  private router = inject(Router);
 
-  public close = output();
+  protected close = output();
 
   protected userProfile$: Observable<UserProfile | null> =
     this.userService.currentUserProfile$;
@@ -56,7 +57,7 @@ export class SidebarComponent {
   constructor() {
   }
 
-  addNewProject(): void {
+  protected addNewProject(): void {
 
     const dialogRef = this.dialog.open(StringInputDialogComponent, {
       data: {
@@ -69,20 +70,17 @@ export class SidebarComponent {
     });
 
     dialogRef.afterClosed().subscribe((newProjectName: string) => {
-      if (newProjectName && newProjectName.trim() !== '') {
+      if (newProjectName?.trim()) {
         this.authService.currentUser$.pipe(take(1)).subscribe((user) => {
           if (user) {
             this.projectService
               .addProject(newProjectName.trim(), user.uid)
-              .then(() => {
-                this.notificationService.showSuccess(
-                  `Project "${newProjectName}" created!`
-                );
+              .then((id) => {
+                this.router.navigate(['/app/project', id]).then();
               })
               .catch((error) => {
-                console.error('Error adding project:', error);
                 this.notificationService.showError(
-                  'Failed to create the project.'
+                  'Error adding project:', error
                 );
               });
           } else {
