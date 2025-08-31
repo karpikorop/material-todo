@@ -1,5 +1,5 @@
 import {Component, inject, output} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
 import {Observable, take} from 'rxjs';
 import {
@@ -36,6 +36,7 @@ import {StringInputDialogComponent} from '../dialogs/string-input-dialog/string-
     MatMenuModule,
     ProjectListItemComponent,
     MatTooltipModule,
+    NgOptimizedImage,
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',

@@ -8,6 +8,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-settings',
@@ -21,7 +22,8 @@ import {MatSlideToggle} from '@angular/material/slide-toggle';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatSlideToggle
+    MatSlideToggle,
+    NgOptimizedImage
   ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss'

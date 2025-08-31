@@ -1,12 +1,11 @@
 import {Component, inject, input} from '@angular/core';
-import {Project} from '../../services/project-service/project.service';
+import {Project, ProjectService} from '../../services/project-service/project.service';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {NotificationService} from '../../services/notification-service/notification.service';
-import {Functions, httpsCallable} from '@angular/fire/functions';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmationDialogComponent} from '../dialogs/confirmation-dialog/confirmation-dialog.component';
@@ -26,7 +25,7 @@ import {ConfirmationDialogComponent} from '../dialogs/confirmation-dialog/confir
 })
 export class ProjectListItemComponent {
   private notificationService = inject(NotificationService);
-  private functions = inject(Functions);
+  private projectService = inject(ProjectService);
   private router = inject(Router);
   private dialog = inject(MatDialog);
   protected isHidden = false;
@@ -59,16 +58,8 @@ export class ProjectListItemComponent {
           await this.router.navigate(['/app/project', 'inbox']);
         }
         this.isHidden = true;
-        const deleteProjectFn = httpsCallable(
-          this.functions,
-          'deleteProjectAndTodos'
-        );
-        console.log(
-          `Calling cloud function to delete project: ${this.project().name}`
-        );
-        const result = await deleteProjectFn({projectId: this.project().id});
-        console.log('Cloud function executed successfully:', result.data);
 
+        await this.projectService.deleteProject(this.project().id);
       } catch (error: any) {
         this.notificationService.showError('Failed to delete project. Please try again later.', error);
         this.isHidden = false;

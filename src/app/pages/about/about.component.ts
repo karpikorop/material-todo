@@ -3,10 +3,11 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {RouterLink} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-about',
-  imports: [MatIconModule, MatCardModule, RouterLink, MatButtonModule],
+  imports: [MatIconModule, MatCardModule, RouterLink, MatButtonModule, NgOptimizedImage],
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
 })

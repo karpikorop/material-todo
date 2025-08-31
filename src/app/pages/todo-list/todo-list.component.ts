@@ -12,10 +12,10 @@ import {NotificationService} from '../../services/notification-service/notificat
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import {Functions, httpsCallable} from '@angular/fire/functions';
 import {shareReplay, switchMap} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmationDialogComponent} from '../../components/dialogs/confirmation-dialog/confirmation-dialog.component';
+import {ProjectService} from '../../services/project-service/project.service';
 
 @Component({
   selector: 'app-todo-list',
@@ -37,8 +37,8 @@ export class TodoListComponent {
   private todoService = inject(TodoService);
   private authService = inject(AuthService);
   private notificationService = inject(NotificationService);
+  private projectService = inject(ProjectService);
   private dialog = inject(MatDialog);
-  private readonly functions = inject(Functions);
 
 
   @ViewChild(AddTodoComponent) addTodoComponent!: AddTodoComponent;
@@ -117,24 +117,11 @@ export class TodoListComponent {
 
     dialogRef.afterClosed().subscribe(async (result: boolean) => {
       if (result) {
-        const deleteProjectFn = httpsCallable(
-          this.functions,
-          'deleteProjectAndTodos'
-        );
-
         try {
-          console.log(
-            `Calling cloud function to delete project: ${currentProjectId}`
-          );
-          const result = await deleteProjectFn({projectId: currentProjectId});
-          console.log('Cloud function executed successfully:', result.data);
           await this.router.navigate(['/app/project', 'inbox']);
+          await this.projectService.deleteProject(currentProjectId); // TODO delete only todos, not project
         } catch (error: any) {
-          console.error(
-            `Error from cloud function (${error.code}):`,
-            error.message
-          );
-          throw error;
+          this.notificationService.showError('Failed to delete project.', error);
         }
       }
     })

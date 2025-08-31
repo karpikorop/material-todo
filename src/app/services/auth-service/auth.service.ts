@@ -23,7 +23,7 @@ export class AuthService {
   private auth: Auth = inject(Auth);
   private notificationService = inject(NotificationService);
 
-  public user$: Observable<User | null> = authState(this.auth).pipe(
+  private user$: Observable<User | null> = authState(this.auth).pipe(
     shareReplay(1)
   );
 
@@ -82,6 +82,7 @@ export class AuthService {
     });
   }
 
+  // TODO Move notification service out of the auth service
   private handleAuthError(error: any): void {
     let message = 'An error occurred during authentication';
 

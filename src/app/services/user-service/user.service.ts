@@ -5,13 +5,14 @@ import {
   docData,
   setDoc,
   updateDoc,
-  getDoc, Timestamp, serverTimestamp,
+  getDoc, Timestamp, serverTimestamp, collection,
 } from '@angular/fire/firestore';
 import {User} from '@angular/fire/auth';
 import {AuthService} from '../auth-service/auth.service';
 import {Observable, of} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {ProjectService} from '../project-service/project.service';
+import {SettingsService} from '../settings-service/settings.service';
 
 export interface UserProfile {
   id: string;
@@ -29,8 +30,15 @@ export class UserService {
   private firestore: Firestore = inject(Firestore);
   private authService: AuthService = inject(AuthService);
   private projectService: ProjectService = inject(ProjectService);
+  private settingsService: SettingsService = inject(SettingsService);
 
-  currentUserProfile$: Observable<UserProfile | null> =
+
+  /**
+   * An observable that streams the current user's profile data.
+   * It listens to changes in the '/users/{userId}' document.
+   * Emits null if no user is logged in.
+   */
+  public currentUserProfile$: Observable<UserProfile | null> =
     this.authService.currentUser$.pipe(
       switchMap((user) => {
         if (user) {
@@ -44,7 +52,7 @@ export class UserService {
     );
 
   constructor() {
-    this.authService.user$.subscribe(async (user) => {
+    this.authService.currentUser$.subscribe(async (user) => {
       if (user) {
         await this.checkAndCreateUserProfile(user);
       }
@@ -54,7 +62,6 @@ export class UserService {
   /**
    * Creates a profile document for a new user in Firestore.
    * Also creates a default "Inbox" project for the user.
-   * This method should be called after successful registration.
    * @param user - User object received from Firebase Auth
    */
   private async checkAndCreateUserProfile(user: User): Promise<void> {
@@ -72,8 +79,23 @@ export class UserService {
         supporter: false,
         createdAt: serverTimestamp() as Timestamp, // unreliable
       };
-      await setDoc(userRef, userData);
+      await setDoc(userRef, userData, {merge: true});
       await this.projectService.createDefaultInbox(user.uid);
+      await this.settingsService.createDefaultSettings(user.uid);
+    }
+
+    // check for missing default data and heal if necessary
+
+    const inboxRef = doc(this.firestore, `users/${user.uid}/projects/inbox`);
+    const inboxDocSnap = await getDoc(inboxRef);
+    if (inboxDocSnap.exists()) {
+      await this.projectService.createDefaultInbox(user.uid);
+    }
+
+    const settingsRef = doc(this.firestore, `users/${user.uid}/settings/preferences`);
+    const settingsDocSnap = await getDoc(settingsRef);
+    if (!settingsDocSnap.exists()) {
+      await this.settingsService.createDefaultSettings(user.uid);
     }
   }
 

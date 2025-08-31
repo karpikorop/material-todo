@@ -37,7 +37,7 @@ export class ProjectService {
    * Observable containing the list of projects for the current user,
    * sorted by creation time (ascending).
    */
-  projects$: Observable<Project[]> = this.authService.currentUser$.pipe(
+  public projects$: Observable<Project[]> = this.authService.currentUser$.pipe(
     switchMap((user) => {
       if (user) {
         const projectsRef = collection(
@@ -106,10 +106,9 @@ export class ProjectService {
   /**
    * Deletes a project and all tasks associated with it.
    * Uses cloud function to perform the deletion.
-   * @param userId - ID of the current user
    * @param projectId - ID of the project to delete
    */
-  async deleteProject(userId: string, projectId: string): Promise<void> {
+  async deleteProject(projectId: string): Promise<void> {
     const deleteProjectFn = httpsCallable(
       this.functions,
       'deleteProjectAndTodos'
@@ -120,10 +119,6 @@ export class ProjectService {
       const result = await deleteProjectFn({projectId: projectId});
       console.log('Cloud function executed:', result.data);
     } catch (error) {
-      console.error(
-        'An unknown error occurred while calling the function:',
-        error
-      );
       throw error;
     }
   }
