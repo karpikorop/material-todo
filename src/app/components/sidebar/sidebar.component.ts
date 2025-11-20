@@ -67,7 +67,7 @@ export class SidebarComponent {
         placeholder: 'Project name',
         mainButtonText: 'Add project',
       },
-      width: '400px',
+      width: '500px',
     });
 
     dialogRef.afterClosed().subscribe((newProjectName: string) => {

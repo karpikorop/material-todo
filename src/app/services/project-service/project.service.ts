@@ -14,13 +14,14 @@ import {
 } from '@angular/fire/firestore';
 import {AuthService} from '../auth-service/auth.service';
 import {Observable, of} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
+import {shareReplay, switchMap} from 'rxjs/operators';
 import {Functions, httpsCallable} from '@angular/fire/functions';
 
 export interface Project {
   id: string; // Firestore ID
   name: string;
   icon: string;
+  sortOrder?: number;
   createdAt: Timestamp;
   userId: string;
 }
@@ -50,7 +51,8 @@ export class ProjectService {
       } else {
         return of([]);
       }
-    })
+    }),
+    shareReplay(1),
   );
 
   /**
@@ -60,6 +62,7 @@ export class ProjectService {
   async createDefaultInbox(userId: string): Promise<void> {
     const inboxProject: Omit<Project, 'id'> = {
       name: 'Inbox',
+      sortOrder: 0,
       createdAt: serverTimestamp() as Timestamp, // unreliable
       userId: userId,
       icon: 'inbox',

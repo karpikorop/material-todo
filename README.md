@@ -10,13 +10,7 @@ You can use the live version of the application [here](https://to-note-angular-a
 
 - **Modern & Fast:** Built with Angular 20 and standalone components for optimal performance.
 
-- **Secure Authentication:** User accounts are managed securely with Firebase Authentication, including email/password and Google sign-in.
-
-- **Real-time Database:** Tasks are stored and synced in real-time across your devices using Firestore.
-
 - **Material Design:** A clean, intuitive, and fully responsive interface powered by Angular Material.
-
-- **Custom Icons:** Utilizes Material Symbols and a custom icon service for a unique look and feel.
 
 - **Open Source:** Transparent, community-driven, and completely free to use.
 
@@ -32,8 +26,6 @@ You can use the live version of the application [here](https://to-note-angular-a
 
 - **Styling:** SCSS & [Tailwind CSS](https://tailwindcss.com/ "null")
 
-- **State Management:** Angular Signals
-
 ---  
 
 ## For Developers
@@ -42,9 +34,9 @@ Interested in running the project locally or contributing? Follow these steps.
 
 ### 1. Prerequisites
 
-- [Node.js](https://nodejs.org/ "null") (v18.13.0 or later)
+- [Node.js](https://nodejs.org/ "null")
 
-- [Angular CLI](https://angular.dev/tools/cli "null") (v20.x.x)
+- [Angular CLI](https://angular.dev/tools/cli "null")
 
 - A Google account for creating a Firebase project.
 

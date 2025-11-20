@@ -15,41 +15,7 @@
       </ng-template>
 
       <div class="tab-content">
-        <h2 class="mb-2 mt-6 font-bold">Account Settings</h2>
-        <mat-card appearance="outlined">
-          <mat-card-header>
-            <mat-card-subtitle>Manage your profile picture and personal information</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="flex flex-col md:flex-row items-start gap-8 py-6">
-
-              <div class="flex flex-col items-center justify-between h-36 w-full">
-                <img ngSrc="https://avatar.iran.liara.run/public" alt="User Avatar"
-                     class="rounded-full object-cover border" width="100" height="100"/>
-                <div class="flex gap-2">
-                  <button matButton="tonal">Upload</button>
-                  <button matButton="outlined">Remove</button>
-                </div>
-              </div>
-
-              <div class="flex-grow w-full flex flex-col justify-between  h-36">
-                <form class="flex flex-col justify-between h-full gap-">
-                  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full">
-                    <input matInput placeholder="e.g., Jane Doe">
-                  </mat-form-field>
-
-                  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full">
-                    <input matInput type="email" placeholder="your@email.com">
-                  </mat-form-field>
-                </form>
-              </div>
-
-            </div>
-          </mat-card-content>
-          <mat-card-actions align="end" class="p-4">
-            <button mat-flat-button color="primary">Save Changes</button>
-          </mat-card-actions>
-        </mat-card>
+        <app-profile-form [userProfile]="this.userService.currentUserProfile$ | async"></app-profile-form>
       </div>
     </mat-tab>
 
@@ -63,38 +29,8 @@
       </ng-template>
 
       <div class="tab-content">
-        <h2 class="mb-2 mt-6 font-bold">Password management</h2>
-        <mat-card appearance="outlined">
-          <mat-card-header>
-            <mat-card-subtitle>Manage your account access.</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-4">
-              <div>
-                <p class="font-medium">Change Password</p>
-                <p class="text-sm text-gray-500">A password reset link will be sent to your email.</p>
-              </div>
-              <button matButton="outlined">Send Reset Link</button>
-            </div>
-            <mat-hint class="mt-2 text-xs flex items-center">
-              <mat-icon class="text-base w-4 h-4 mr-1 flex-shrink-0">info</mat-icon>
-              For accounts created with Google, manage your password via your Google Account.
-            </mat-hint>
-          </mat-card-content>
-        </mat-card>
-
-        <h2 class="mb-2 mt-6 font-bold" style="color: var(--mat-sys-error)">Danger Zone</h2>
-        <mat-card appearance="outlined">
-          <mat-card-content>
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <p class="font-medium">Delete Account</p>
-                <p class="text-sm text-gray-500">Permanently delete your account and all of your data.</p>
-              </div>
-              <button matButton="outlined">Delete My Account</button>
-            </div>
-          </mat-card-content>
-        </mat-card>
+        <app-password-management></app-password-management>
+        <app-danger-zone></app-danger-zone>
       </div>
     </mat-tab>
 
@@ -108,23 +44,7 @@
       </ng-template>
 
       <div class="tab-content">
-        <h2 class="mb-2 mt-6 font-bold">Notifications</h2>
-        <mat-card appearance="outlined">
-          <mat-card-content>
-            <mat-slide-toggle>
-              <span class="text-lg ml-2">Email Notifications</span>
-            </mat-slide-toggle>
-            <p class="text-sm text-gray-500 mt-2">Receive email updates about your account activity.</p>
-            <mat-slide-toggle class="mt-6">
-              <span class="text-lg ml-2">Push Notifications</span>
-            </mat-slide-toggle>
-            <p class="text-sm text-gray-500 mt-2">Get real-time alerts on your device.</p>
-            <mat-slide-toggle class="mt-6">
-              <span class="text-lg ml-2">Newsletter Subscription</span>
-            </mat-slide-toggle>
-            <p class="text-sm text-gray-500 mt-2">Stay informed with our newsletter.</p>
-          </mat-card-content>
-        </mat-card>
+        <app-notifications></app-notifications>
       </div>
     </mat-tab>
 
@@ -138,54 +58,9 @@
       </ng-template>
 
       <div class="tab-content">
-        <h2 class="mb-2 mt-6 font-bold">Personalization</h2>
-        <mat-card appearance="outlined">
-          <mat-card-header>
-            <mat-card-subtitle>Customize the look and feel of the application.</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <mat-form-field class="mt-4 mr-4" subscriptSizing="dynamic">
-              <mat-label>Theme Color</mat-label>
-              <mat-select value="default">
-                <mat-option value="default">Default Blue</mat-option>
-                <mat-option value="indigo">Indigo</mat-option>
-                <mat-option value="teal">Teal</mat-option>
-                <mat-option value="rose">Rose</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field class="mt-4" subscriptSizing="dynamic">
-              <mat-label>Time Zone</mat-label>
-              <mat-select>
-                <mat-option value="Europe/Kyiv">Kyiv (UTC+3)</mat-option>
-                <mat-option value="America/New_York">New York (UTC-4)</mat-option>
-                <mat-option value="Asia/Tokyo">Tokyo (UTC+9)</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </mat-card-content>
-        </mat-card>
-
-        <h2 class="mb-2 mt-6 font-bold">Data</h2>
-        <mat-card appearance="outlined">
-          <mat-card-content>
-            <div class="flex items-center justify-between pb-4">
-              <div>
-                <p class="font-medium">Clear All Data</p>
-                <p class="text-sm text-gray-500">Remove all your projects and tasks.</p>
-              </div>
-              <button mat-stroked-button color="warn">Clear Data</button>
-            </div>
-            <mat-divider></mat-divider>
-            <div class="flex items-center justify-between pt-4">
-              <div>
-                <p class="font-medium">Export Data</p>
-                <p class="text-sm text-gray-500">Download a JSON file of all your data.</p>
-              </div>
-              <button mat-stroked-button>Export</button>
-            </div>
-          </mat-card-content>
-        </mat-card>
+        <app-personalization></app-personalization>
+        <app-data-management></app-data-management>
       </div>
     </mat-tab>
   </mat-tab-group>
 </div>
-

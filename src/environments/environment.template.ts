@@ -1,4 +1,4 @@
-// Use this file to define environment variables for development mode.
+// Use this file to define environment variables.
 // Rename this file to `environment.ts`.
 export const environment = {
   production: false,

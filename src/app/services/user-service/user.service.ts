@@ -10,7 +10,7 @@ import {
 import {User} from '@angular/fire/auth';
 import {AuthService} from '../auth-service/auth.service';
 import {Observable, of} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
+import {shareReplay, switchMap} from 'rxjs/operators';
 import {ProjectService} from '../project-service/project.service';
 import {SettingsService} from '../settings-service/settings.service';
 
@@ -48,7 +48,8 @@ export class UserService {
         } else {
           return of(null);
         }
-      })
+      }),
+      shareReplay(1),
     );
 
   constructor() {

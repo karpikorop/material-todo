@@ -1,0 +1,64 @@
+<h2 class="mb-2 mt-6 font-bold">Account Settings</h2>
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-subtitle>Manage your profile picture and personal information</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="mt-6">
+    <!-- Profile Picture Section -->
+    <div class="profile-picture-section mb-8">
+      <div class="flex items-center gap-6">
+        <div class="avatar-container">
+          <img ngSrc="https://avatar.iran.liara.run/public" alt="User Avatar"
+               class="w-20 h-20 rounded-full object-cover border-2 border-gray-200" width="80" height="80"/>
+        </div>
+        <div class="avatar-actions">
+          <h3 class="text-lg font-medium mb-2">Profile Picture</h3>
+          <p class="text-sm text-gray-500 mb-3">Update your avatar to personalize your profile</p>
+          <div class="flex gap-2">
+            <button mat-stroked-button>
+              <mat-icon class="mr-1">upload</mat-icon>
+              Upload New
+            </button>
+            <button mat-stroked-button color="warn">
+              <mat-icon class="mr-1">delete</mat-icon>
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Information Section -->
+    <div class="mt-4">
+      <h3 class="text-lg font-medium mb-4">Profile Information</h3>
+
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="space-y-4">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full">
+          <input matInput
+                 placeholder="Enter your display name"
+                 formControlName="username"
+                 autocomplete="off"
+                 >
+          <mat-hint>Your visible username</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full">
+          <input matInput
+                 type="email"
+                 placeholder="your@email.com"
+                 formControlName="email"
+                 autocomplete="off"
+                 >
+          <mat-hint>Your account email</mat-hint>
+        </mat-form-field>
+      </form>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions align="end" class="m-2 mt-5">
+    <button mat-flat-button color="primary" type="submit" [disabled]="!isSaveEnabled()" (click)="onSubmit()">
+      <mat-icon class="mr-1">save</mat-icon>
+      Save Changes
+    </button>
+  </mat-card-actions>
+</mat-card>

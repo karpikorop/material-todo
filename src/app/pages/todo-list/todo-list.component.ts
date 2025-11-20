@@ -50,6 +50,10 @@ export class TodoListComponent {
 
   protected todos$: Observable<Todo[]> = this.projectId$.pipe(
     switchMap((id: string) => this.todoService.getTodosByProject(id)),
+    map(todos => todos.sort((a, b) => {
+      if (a.status === b.status) return 0;
+      return a.status === 'done' ? 1 : -1;
+    })),
     shareReplay(1)
   );
 

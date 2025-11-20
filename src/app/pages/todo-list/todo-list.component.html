@@ -6,6 +6,11 @@
     </button>
   </header>
 
+  <div class="add-todo-container">
+    @if (projectId$ | async; as projectId) {
+      <app-add-todo [projectId]="projectId"></app-add-todo>
+    }
+  </div>
   <div class="tasks-scroll-container">
     @if (todos$ | async; as todos) {
       @if (todos.length > 0) {
@@ -26,12 +31,6 @@
       <div class="loading-state">
         <mat-spinner diameter="50"></mat-spinner>
       </div>
-    }
-  </div>
-
-  <div class="add-todo-container">
-    @if (projectId$ | async; as projectId) {
-      <app-add-todo [projectId]="projectId"></app-add-todo>
     }
   </div>
 </div>

@@ -15,7 +15,7 @@ import {
 } from '@angular/fire/firestore';
 import {AuthService} from '../auth-service/auth.service';
 import {Observable, of} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
+import {shareReplay, switchMap} from 'rxjs/operators';
 import {Project} from '../project-service/project.service';
 
 export interface Todo {
@@ -65,7 +65,8 @@ export class TodoService {
         );
 
         return collectionData(q, {idField: 'id'}) as Observable<Todo[]>;
-      })
+      }),
+      shareReplay(1),
     );
   }
 

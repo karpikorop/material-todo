@@ -1,14 +1,14 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {MatTabsModule, MatTabGroup} from '@angular/material/tabs';
-import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatDivider} from '@angular/material/divider';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
-import {MatSlideToggle} from '@angular/material/slide-toggle';
-import {NgOptimizedImage} from '@angular/common';
+import { ProfileFormComponent } from './components/profile-form/profile-form.component';
+import { PasswordManagementComponent } from './components/password-management/password-management.component';
+import { DangerZoneComponent } from './components/danger-zone/danger-zone.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { PersonalizationComponent } from './components/personalization/personalization.component';
+import { DataManagementComponent } from './components/data-management/data-management.component';
+import {UserService} from '../../services/user-service/user.service';
+import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-settings',
@@ -16,18 +16,19 @@ import {NgOptimizedImage} from '@angular/common';
     MatTabGroup,
     MatTabsModule,
     MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatDivider,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatSlideToggle,
-    NgOptimizedImage
+    ProfileFormComponent,
+    PasswordManagementComponent,
+    DangerZoneComponent,
+    NotificationsComponent,
+    PersonalizationComponent,
+    DataManagementComponent,
+    AsyncPipe
   ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss'
 })
 export class SettingsComponent {
+protected userService = inject(UserService);
+
 
 }
