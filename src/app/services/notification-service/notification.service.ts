@@ -12,8 +12,8 @@ import {
 export class NotificationService {
   private _snackBar = inject(MatSnackBar);
 
-  public showSuccess(message: string) {
-    this.showCustomNotification({title: 'Success', message, type: 'success'});
+  public showSuccess(message: string, duration = 3000) {
+    this.showCustomNotification({title: 'Success', message, type: 'success', duration});
   }
 
   public showError(message: string, error?: any) {
@@ -22,7 +22,7 @@ export class NotificationService {
     } else {
       console.error(message);
     }
-    this.showCustomNotification({title: 'Error', message, type: 'error'});
+    this.showCustomNotification({title: 'Error', message, type: 'error', duration: 5000});
   }
 
   public showWarning(message: string) {
@@ -30,8 +30,8 @@ export class NotificationService {
     this.showCustomNotification({title: 'Warning', message, type: 'warning'});
   }
 
-  public showInfo(message: string) {
-    this.showCustomNotification({title: 'Info', message, type: 'info'});
+  public showInfo(message: string, duration = 3000) {
+    this.showCustomNotification({title: 'Info', message, type: 'info', duration});
   }
 
   public show(data: CustomSnackbarData) {

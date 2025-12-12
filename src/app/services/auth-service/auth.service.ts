@@ -1,6 +1,5 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {inject} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
 import {
   Auth,
   User,
@@ -11,10 +10,9 @@ import {
   signOut,
   GoogleAuthProvider,
   UserCredential,
-  sendEmailVerification,
+  sendEmailVerification, reauthenticateWithCredential, EmailAuthProvider
 } from '@angular/fire/auth';
 import {NotificationService} from '../notification-service/notification.service';
-import {shareReplay} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -23,12 +21,18 @@ export class AuthService {
   private auth: Auth = inject(Auth);
   private notificationService = inject(NotificationService);
 
-  private user$: Observable<User | null> = authState(this.auth).pipe(
-    shareReplay(1)
-  );
+  private currentUser = new BehaviorSubject<User | undefined | null>(undefined);
+
+  /**
+   * An observable that emits the current user whenever it changes.
+   * Emits null if no user is logged in.
+   * Emits undefined if no information about the user is available (e.g., during initialization).
+   */
+  public currentUser$ = this.currentUser.asObservable();
 
   constructor() {
-    this.user$.subscribe((user) => {
+    authState(this.auth).subscribe((user) => {
+      this.currentUser.next(user);
       if (user) {
         console.log('User logged in');
       } else {
@@ -37,8 +41,8 @@ export class AuthService {
     });
   }
 
-  get currentUser$(): Observable<User | null> {
-    return this.user$;
+  get userSnapshot(): User | null {
+    return this.currentUser.value || null;
   }
 
   public async signUp(email: string, password: string): Promise<UserCredential> {
@@ -66,7 +70,6 @@ export class AuthService {
 
   public async loginWithGoogle(): Promise<UserCredential> {
     const provider = new GoogleAuthProvider();
-
     try {
       return await signInWithPopup(this.auth, provider);
     } catch (error) {
@@ -82,10 +85,19 @@ export class AuthService {
     });
   }
 
+  public async reauthenticate(password: string): Promise<void> {
+    const user = this.userSnapshot;
+
+    if (!user || !user.email) {
+      throw new Error('No user logged in to re-authenticate.');
+    }
+    const credential = EmailAuthProvider.credential(user.email, password);
+    await reauthenticateWithCredential(user, credential);
+  }
+
   // TODO Move notification service out of the auth service
   private handleAuthError(error: any): void {
-    let message = 'An error occurred during authentication';
-
+    let message;
     switch (error.code) {
       case 'auth/user-not-found':
         message = 'No user found with this email address';

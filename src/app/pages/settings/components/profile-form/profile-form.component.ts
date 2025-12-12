@@ -9,7 +9,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import {UserProfile} from '../../../../services/user-service/user.service';
 
 @Component({
-  selector: 'app-profile-form',
+  selector: 'profile-form-settings',
   standalone: true,
   imports: [
     MatCardModule,
@@ -26,13 +26,14 @@ import {UserProfile} from '../../../../services/user-service/user.service';
 export class ProfileFormComponent {
   public userProfile = input.required<UserProfile | null>();
   public profileUpdate = output<Partial<UserProfile>>();
+  public isEmailEditable = input.required<boolean>();
 
   protected profileForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.profileForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]]
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.email]]
     });
 
     // Use effect to react to userProfile signal changes
@@ -45,21 +46,45 @@ export class ProfileFormComponent {
         });
       }
     });
+
+    // Use effect to disable/enable email field based on isEmailEditable
+    effect(() => {
+      const emailControl = this.profileForm.get('email');
+      if (emailControl) {
+        if (this.isEmailEditable()) {
+          emailControl.enable();
+        } else {
+          emailControl.disable();
+        }
+      }
+    });
   }
 
   protected onSubmit() {
     if (this.profileForm.valid) {
       const formValue = this.profileForm.value;
-      this.profileUpdate.emit({
-        username: formValue.username,
-        email: formValue.email
-      });
+
+      const updateData: Partial<UserProfile> = {
+        username: formValue.username
+      };
+
+      if (formValue.email !== this.userProfile()?.email) {
+        updateData.email = formValue.email;
+      }
+
+      this.profileUpdate.emit(updateData);
     }
+  }
+
+  protected get userAvatarUrl(): string {
+    return this.userProfile()?.avatarUrl || `https://ui-avatars.com/api/?name=${this.userProfile()?.username}&background=random`;
   }
 
   protected isSaveEnabled(): boolean {
     const userNameChanged = this.userProfile()?.username !== this.profileForm.value.username;
-    const userEmailChanged = this.userProfile()?.email !== this.profileForm.value.email;
+    const userEmailChanged = this.userProfile()?.email !== this.profileForm.value.email && this.profileForm.value.email.trim();
     return this.profileForm.valid && (userNameChanged || userEmailChanged);
   }
+
+
 }

@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
 @Component({
-  selector: 'app-personalization',
+  selector: 'personalization-settings',
   standalone: true,
   imports: [
     MatCardModule,

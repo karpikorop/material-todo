@@ -4,63 +4,16 @@
     <p class="text-lg text-gray-500 mb-2">Manage your account and application preferences.</p>
   </header>
 
-  <mat-tab-group animationDuration="0ms" mat-stretch-tabs="false" mat-align-tabs="start">
-    <!-- ================== PROFILE TAB ================== -->
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <div class="flex items-center">
-          <mat-icon class="mr-2">account_circle</mat-icon>
-          <span>Profile</span>
-        </div>
-      </ng-template>
+  <div class="settings-content pb-8">
 
-      <div class="tab-content">
-        <app-profile-form [userProfile]="this.userService.currentUserProfile$ | async"></app-profile-form>
-      </div>
-    </mat-tab>
-
-    <!-- ================== SECURITY TAB ================== -->
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <div class="flex items-center">
-          <mat-icon class="mr-2">security</mat-icon>
-          <span>Security</span>
-        </div>
-      </ng-template>
-
-      <div class="tab-content">
-        <app-password-management></app-password-management>
-        <app-danger-zone></app-danger-zone>
-      </div>
-    </mat-tab>
-
-    <!-- ================== NOTIFICATION TAB ================== -->
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <div class="flex items-center">
-          <mat-icon class="mr-2">notifications</mat-icon>
-          <span>Notifications</span>
-        </div>
-      </ng-template>
-
-      <div class="tab-content">
-        <app-notifications></app-notifications>
-      </div>
-    </mat-tab>
-
-    <!-- ================== APPLICATION TAB ================== -->
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <div class="flex items-center">
-          <mat-icon class="mr-2">settings_applications</mat-icon>
-          <span>Application</span>
-        </div>
-      </ng-template>
-
-      <div class="tab-content">
-        <app-personalization></app-personalization>
-        <app-data-management></app-data-management>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
+    <profile-form-settings
+      [userProfile]="this.userService.currentUserProfile$ | async"
+      [isEmailEditable]="this.userService.isEmailEditable()"
+      (profileUpdate)="updateProfile($event)">
+    </profile-form-settings>
+        <password-management-settings></password-management-settings>
+        <notifications-settings></notifications-settings>
+        <personalization-settings></personalization-settings>
+        <danger-zone-settings></danger-zone-settings>
+  </div>
 </div>

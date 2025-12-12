@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-password-management',
+  selector: 'password-management-settings',
   standalone: true,
   imports: [
     MatCardModule,

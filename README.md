@@ -50,7 +50,7 @@ This project requires a Firebase backend to function. You will need to set up yo
 
 2. Enable **Authentication** (with Email/Password and Google providers) and **Firestore Database** (in test mode to start).
 
-3. Copy your Firebase configuration object into the `src/environments/environment.ts` and `src/environments/environment.prod.ts` files.
+3. Copy your Firebase configuration object into the `src/environments/environment.ts`(create from template). Do not commit.
 
 ---  
 
@@ -59,8 +59,7 @@ This project requires a Firebase backend to function. You will need to set up yo
 1. **Clone the repository:**
 
 ```  
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git  
-cd YOUR_REPO_NAME  
+git clone https://github.com/karpikorop/material-todo.git   
 ```  
 
 2. **Install dependencies:**

@@ -10,27 +10,27 @@ import {
   query,
   where,
   orderBy,
-  writeBatch,
-  getDocs, Timestamp, serverTimestamp,
+Timestamp, serverTimestamp,
 } from '@angular/fire/firestore';
 import {AuthService} from '../auth-service/auth.service';
 import {Observable, of} from 'rxjs';
 import {shareReplay, switchMap} from 'rxjs/operators';
-import {Project} from '../project-service/project.service';
 
 export interface Todo {
   id: string; // Firestore ID
+  userId: string;
   title: string;
   description?: string;
   status: 'todo' | 'done' | 'archived';
   priority?: 'low' | 'medium' | 'high';
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
   dueDate?: Timestamp;
   reminderDate?: Timestamp;
   projectId: string;
-  userId: string;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
 }
+
+type newTodoData = Omit<Todo, 'id' | 'userId' | 'createdAt' | 'updatedAt' | 'status'>;
 
 @Injectable({
   providedIn: 'root',
@@ -76,7 +76,7 @@ export class TodoService {
    * @param userId - Current user's ID
    */
   async addTodo(
-    todoData: Omit<Todo, 'id' | 'userId' | 'createdAt' | 'updatedAt' | 'status'>,
+    todoData: newTodoData,
     userId: string
   ): Promise<void> {
     const todosRef = collection(this.firestore, `users/${userId}/todos`);

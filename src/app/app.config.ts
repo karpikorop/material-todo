@@ -11,6 +11,7 @@ import {LayoutService} from './services/layout-service/layout.service';
 import {getAuth, provideAuth, connectAuthEmulator} from '@angular/fire/auth';
 import {getFirestore, provideFirestore, connectFirestoreEmulator} from '@angular/fire/firestore';
 import {getFunctions, provideFunctions, connectFunctionsEmulator} from '@angular/fire/functions';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -39,7 +40,7 @@ export const appConfig: ApplicationConfig = {
       }
       return functions;
     }),
-
+    provideStorage(() => getStorage()),
     provideAnimations(),
     provideHttpClient(withFetch()),
     {

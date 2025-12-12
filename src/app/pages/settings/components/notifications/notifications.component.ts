@@ -3,7 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 @Component({
-  selector: 'app-notifications',
+  selector: 'notifications-settings',
   standalone: true,
   imports: [
     MatCardModule,

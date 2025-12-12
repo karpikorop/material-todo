@@ -8,7 +8,7 @@
     <div class="profile-picture-section mb-8">
       <div class="flex items-center gap-6">
         <div class="avatar-container">
-          <img ngSrc="https://avatar.iran.liara.run/public" alt="User Avatar"
+          <img [ngSrc]="this.userAvatarUrl" alt="User Avatar"
                class="w-20 h-20 rounded-full object-cover border-2 border-gray-200" width="80" height="80"/>
         </div>
         <div class="avatar-actions">
@@ -49,7 +49,20 @@
                  formControlName="email"
                  autocomplete="off"
                  >
-          <mat-hint>Your account email</mat-hint>
+          <mat-hint>
+            @if (isEmailEditable()) {
+              Your account email
+            } @else {
+              Email cannot be changed for your authentication provider
+            }
+          </mat-hint>
+          @if (profileForm.get('email')?.invalid && profileForm.get('email')?.touched) {
+            <mat-error>
+              @if (profileForm.get('email')?.hasError('email')) {
+                Please enter a valid email address
+              }
+            </mat-error>
+          }
         </mat-form-field>
       </form>
     </div>
