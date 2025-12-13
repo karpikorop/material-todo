@@ -47,6 +47,7 @@ export class LoginComponent {
     const data = this.loginForm.value;
     try {
       await this.authService.logIn(data.email, data.password);
+      console.log('Redirecting to /app after successful login...');
       await this.router.navigate(['/app']);
     } catch (error) {
       this.notificationService.showError("Error logging in");

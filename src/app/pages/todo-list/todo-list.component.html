@@ -17,7 +17,7 @@
         @for (todo of todos; track todo.id) {
           <app-todo-item
             [todo]="todo"
-            (update)="updateTodo({ todoId: todo.id, data: $event })"
+            (update)="updateTodo($event)"
             (delete)="deleteTodo($event)"
           >
           </app-todo-item>

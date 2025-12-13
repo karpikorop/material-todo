@@ -3,75 +3,79 @@
   <mat-card-header>
     <mat-card-subtitle>Manage your profile picture and personal information</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content class="mt-6">
+  <mat-card-content class="mt-4">
+
     <!-- Profile Picture Section -->
-    <div class="profile-picture-section mb-8">
-      <div class="flex items-center gap-6">
-        <div class="avatar-container">
-          <img [ngSrc]="this.userAvatarUrl" alt="User Avatar"
-               class="w-20 h-20 rounded-full object-cover border-2 border-gray-200" width="80" height="80"/>
+    <div class="profile-section">
+      <h3 class="section-title">Profile Picture</h3>
+      <div class="avatar-card">
+        <div class="avatar-content">
+          <div class="avatar-wrapper">
+            <img [ngSrc]="this.userAvatarUrl"
+                 alt="User Avatar"
+                 class="avatar-image"
+                 width="80"
+                 height="80"/>
+          </div>
+          <div class="avatar-info">
+            <p class="avatar-label">Your Avatar</p>
+            <p class="avatar-description">Update your avatar to personalize your profile</p>
+          </div>
         </div>
         <div class="avatar-actions">
-          <h3 class="text-lg font-medium mb-2">Profile Picture</h3>
-          <p class="text-sm text-gray-500 mb-3">Update your avatar to personalize your profile</p>
-          <div class="flex gap-2">
-            <button mat-stroked-button>
-              <mat-icon class="mr-1">upload</mat-icon>
-              Upload New
-            </button>
-            <button mat-stroked-button color="warn">
-              <mat-icon class="mr-1">delete</mat-icon>
-              Remove
-            </button>
-          </div>
+          <button mat-stroked-button (click)="fileInput.click()">
+            <mat-icon>upload</mat-icon>
+            Upload
+          </button>
+          <input
+            #fileInput
+            type="file"
+            (change)="onImageSelected($event)"
+            accept="image/*"
+            class="hidden"
+          >
+          <button mat-stroked-button color="warn" (click)="onAvatarReset()">
+            <mat-icon>delete</mat-icon>
+            Remove
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Profile Information Section -->
-    <div class="mt-4">
-      <h3 class="text-lg font-medium mb-4">Profile Information</h3>
+    <div class="divider mt-2 mb-6"></div>
 
-      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- Profile Information Section -->
+    <div class="profile-section">
+      <h3 class="section-title">Username</h3>
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full">
           <input matInput
                  placeholder="Enter your display name"
                  formControlName="username"
-                 autocomplete="off"
-                 >
-          <mat-hint>Your visible username</mat-hint>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full">
-          <input matInput
-                 type="email"
-                 placeholder="your@email.com"
-                 formControlName="email"
-                 autocomplete="off"
-                 >
-          <mat-hint>
-            @if (isEmailEditable()) {
-              Your account email
-            } @else {
-              Email cannot be changed for your authentication provider
-            }
-          </mat-hint>
-          @if (profileForm.get('email')?.invalid && profileForm.get('email')?.touched) {
+                 autocomplete="off">
+          <mat-icon matPrefix>person</mat-icon>
+          @if (profileForm.get('username')?.invalid && profileForm.get('username')?.touched) {
             <mat-error>
-              @if (profileForm.get('email')?.hasError('email')) {
-                Please enter a valid email address
+              @if (profileForm.get('username')?.hasError('required')) {
+                Username is required
+              } @else if (profileForm.get('username')?.hasError('minlength')) {
+                Username must be at least 3 characters
               }
             </mat-error>
           }
         </mat-form-field>
       </form>
-    </div>
-  </mat-card-content>
 
-  <mat-card-actions align="end" class="m-2 mt-5">
-    <button mat-flat-button color="primary" type="submit" [disabled]="!isSaveEnabled()" (click)="onSubmit()">
-      <mat-icon class="mr-1">save</mat-icon>
-      Save Changes
-    </button>
-  </mat-card-actions>
+      <div class="action-buttons">
+        <button mat-flat-button
+                color="primary"
+                [disabled]="!isSaveEnabled()"
+                (click)="onSubmit()">
+          <mat-icon class="mr-1">save</mat-icon>
+          Save Changes
+        </button>
+      </div>
+    </div>
+
+  </mat-card-content>
 </mat-card>

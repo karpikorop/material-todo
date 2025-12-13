@@ -1,4 +1,4 @@
-import {Component, input, output, effect} from '@angular/core';
+import {Component, input, output, effect, inject} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,7 +6,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { NgOptimizedImage } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {UserProfile} from '../../../../services/user-service/user.service';
+import {
+  PLACEHOLDER_AVATAR_URL,
+  UserProfile,
+  UserProfileInterface
+} from '../../../../services/user-service/user.service';
+import {NotificationService} from '../../../../services/notification-service/notification.service';
 
 @Component({
   selector: 'profile-form-settings',
@@ -24,16 +29,18 @@ import {UserProfile} from '../../../../services/user-service/user.service';
   styleUrl: './profile-form.component.scss'
 })
 export class ProfileFormComponent {
-  public userProfile = input.required<UserProfile | null>();
-  public profileUpdate = output<Partial<UserProfile>>();
-  public isEmailEditable = input.required<boolean>();
+  public userProfile = input.required<UserProfile>();
+  public profileUpdate = output<Partial<UserProfileInterface>>();
+  public avatarUpload = output<File>();
+  public avatarReset = output<void>();
+
+  private notificationService = inject(NotificationService);
 
   protected profileForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.profileForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.email]]
+      username: ['', [Validators.required, Validators.minLength(3)]]
     });
 
     // Use effect to react to userProfile signal changes
@@ -41,50 +48,55 @@ export class ProfileFormComponent {
       const profile = this.userProfile();
       if (profile) {
         this.profileForm.patchValue({
-          username: profile.username || '',
-          email: profile.email || ''
+          username: profile.username || ''
         });
-      }
-    });
-
-    // Use effect to disable/enable email field based on isEmailEditable
-    effect(() => {
-      const emailControl = this.profileForm.get('email');
-      if (emailControl) {
-        if (this.isEmailEditable()) {
-          emailControl.enable();
-        } else {
-          emailControl.disable();
-        }
       }
     });
   }
 
   protected onSubmit() {
-    if (this.profileForm.valid) {
-      const formValue = this.profileForm.value;
-
-      const updateData: Partial<UserProfile> = {
-        username: formValue.username
+    if (this.profileForm.valid && this.isUsernameChanged()) {
+      const updateData: Partial<UserProfileInterface> = {
+        username: this.profileForm.value.username
       };
-
-      if (formValue.email !== this.userProfile()?.email) {
-        updateData.email = formValue.email;
-      }
 
       this.profileUpdate.emit(updateData);
     }
   }
 
   protected get userAvatarUrl(): string {
-    return this.userProfile()?.avatarUrl || `https://ui-avatars.com/api/?name=${this.userProfile()?.username}&background=random`;
+    return this.userProfile()?.avatarUrl || PLACEHOLDER_AVATAR_URL;
+  }
+
+  protected isUsernameChanged(): boolean {
+    return this.userProfile()?.username !== this.profileForm.value.username;
   }
 
   protected isSaveEnabled(): boolean {
-    const userNameChanged = this.userProfile()?.username !== this.profileForm.value.username;
-    const userEmailChanged = this.userProfile()?.email !== this.profileForm.value.email && this.profileForm.value.email.trim();
-    return this.profileForm.valid && (userNameChanged || userEmailChanged);
+    return this.profileForm.valid && this.isUsernameChanged();
   }
 
+  protected onImageSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
 
+    if (!input.files || input.files.length === 0) return;
+
+    const file = input.files[0];
+
+    if (!file.type.startsWith('image/')) {
+      this.notificationService.showError('Please select an image file');
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      this.notificationService.showError('Image is too large. Max 2MB.');
+      return;
+    }
+    this.avatarUpload.emit(file);
+    input.value = '';
+  }
+
+  protected onAvatarReset() {
+    this.avatarReset.emit();
+  }
 }

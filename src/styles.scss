@@ -32,6 +32,45 @@ body {
   font-variation-settings: "FILL" 1;
 }
 
+
+// BORDERS
+.border-grey {
+  border: 1px solid var(--mat-sys-outline-variant);
+}
+
+.border-dark{
+  border: 1px solid var(--mat-sys-outline);
+}
+
+// SHADOWS
+.shadow-1 {
+  box-shadow: var(--mat-sys-level1);
+}
+.shadow-2 {
+  box-shadow: var(--mat-sys-level2);
+}
+.shadow-3 {
+  box-shadow: var(--mat-sys-level3);
+}
+.shadow-4 {
+  box-shadow: var(--mat-sys-level4);
+}
+.shadow-5 {
+  box-shadow: var(--mat-sys-level5);
+}
+
+// TEXT COLORS
+.text-dark {
+  color: var(--mat-sys-on-surface);
+}
+.text-grey {
+  color: var(--mat-sys-secondary);
+}
+
+.text-disabled {
+  color: color-mix(in srgb, var(--mat-sys-on-surface) 60%, transparent);
+}
+
 //DIVIDER
 .divider {
   height: 1px;

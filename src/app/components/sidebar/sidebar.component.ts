@@ -3,8 +3,7 @@ import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
 import {Observable, take} from 'rxjs';
 import {
-  UserService,
-  UserProfile,
+  UserService, PLACEHOLDER_AVATAR_URL, UserProfile,
 } from '../../services/user-service/user.service';
 import {
   ProjectService,
@@ -51,7 +50,7 @@ export class SidebarComponent {
 
   protected close = output();
 
-  protected userProfile$: Observable<UserProfile | null> =
+  protected userProfile$: Observable<UserProfile> =
     this.userService.currentUserProfile$;
   protected projects$: Observable<Project[]> = this.projectService.projects$;
 
@@ -97,4 +96,10 @@ export class SidebarComponent {
   protected onClose(): void {
     this.close.emit();
   }
+
+  protected async logout() {
+    await this.authService.logout();
+  }
+
+  protected readonly PLACEHOLDER_AVATAR_URL = PLACEHOLDER_AVATAR_URL;
 }

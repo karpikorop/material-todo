@@ -7,7 +7,7 @@ import {
   updateDoc,
   getDoc, Timestamp, serverTimestamp,
 } from '@angular/fire/firestore';
-import { User, verifyBeforeUpdateEmail} from '@angular/fire/auth';
+import { User } from '@angular/fire/auth';
 import {AuthService} from '../auth-service/auth.service';
 import {BehaviorSubject, Observable, of, switchAll} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
@@ -15,14 +15,21 @@ import {ProjectService} from '../project-service/project.service';
 import {SettingsService} from '../settings-service/settings.service';
 import {getDownloadURL, ref, Storage, uploadBytes} from '@angular/fire/storage';
 
-export interface UserProfile {
+export interface UserProfileInterface {
   id: string;
+  /**
+   * If possible, use email from Auth Service currentUser$ instead.
+   */
   email: string;
   username: string;
   avatarUrl: string;
   supporter: boolean;
   createdAt: Timestamp;
 }
+
+export type UserProfile = UserProfileInterface | null;
+
+export const PLACEHOLDER_AVATAR_URL = "https://placehold.net/avatar-4.png";
 
 @Injectable({
   providedIn: 'root',
@@ -34,21 +41,21 @@ export class UserService {
   private settingsService: SettingsService = inject(SettingsService);
   private storage = inject(Storage);
 
-  private currentUserProfile = new BehaviorSubject<UserProfile | null>(null);
+  private currentUserProfile = new BehaviorSubject<UserProfile>(null);
 
   /**
    * An observable that streams the current user's profile data.
    * It listens to changes in the '/users/{userId}' document.
    * Emits null if no user is logged in.
    */
-  public currentUserProfile$: Observable<UserProfile | null> = this.currentUserProfile.asObservable();
+  public currentUserProfile$: Observable<UserProfile> = this.currentUserProfile.asObservable();
 
 
   /**
    * Returns the current user's profile data synchronously.
    * If the user is not logged in, returns null.
    */
-  public get currentUser(): UserProfile | null {
+  public get currentUser(): UserProfile {
     return this.currentUserProfile.value;
   }
 
@@ -80,7 +87,7 @@ export class UserService {
 
         return docData(
           doc(this.firestore, `users/${authUser.uid}`), { idField: 'id' }
-        ) as Observable<UserProfile | null>;
+        ) as Observable<UserProfile>;
       }),
       switchAll(),
     ).subscribe((profile) => {
@@ -91,6 +98,7 @@ export class UserService {
   /**
    * Creates a profile document for a new user in Firestore.
    * Also creates a default "Inbox" project for the user.
+   * Runs healing logic to ensure that the user's profile is not corrupted.
    * @param user - User object received from Firebase Auth
    */
   private async checkAndCreateUserProfile(user: User): Promise<void> {
@@ -98,13 +106,13 @@ export class UserService {
     const docSnap = await getDoc(userRef);
 
     if (!docSnap.exists()) {
-      const userData: UserProfile = {
+      const userData: UserProfileInterface = {
         id: user.uid,
         email: user.email!,
         username: user.displayName || user.email!.split('@')[0],
         avatarUrl:
           user.photoURL ||
-          'https://placehold.co/100x100/E8E8E8/BDBDBD?text=Ava',
+          PLACEHOLDER_AVATAR_URL,
         supporter: false,
         createdAt: serverTimestamp() as Timestamp, // unreliable
       };
@@ -125,16 +133,6 @@ export class UserService {
     ]);
   }
 
-  // Also updates the user's email if it was changed manually in settings
-  private async healUserProfileEmail(user: User){
-    const firestoreEmail = this.currentUserProfile.value?.email;
-    if (user.email && firestoreEmail !== user.email) {
-      const userRef = doc(this.firestore, `users/${user.uid}`);
-      await updateDoc(userRef, { email: user.email });
-      console.log('Synced Firestore email with new Auth email');
-    }
-  }
-
   private async healDefaultInbox(user: User): Promise<void> {
     const inboxRef = doc(this.firestore, `users/${user.uid}/projects/inbox`);
     const inboxSnap = await getDoc(inboxRef);
@@ -153,6 +151,16 @@ export class UserService {
     }
   }
 
+  // Also updates the user's email if it was changed manually in settings
+  private async healUserProfileEmail(user: User){
+    const firestoreEmail = this.currentUserProfile.value?.email;
+    if (user.email && firestoreEmail !== user.email) {
+      const userRef = doc(this.firestore, `users/${user.uid}`);
+      await updateDoc(userRef, { email: user.email });
+      console.log('Synced Firestore email with new Auth email');
+    }
+  }
+
   /**
    * Updates the user's profile data.
    * Actively removes the id and email field from the data to not add/change it in Firestore
@@ -161,7 +169,7 @@ export class UserService {
    * @throws Error if no user ID is provided
    */
   async updateUserProfile(
-    data: Partial<UserProfile>,
+    data: Partial<UserProfileInterface>,
     userId = this.userId!,
   ): Promise<void> {
     if (!userId) {
@@ -174,26 +182,13 @@ export class UserService {
   }
 
 
-  /**
-   * Changes the user's authentication email in Firebase Auth.
-   * Sends verification email to the new address.
-   * User's profile obj email field in Firestore updates is handled in healing logic.
-   * @param newEmail The new email address to set
-   */
-  async changeUserAuthEmail(newEmail: string): Promise<void> {
-    const user = this.authService.userSnapshot;
-    if (!user) throw new Error('No user');
-
-    await verifyBeforeUpdateEmail(user, newEmail);
-    // userProfile email field change should be handled in healing logic
-  }
-
+  // TODO: Move to cloud function with compression
   /**
    * Uploads a file to Firebase Storage and updates the user's avatarUrl.
    * Path: users/{userId}/avatar
    * @param file The file object from the input
    */
-  async uploadUserAvatar(file: File): Promise<void> {
+  public async uploadUserAvatar(file: File): Promise<void> {
     const user = this.currentUser;
     if (!user) throw new Error('User not logged in');
 
@@ -211,5 +206,9 @@ export class UserService {
     const newAvatarUrl = await getDownloadURL(storageRef);
 
     return this.updateUserProfile({ avatarUrl: newAvatarUrl });
+  }
+
+  public resetUserAvatar(): Promise<void> {
+    return this.updateUserProfile({ avatarUrl: PLACEHOLDER_AVATAR_URL });
   }
 }

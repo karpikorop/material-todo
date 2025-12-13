@@ -8,12 +8,23 @@
 
     <profile-form-settings
       [userProfile]="this.userService.currentUserProfile$ | async"
-      [isEmailEditable]="this.userService.isEmailEditable()"
-      (profileUpdate)="updateProfile($event)">
+      (profileUpdate)="updateProfile($event)"
+      (avatarUpload)="uploadUserAvatar($event)"
+      (avatarReset)="resetUserAvatar()"
+    >
     </profile-form-settings>
-        <password-management-settings></password-management-settings>
-        <notifications-settings></notifications-settings>
-        <personalization-settings></personalization-settings>
-        <danger-zone-settings></danger-zone-settings>
+
+    <security-login-settings
+      [user]="this.authService.currentUser$ | async"
+      (emailUpdate)="updateEmail($event)"
+      (googleAccountLink)="handleGoogleAccountLink()"
+      (googleAccountChange)="handleGoogleAccountChange()"
+      (googleAccountRemove)="handleGoogleAccountRemove()">
+    </security-login-settings>
+
+    <password-management-settings></password-management-settings>
+    <notifications-settings></notifications-settings>
+    <personalization-settings></personalization-settings>
+    <danger-zone-settings></danger-zone-settings>
   </div>
 </div>

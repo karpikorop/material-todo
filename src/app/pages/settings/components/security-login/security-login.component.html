@@ -1,0 +1,110 @@
+<h2 class="mb-2 mt-6 font-bold">Security & Login</h2>
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-subtitle>Manage your email and authentication settings</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="mt-4">
+
+    <!-- Google Provider Section -->
+    @if (hasGoogleProvider()) {
+      <div class="provider-section">
+        <h3 class="section-title">Connected Accounts</h3>
+        <div class="provider-card">
+          <div class="provider-info-container">
+            <div class="provider-info">
+              <mat-icon svgIcon="google" class="provider-icon"></mat-icon>
+              <div class="provider-details">
+                <p class="provider-label">Google Email</p>
+                <p class="provider-email">{{ googleProvider()?.email }}</p>
+              </div>
+            </div>
+
+            <div class="provider-actions">
+              <button mat-stroked-button color="primary" (click)="onGoogleAccountChange()">
+                <mat-icon>swap_horiz</mat-icon>
+                Change Account
+              </button>
+              <button mat-stroked-button color="warn" (click)="onGoogleAccountRemove()">
+                <mat-icon>link_off</mat-icon>
+                Disconnect
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    } @else if (hasPasswordProvider()) {
+      <!-- Link Google Account Section (when not connected) -->
+      <div class="provider-section">
+        <h3 class="section-title">Link Additional Account</h3>
+        <div class="provider-card">
+          <div class="provider-info-container">
+            <div class="provider-info">
+              <mat-icon svgIcon="google" class="provider-icon"></mat-icon>
+              <div class="provider-details">
+                <p class="provider-label">Google Account</p>
+                <p class="provider-email">Not connected</p>
+              </div>
+            </div>
+
+            <div class="provider-actions">
+              <button mat-flat-button color="primary" (click)="onGoogleAccountLink()">
+                <mat-icon>link</mat-icon>
+                Link Google Account
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Password Provider Email Section -->
+    @if (hasPasswordProvider()) {
+      @if (hasGoogleProvider()) {
+        <mat-divider class="section-divider"></mat-divider>
+      }
+
+      <div class="provider-section">
+        <h3 class="section-title">Email Address</h3>
+        <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full">
+            <input matInput
+                   type="email"
+                   placeholder="your@email.com"
+                   formControlName="email"
+                   autocomplete="off">
+            <mat-icon matPrefix>email</mat-icon>
+
+            @if (emailForm.get('email')?.invalid && emailForm.get('email')?.touched) {
+              <mat-error>
+                @if (emailForm.get('email')?.hasError('required')) {
+                  Email is required
+                } @else if (emailForm.get('email')?.hasError('email')) {
+                  Please enter a valid email address
+                }
+              </mat-error>
+            }
+          </mat-form-field>
+
+          <app-info-banner class="pt-4"
+            message="Changing your email will require verification. You'll receive a verification email at your new address.">
+          </app-info-banner>
+        </form>
+
+        <div class="action-buttons">
+          <button mat-flat-button color="primary" [disabled]="!isSaveEnabled()" (click)="onSubmit()">
+            <mat-icon class="mr-1">save</mat-icon>
+            Update Email
+          </button>
+        </div>
+      </div>
+    }
+
+    <!-- No providers warning -->
+    @if (!hasPasswordProvider() && !hasGoogleProvider()) {
+      <app-warning-banner
+        message="No authentication providers found.">
+      </app-warning-banner>
+    }
+  </mat-card-content>
+</mat-card>
+

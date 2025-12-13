@@ -16,7 +16,7 @@ export enum IconsNames {
 
 /**
  * To use an icon in a component, use the `mat-icon` directive with the `svgIcon` attribute.
- * Example: `<mat-icon svgIcon="github-mark"></mat-icon>`
+ * Example: `<mat-icon svgIcon="google"></mat-icon>`
  * This will render the icon from `public/icons/github-mark.svg`.
  */
 

@@ -26,14 +26,14 @@ export class TodoItemComponent {
   private notificationService = inject(NotificationService);
   @Input({required: true}) todo!: Todo;
 
-  @Output() update = new EventEmitter<Partial<Omit<Todo, 'id'>>>();
+  @Output() update = new EventEmitter<{ todoId: string; data: Partial<Omit<Todo, 'id'>> }>();
   @Output() delete = new EventEmitter<string>();
 
   protected isHovered = signal(false);
 
   protected onStatusChange(checked: boolean): void {
     const newStatus = checked ? 'done' : 'todo';
-    this.update.emit({status: newStatus});
+    this.update.emit({ todoId: this.todo.id, data: { status: newStatus } });
   }
 
   protected onDelete(): void {
