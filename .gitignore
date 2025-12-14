@@ -48,5 +48,11 @@ Thumbs.db
 .runtimeconfig.json
 
 # Environments
-/src/environments/environment.prod.ts
-/src/environments/environment.ts
+/apps/main-app/src/environments/environment.prod.ts
+/apps/main-app/src/environments/environment.ts
+
+
+
+.nx/cache
+.nx/workspace-data
+.angular

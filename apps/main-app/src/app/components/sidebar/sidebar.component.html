@@ -1,0 +1,56 @@
+<div class="sidebar-container">
+  <div class="sidebar-header">
+    <button
+      mat-button
+      class="user-profile-button"
+      [matMenuTriggerFor]="userMenu"
+      >
+      @if (userProfile$ | async; as user) {
+        <div class="user-profile-content">
+          <img [ngSrc]="user.avatarUrl || PLACEHOLDER_AVATAR_URL" alt="User Avatar" class="user-avatar" width="24"
+            height="24"/>
+          <span class="username">{{ user.username }}</span>
+        </div>
+      }
+    </button>
+
+    <button
+      mat-icon-button
+      class="close-button"
+      aria-label="Close sidebar"
+      (click)="onClose()"
+      >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+  </div>
+
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item routerLink="/app/settings">
+      <mat-icon>settings</mat-icon>
+      <span>Settings</span>
+    </button>
+    <button mat-menu-item routerLink="" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+
+  <div class="divider ml-4 mr-4"></div>
+
+  <mat-nav-list class="project-list">
+    @if (projects$ | async; as projects) {
+      @for (project of projects; track project.id) {
+        <project-list-item [project]="project"></project-list-item>
+        } @empty {
+        <div class="empty">No projects yet</div>
+      }
+    }
+  </mat-nav-list>
+
+  <div class="add-project-action">
+    <button mat-stroked-button (click)="addNewProject()" class="w-full">
+      <mat-icon>add</mat-icon>
+      <span>Add Project</span>
+    </button>
+  </div>
+</div>

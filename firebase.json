@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/todo-material-angular-app/browser",
+    "public": "dist/apps/main-app/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -11,23 +11,27 @@
         "source": "**",
         "destination": "/index.html"
       }
+    ],
+    "predeploy": [
+      "npx nx build main-app"
     ]
   },
   "functions": [
     {
-      "source": "functions",
+      "source": "dist/apps/functions",
       "codebase": "default",
       "ignore": [
         "node_modules",
         ".git",
         "firebase-debug.log",
         "firebase-debug.*.log",
-        "*.local"
+        "*.local",
+        "package-lock.json"
       ],
       "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run lint",
-        "npm --prefix \"$RESOURCE_DIR\" run build"
-      ]
+        "npx nx build functions"
+      ],
+      "runtime": "nodejs24"
     }
   ],
   "emulators": {
