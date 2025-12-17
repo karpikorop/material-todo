@@ -1,11 +1,12 @@
 import {HttpsError} from 'firebase-functions/v2/https';
 import * as logger from 'firebase-functions/logger';
 import { injectable, inject } from 'tsyringe';
+import {FirebaseAdminService} from './firebase-admin.service';
 
 @injectable()
 export class ProjectsService {
 
-  constructor(@inject('Firestore') private readonly db: FirebaseFirestore.Firestore) {}
+  constructor(private firebase: FirebaseAdminService) {}
 
   /**
    * Deletes a project and its associated todos.
@@ -25,13 +26,14 @@ export class ProjectsService {
     }
 
     try {
-      const batch = this.db.batch();
-      const projectRef = this.db
+      const db = this.firebase.firestore;
+      const batch = db.batch();
+      const projectRef = db
         .collection('users')
         .doc(uid)
         .collection('projects')
         .doc(projectId);
-      const todosQuery = this.db
+      const todosQuery = db
         .collection('users')
         .doc(uid)
         .collection('todos')

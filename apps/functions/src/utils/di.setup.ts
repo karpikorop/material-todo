@@ -9,19 +9,6 @@ import {
   onSchedule, ScheduledEvent, ScheduleOptions
 } from 'firebase-functions/v2/scheduler';
 
-function ensureDependencies() {
-  if (container.isRegistered('Firestore')) return;
-
-  try {
-    admin.app();
-  } catch {
-    admin.initializeApp();
-  }
-  container.register('Firestore', { useValue: admin.firestore() });
-  container.register('Auth', { useValue: admin.auth() });
-  container.register('Storage', { useValue: admin.storage() });
-}
-
 function extractClass(module: any): InjectionToken<any> {
   if (module.default) return module.default;
 
@@ -37,7 +24,6 @@ function extractClass(module: any): InjectionToken<any> {
  * On later calls, it returns the cached instance immediately.
  */
 function createLazyLoader(importFn: () => Promise<any>) {
-  ensureDependencies();
   let cachedInstance: any = null;
 
   return async () => {
@@ -55,7 +41,6 @@ async function runHandler(
   importFn: () => Promise<any>,
   executeFn: (instance: any) => Promise<any>
 ) {
-  ensureDependencies();
 
   const module = await importFn();
   const ClassToken = extractClass(module);
