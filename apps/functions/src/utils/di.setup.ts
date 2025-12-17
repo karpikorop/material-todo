@@ -3,10 +3,10 @@ import { container, InjectionToken } from 'tsyringe';
 import * as admin from 'firebase-admin';
 import {
   onCall, CallableOptions,
-  onRequest, HttpsOptions
+  onRequest, HttpsOptions, CallableRequest
 } from 'firebase-functions/v2/https';
 import {
-  onSchedule, ScheduleOptions
+  onSchedule, ScheduledEvent, ScheduleOptions
 } from 'firebase-functions/v2/scheduler';
 
 function ensureDependencies() {
@@ -32,6 +32,25 @@ function extractClass(module: any): InjectionToken<any> {
   return found as InjectionToken<any>;
 }
 
+/**
+ * Returns a function that resolves the instance only once.
+ * On later calls, it returns the cached instance immediately.
+ */
+function createLazyLoader(importFn: () => Promise<any>) {
+  ensureDependencies();
+  let cachedInstance: any = null;
+
+  return async () => {
+    if (!cachedInstance) {
+      const module = await importFn();
+      const ClassToken = extractClass(module);
+      cachedInstance = container.resolve(ClassToken);
+    }
+    return cachedInstance;
+  };
+}
+
+// todo remove
 async function runHandler(
   importFn: () => Promise<any>,
   executeFn: (instance: any) => Promise<any>
@@ -46,38 +65,47 @@ async function runHandler(
 }
 
 /**
- * Creates a Callable Function (Lazy + DI)
+ * Creates a Callable Function (Lazy Singleton)
  */
 export function createCall(
   options: CallableOptions,
   importFn: () => Promise<any>
 ) {
-  return onCall(options, (req) =>
-    runHandler(importFn, (instance) => instance.handle(req))
-  );
+  const getInstance = createLazyLoader(importFn);
+
+  return onCall(options, async (req: CallableRequest) => {
+    const instance = await getInstance();
+    return instance.handle(req);
+  });
 }
 
 /**
- * Creates an HTTP Function (Lazy + DI)
+ * Creates an HTTP Function (Lazy Singleton)
  */
 export function createRequest(
   options: HttpsOptions,
   importFn: () => Promise<any>
 ) {
-  return onRequest(options, (req, res) =>
-    runHandler(importFn, (instance) => instance.handle(req, res))
-  );
+  const getInstance = createLazyLoader(importFn);
+
+  return onRequest(options, async (req, res) => {
+    const instance = await getInstance();
+    return instance.handle(req, res);
+  });
 }
 
 /**
- * Creates a Scheduled Function (Lazy + DI)
+ * Creates a Scheduled Function (Lazy Singleton)
  */
 export function createSchedule(
   schedule: string,
   options: Omit<ScheduleOptions, 'schedule'>,
   importFn: () => Promise<any>
 ) {
-  return onSchedule({ schedule, ...options }, (event) =>
-    runHandler(importFn, (instance) => instance.execute(event))
-  );
+  const getInstance = createLazyLoader(importFn);
+
+  return onSchedule({ schedule, ...options }, async (event: ScheduledEvent) => {
+    const instance = await getInstance();
+    return instance.execute(event);
+  });
 }

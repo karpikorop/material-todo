@@ -10,7 +10,6 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "experimentalDecorators": true,
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
@@ -19,6 +18,7 @@
     "paths": {
       "@shared/*": ["shared/src/*"]
     },
+    "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
   "angularCompilerOptions": {

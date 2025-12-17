@@ -1,4 +1,4 @@
-import { injectable} from 'tsyringe';
+import {injectable} from 'tsyringe';
 import { HttpsError } from 'firebase-functions/v2/https';
 import { ProjectsService } from '../services/projects.service';
 import * as logger from 'firebase-functions/logger';
