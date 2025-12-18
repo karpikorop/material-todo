@@ -8,7 +8,7 @@
     "build": {
       "executor": "@nx/webpack:webpack",
       "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
+      "defaultConfiguration": "development",
       "options": {
         "target": "node",
         "compiler": "tsc",
@@ -29,7 +29,7 @@
         "production": {
           "optimization": true,
           "extractLicenses": true,
-          "inspect": false,
+          "inspect": false
         }
       }
     },

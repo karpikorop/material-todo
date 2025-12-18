@@ -1,28 +1,32 @@
 # Material Todo - A Modern Angular Task Manager
 
-A free, lightweight, and open-source task manager, built with the latest version of Angular and designed according to Material Design principles.
+A straightforward, responsive task manager built to demonstrate a modern, full-stack architecture using Angular, Firebase, and Nx.
 
 You can use the live version of the application [here](https://to-note-angular-app.web.app)
 
----  
+---
 
-### Key Features
+## Key Features
 
-- **Modern & Fast:** Built with Angular 20 and standalone components for optimal performance.
+- Modern & Fast: Built with Angular 21, leveraging Standalone Components for optimal performance.
 
-- **Material Design:** A clean, intuitive, and fully responsive interface powered by Angular Material.
+- Monorepo Architecture: Structured using Nx to organize the frontend application and cloud functions efficiently.
 
-- **Open Source:** Transparent, community-driven, and completely free to use.
+- Material Design: A clean, functional interface powered by Angular Material and Tailwind CSS v4.
 
----  
+- Real-time & Secure: Powered by Firebase for instant data syncing, secure authentication, and cloud-based storage.
+
+---
 
 ### Tech Stack
 
-- **Framework:** [Angular](https://angular.dev/ "null") (v20.x.x) with Standalone Components
+- **Workspace:** [Nx](https://nx.dev/ "null") (Monorepo handling Main App + Cloud Functions)
+
+- **Framework:** [Angular](https://angular.dev/ "null") (v21.x.x) with Standalone Components
 
 - **UI Components:** [Angular Material](https://material.angular.io/ "null")
 
-- **Backend & Database:** [Firebase](https://firebase.google.com/ "null") (Authentication, Firestore and Functions)
+- **Backend & Database:** [Firebase](https://firebase.google.com/ "null") (Authentication, Firestore and Storage) & [Google Cloud Functions](https://cloud.google.com/functions "null")
 
 - **Styling:** SCSS & [Tailwind CSS](https://tailwindcss.com/ "null")
 
@@ -80,7 +84,7 @@ Navigate to `http://localhost:4200/`.
 
 ### 4. Emulator Workflow
 
-This project is configured to use the **Firebase Local Emulator Suite** for a safe, offline development environment. The necessary configuration (`firebase.json`) is already included in the repository.
+This project is configured to use the **Firebase Local Emulator Suite** for a safe, local development environment. The necessary configuration (`firebase.json`) is already included in the repository.
 
 #### Running the Development Environment
 
@@ -115,13 +119,13 @@ Functions are written in TypeScript and must be compiled before running emulator
 - **To Build:**
 
 ```zsh
-cd functions && npm run build 
+npm run build functions
 ```
 
 or
 
 ```zsh
-cd functions && npm build:watch
+nx run functions:build
 ```
 
 - **To Deploy:** (run from the project root)
