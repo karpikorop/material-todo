@@ -22,7 +22,7 @@ jobs:
           # 2. Create the real environment.prod.ts with your secrets
           echo "export const environment = { production: true, useEmulators: false, firebase: ${{ secrets.FIREBASE_CONFIG }} };" > apps/main-app/src/environments/environment.prod.ts
 
-      - run: npm ci && npm run build
+      - run: npm ci && npx nx build main-app
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
