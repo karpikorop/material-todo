@@ -17,8 +17,12 @@ jobs:
           cache: 'npm'
 
       - name: Create Environment Files
+        env:
+          # Load the secret into a shell environment variable
+          FIREBASE_CONFIG_JSON: ${{ secrets.FIREBASE_CONFIG }}
         run: |
-          echo 'export const firebaseConfig = ${{ secrets.FIREBASE_CONFIG }};' > apps/main-app/src/environments/firebase.config.ts
+          # Write the variable directly to the file
+          echo "export const firebaseConfig = $FIREBASE_CONFIG_JSON;" > apps/main-app/src/environments/firebase.config.ts
 
       # npm ci will trigger postinstall, which will see the file above and skip the template copy.
       - run: npm ci
