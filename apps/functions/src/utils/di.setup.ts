@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import { container, InjectionToken } from 'tsyringe';
-import * as admin from 'firebase-admin';
 import {
   onCall, CallableOptions,
   onRequest, HttpsOptions, CallableRequest
@@ -8,6 +7,7 @@ import {
 import {
   onSchedule, ScheduledEvent, ScheduleOptions
 } from 'firebase-functions/v2/scheduler';
+import { onObjectFinalized, StorageOptions, StorageEvent } from 'firebase-functions/v2/storage';
 
 function extractClass(module: any): InjectionToken<any> {
   if (module.default) return module.default;
@@ -90,6 +90,22 @@ export function createSchedule(
   const getInstance = createLazyLoader(importFn);
 
   return onSchedule({ schedule, ...options }, async (event: ScheduledEvent) => {
+    const instance = await getInstance();
+    return instance.execute(event);
+  });
+}
+
+
+/**
+ * Creates a Storage Object Finalized Function (Lazy Singleton)
+ */
+export function createObjectFinalized(
+  options: StorageOptions,
+  importFn: () => Promise<any>
+) {
+  const getInstance = createLazyLoader(importFn);
+
+  return onObjectFinalized(options, async (event: StorageEvent) => {
     const instance = await getInstance();
     return instance.execute(event);
   });

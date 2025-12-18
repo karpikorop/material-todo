@@ -1,7 +1,6 @@
 import * as logger from 'firebase-functions/logger';
 import { injectable } from 'tsyringe';
 import {FirebaseAdminService} from './firebase-admin.service';
-import type {VoidResponseInterface} from '@shared/lib/void-function-response';
 
 @injectable()
 export class ProjectsService {
