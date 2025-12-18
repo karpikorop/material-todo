@@ -6,7 +6,9 @@
     "start": "nx serve main-app",
     "build": "nx build",
     "watch": "nx build --watch --configuration development",
-    "test": "nx test"
+    "test": "nx test",
+    "postinstall": "node scripts/ensure-env.js"
+
   },
   "private": true,
   "dependencies": {

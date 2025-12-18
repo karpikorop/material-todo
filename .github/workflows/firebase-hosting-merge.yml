@@ -1,5 +1,3 @@
-# https://github.com/firebase/firebase-tools
-
 name: Deploy to Firebase Hosting on merge
 on:
   push:
@@ -11,13 +9,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Optimization: Explicitly set Node version + Cache NPM packages
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
       - name: Create Environment Files
         run: |
-          # Create firebase.config.ts file
-          mkdir -p apps/main-app/src/environments
-          echo "export const firebaseConfig = ${{ secrets.FIREBASE_CONFIG }};" > apps/main-app/src/environments/firebase.config.ts
+          echo 'export const firebaseConfig = ${{ secrets.FIREBASE_CONFIG }};' > apps/main-app/src/environments/firebase.config.ts
 
-      - run: npm ci && npx nx build main-app
+      # npm ci will trigger postinstall, which will see the file above and skip the template copy.
+      - run: npm ci
+      - run: npx nx build main-app
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
