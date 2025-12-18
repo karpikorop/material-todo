@@ -89,7 +89,7 @@ Before starting the emulators don't forget to build the functions.
 **Start Emulators:**
 
 ```zsh
-firebase emulators:start --only functions,auth,firestore
+firebase emulators:start --only functions,auth,firestore,storage
 ```
 
 _Note: The first time you run this, Firebase will automatically download the required emulator software._
