@@ -1,7 +1,7 @@
-import {HttpsError} from 'firebase-functions/v2/https';
 import * as logger from 'firebase-functions/logger';
-import { injectable, inject } from 'tsyringe';
+import { injectable } from 'tsyringe';
 import {FirebaseAdminService} from './firebase-admin.service';
+import type {VoidResponseInterface} from '@shared/lib/void-function-response';
 
 @injectable()
 export class ProjectsService {
@@ -11,21 +11,19 @@ export class ProjectsService {
   /**
    * Deletes a project and its associated todos.
    * @returns Promise resolving to success status
-   * @throws {HttpsError} If user is not authenticated or projectId is invalid
-   * @param projectId
-   * @param uid
+   * @param projectId - ID of the project to delete
+   * @param uid - ID of the user who owns the project
    */
   public async deleteProject(
     projectId: string,
     uid: string
-  ): Promise<{ status: string }> {
+  ): Promise<void> {
     if (!projectId) {
       throw new Error(
         'A valid projectId must be provided.'
       );
     }
 
-    try {
       const db = this.firebase.firestore;
       const batch = db.batch();
       const projectRef = db
@@ -51,10 +49,5 @@ export class ProjectsService {
         `Successfully deleted project and ${todoSnapshots.size} todos.`,
         { uid, projectId }
       );
-      return {status: 'success'};
-    } catch (error) {
-      logger.error('Error during project deletion:', error);
-      throw new HttpsError('internal', 'Failed to delete the project.');
-    }
   }
 }

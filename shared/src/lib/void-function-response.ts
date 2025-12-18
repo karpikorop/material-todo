@@ -1,4 +1,4 @@
-export interface VoidResponseInterface<T> {
+export interface VoidResponseInterface<T = void> {
   success: boolean;
   message?: string;
   data?: T;

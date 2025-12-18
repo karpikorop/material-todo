@@ -31,7 +31,7 @@
       "predeploy": [
         "npx nx build functions"
       ],
-      "runtime": "nodejs24"
+      "runtime": "nodejs22"
     }
   ],
   "emulators": {

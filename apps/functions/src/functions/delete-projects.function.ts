@@ -25,7 +25,7 @@ export default class DeleteProject extends AbstractCallableFunction<deleteProjec
     try {
       await this.projectsService.deleteProject(data.projectId, auth.uid,);
       return { success: true, message: 'Project deleted successfully' };
-    } catch (error) {
+    } catch (error: any) {
       logger.error('Delete failed', error);
       throw new HttpsError('internal', 'Failed to delete project');
     }

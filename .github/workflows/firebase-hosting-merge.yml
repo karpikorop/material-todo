@@ -14,11 +14,11 @@ jobs:
       - name: Create Environment Files
         run: |
           # Create the directory if it doesn't exist
-          mkdir -p src/environments
+          mkdir -p apps/main-app/src/environments
 
           # 1. Create a dummy base environment.ts file for the build to find
           echo "export const environment = { production: false, useEmulators: false, };" > src/environments/environment.ts
-
+ 
           # 2. Create the real environment.prod.ts with your secrets
           echo "export const environment = { production: true, useEmulators: false, firebase: ${{ secrets.FIREBASE_CONFIG }} };" > src/environments/environment.prod.ts
 

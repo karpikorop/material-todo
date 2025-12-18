@@ -38,35 +38,15 @@ export default [
     ],
     // Override or add rules here
     rules: {
-      "overrides": [
-        {
-          "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-          "rules": {
-            // Allow using 'any' (fixes: "Unexpected any. Specify a different type")
-            "@typescript-eslint/no-explicit-any": "off",
+      '@typescript-eslint/no-explicit-any': 'off',
 
-            // Allow empty functions (useful for Angular lifecycle hooks like ngOnInit)
-            "@typescript-eslint/no-empty-function": "off",
+      '@typescript-eslint/no-empty-function': 'warn',
 
-            // Allow console.log
-            "no-console": "off",
+      "no-console": ["warn", { "allow": ["error", "warn"] }],
 
-            // Allow unused variables (or set to "warn" instead of "error")
-            "@typescript-eslint/no-unused-vars": "off",
+      '@typescript-eslint/no-unused-vars': 'warn',
 
-            // Stop forcing 'unknown' or 'never' on generics
-            "@typescript-eslint/no-unnecessary-type-constraint": "off",
-
-            "@angular-eslint/template/interactive-supports-focus": "off",
-
-            "@angular-eslint/template/click-events-have-key-events": "off",
-
-            // Allow component selectors to be whatever you want (not strict prefix)
-            "@angular-eslint/component-selector": "off"
-          }
-        }
-        // ... other overrides might exist here
-      ]
+      '@typescript-eslint/no-unnecessary-type-constraint': 'off',
     },
   },
 ];
