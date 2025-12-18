@@ -52,7 +52,14 @@
       "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "main-app:build:production"
+          "buildTarget": "main-app:build:production",
+          "fileReplacements": [
+            {
+              "replace": "apps/main-app/src/environments/environment.ts",
+              "with": "apps/main-app/src/environments/environment.prod.ts"
+            }
+          ]
+
         },
         "development": {
           "buildTarget": "main-app:build:development"
