@@ -25,6 +25,12 @@
       },
       "configurations": {
         "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/main-app/src/environments/environment.ts",
+              "with": "apps/main-app/src/environments/environment.prod.ts"
+            }
+          ],
           "budgets": [
             {
               "type": "initial",
@@ -59,7 +65,6 @@
               "with": "apps/main-app/src/environments/environment.prod.ts"
             }
           ]
-
         },
         "development": {
           "buildTarget": "main-app:build:development"

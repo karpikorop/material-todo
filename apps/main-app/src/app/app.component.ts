@@ -21,16 +21,17 @@ export class AppComponent implements OnInit {
   private notificationService = inject(NotificationService);
   private isEmulator = inject(IS_EMULATOR);
 
+  title = 'todo-material-angular-app';
   constructor() {
     this.iconService.registerIcons();
   }
 
   ngOnInit(): void {
-    try {
-      this.matIconReg.setDefaultFontSetClass('material-symbols-rounded');
-    } catch (error) {
-      console.error('Failed to set default font set class:', error);
-    }
+    this.registerMaterialIcons();
+    this.isEmulatorCheck();
+  }
+
+  private isEmulatorCheck() {
     if (this.isEmulator) {
       console.warn('Running in emulator mode. Some features may not work as expected.');
       this.notificationService.show({
@@ -42,5 +43,11 @@ export class AppComponent implements OnInit {
     }
   }
 
-  title = 'todo-material-angular-app';
+  private registerMaterialIcons() {
+    try {
+      this.matIconReg.setDefaultFontSetClass('material-symbols-rounded');
+    } catch (error) {
+      console.error('Failed to set default font set class:', error);
+    }
+  }
 }

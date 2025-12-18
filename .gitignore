@@ -46,11 +46,7 @@ Thumbs.db
 .firebase
 *-debug.log
 .runtimeconfig.json
-
-# Environments
-/apps/main-app/src/environments/environment.prod.ts
-/apps/main-app/src/environments/environment.ts
-
+firebase.config.ts
 
 
 .nx/cache

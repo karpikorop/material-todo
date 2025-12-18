@@ -50,7 +50,7 @@ This project requires a Firebase backend to function. You will need to set up yo
 
 2. Enable **Authentication** (with Email/Password and Google providers) and **Firestore Database** (in test mode to start).
 
-3. Copy your Firebase configuration object into the `src/environments/environment.ts`(create from template). Do not commit.
+3. Copy your Firebase configuration object into the `apps/main-app/src/environments/firebase.config.ts`(create from template). Do not commit.
 
 ---  
 

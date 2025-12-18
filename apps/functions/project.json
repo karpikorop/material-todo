@@ -30,12 +30,6 @@
           "optimization": true,
           "extractLicenses": true,
           "inspect": false,
-          "fileReplacements": [
-            { // possible remove
-              "replace": "apps/functions/src/environments/environment.ts",
-              "with": "apps/functions/src/environments/environment.prod.ts"
-            }
-          ]
         }
       }
     },
