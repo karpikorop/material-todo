@@ -3,7 +3,7 @@ import { HttpsError } from 'firebase-functions/v2/https';
 import { ProjectsService } from '../services/projects.service';
 import * as logger from 'firebase-functions/logger';
 import {AbstractCallableFunction} from '../common/abstract-callable.function';
-import type { VoidResponseInterface } from '@shared/lib/void-function-response';
+import type { VoidResponseInterface } from '@shared/lib/models/void-function-response';
 
 interface deleteProjectRequest {
   projectId: string;

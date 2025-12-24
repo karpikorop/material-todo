@@ -75,7 +75,7 @@ npm install
 3. **Run the development server:**
 
 ```  
-ng serve  
+npm start 
 ```  
 
 Navigate to `http://localhost:4200/`.
@@ -107,7 +107,7 @@ and set `useEmulators: true`.
 **Start Angular App:** In a second terminal, run:
 
 ```zsh
-ng serve
+npm start
 ```
 
 _(The Emulator UI can be viewed at `http://127.0.0.1:4000`)_

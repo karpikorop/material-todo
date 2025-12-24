@@ -45,6 +45,9 @@ export class SignupComponent {
     const data = this.signUpForm.value;
     try {
       await this.authService.signUp(data.email, data.password);
+      this.notificationService.showInfo(
+        'Verification email sent. Please check your inbox. Check spam folder if not found.'
+      );
       await this.router.navigate(['/app']);
     } catch (error) {
       this.notificationService.showError("Error signing up");

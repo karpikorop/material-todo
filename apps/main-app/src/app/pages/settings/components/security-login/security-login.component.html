@@ -65,39 +65,73 @@
 
       <div class="provider-section">
         <h3 class="section-title">Email Address</h3>
-        <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
-          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full">
-            <input matInput
-                   type="email"
-                   placeholder="your@email.com"
-                   formControlName="email"
-                   autocomplete="off">
-            <mat-icon matPrefix>email</mat-icon>
+        <div class="provider-card">
+          <form [formGroup]="emailForm" (ngSubmit)="onEmailChange()" class="email-form">
+            <div class="email-form-content">
+              <div class="email-input-section">
+                <mat-icon class="provider-icon">email</mat-icon>
+                <mat-form-field appearance="outline" subscriptSizing="dynamic" class="email-field">
+                  <input matInput
+                         type="email"
+                         placeholder="your@email.com"
+                         formControlName="email"
+                         autocomplete="off">
 
-            @if (emailForm.get('email')?.invalid && emailForm.get('email')?.touched) {
-              <mat-error>
-                @if (emailForm.get('email')?.hasError('required')) {
-                  Email is required
-                } @else if (emailForm.get('email')?.hasError('email')) {
-                  Please enter a valid email address
-                }
-              </mat-error>
-            }
-          </mat-form-field>
+                  @if (emailForm.get('email')?.invalid && emailForm.get('email')?.touched) {
+                    <mat-error>
+                      @if (emailForm.get('email')?.hasError('required')) {
+                        Email is required
+                      } @else if (emailForm.get('email')?.hasError('email')) {
+                        Please enter a valid email address
+                      }
+                    </mat-error>
+                  }
+                </mat-form-field>
+              </div>
 
-          <app-info-banner class="pt-4"
-            message="Changing your email will require verification. You'll receive a verification email at your new address.">
-          </app-info-banner>
-        </form>
+              <div class="email-actions">
+                <button mat-flat-button color="primary" [disabled]="!isSaveEnabled()" type="submit">
+                  <mat-icon>save</mat-icon>
+                  Update Email
+                </button>
+              </div>
+            </div>
 
-        <div class="action-buttons">
-          <button mat-flat-button color="primary" [disabled]="!isSaveEnabled()" (click)="onSubmit()">
-            <mat-icon class="mr-1">save</mat-icon>
-            Update Email
-          </button>
+            <app-info-banner class="email-info-banner"
+              message="Changing your email will require verification.">
+            </app-info-banner>
+          </form>
         </div>
       </div>
+
+      <mat-divider class="section-divider"></mat-divider>
+
+      <div class="provider-section">
+        <h3 class="section-title">Password</h3>
+        <div class="provider-card">
+          <div class="provider-info-container">
+            <div class="provider-info">
+              <mat-icon class="provider-icon">lock</mat-icon>
+              <div class="provider-details">
+                <p class="provider-label">Change Password</p>
+                <p class="provider-email">A password reset link will be sent to your email.</p>
+              </div>
+            </div>
+
+            <div class="provider-actions">
+              <button mat-flat-button color="primary" (click)="onPasswordReset()">
+                <mat-icon>mail_outline</mat-icon>
+                Send Reset Link
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     }
+
+
+
 
     <!-- No providers warning -->
     @if (!hasPasswordProvider() && !hasGoogleProvider()) {

@@ -14,7 +14,9 @@ import {
   reauthenticateWithCredential,
   EmailAuthProvider,
   linkWithPopup,
-  unlink, verifyBeforeUpdateEmail
+  unlink,
+  verifyBeforeUpdateEmail,
+  sendPasswordResetEmail
 } from '@angular/fire/auth';
 import {NotificationService} from '../notification-service/notification.service';
 
@@ -25,6 +27,7 @@ export enum AuthProvider {
 
 export type AuthUser = User | null | undefined;
 
+// TODO check all the methods usages and check if they used the right way for its case (awaited or not)
 @Injectable({
   providedIn: 'root',
 })
@@ -56,13 +59,15 @@ export class AuthService {
     return this.currentUser.value || null;
   }
 
+  public getPasswordEmail(user = this.userSnapshot): string | null {
+    const passProvider = user?.providerData.find(p => p.providerId === AuthProvider.Password);
+    return passProvider?.email || null;
+  }
+
   public async signUp(email: string, password: string): Promise<UserCredential> {
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
       await sendEmailVerification(userCredential.user);
-      this.notificationService.showInfo(
-        'Verification email sent. Please check your inbox. Check spam folder if not found.'
-      );
       return userCredential;
     } catch (error) {
       this.handleAuthError(error);
@@ -102,14 +107,32 @@ export class AuthService {
     }
   }
 
-  public async reauthenticate(password: string): Promise<void> {
-    const user = this.userSnapshot;
-
-    if (!user || !user.email) {
+  public async reauthenticate(password: string, user = this.userSnapshot): Promise<void> {
+    if (!user?.email) {
       throw new Error('No user logged in to re-authenticate.');
     }
     const credential = EmailAuthProvider.credential(user.email, password);
     await reauthenticateWithCredential(user, credential);
+  }
+
+
+  /**
+   * Sends a password reset email to the user.
+   * Email from a password provider is used as target email.
+   * @returns A promise that resolves if the email was sent successfully, or rejects with an error otherwise.
+   */
+  public async sendPasswordResetEmail(user = this.userSnapshot): Promise<void> {
+    const email = this.getPasswordEmail(user);
+    if (!user || !email) {
+      throw new Error('No user logged in or user has no email address.');
+    }
+
+    try {
+      await sendPasswordResetEmail(this.auth, email);
+    } catch (error) {
+      this.handleAuthError(error);
+      throw error;
+    }
   }
 
   /**

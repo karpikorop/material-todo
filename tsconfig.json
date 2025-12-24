@@ -16,7 +16,8 @@
     "module": "ES2022",
     "baseUrl": ".",
     "paths": {
-      "@shared/*": ["shared/src/*"]
+      "@shared/*": ["shared/src/*"],
+      "shared": ["shared/src/index.ts"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true

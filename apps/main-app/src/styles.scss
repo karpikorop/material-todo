@@ -2,7 +2,7 @@
 @use "./app/styles/_theme-colors" as app;
 @import "tailwindcss";
 
-
+@import "./app/styles/ng-select-custom.scss";
 // Angular material theme variables
 // https://material.angular.dev/guide/system-variables
 
@@ -21,6 +21,7 @@ html {
       )
   );
 }
+
 
 body {
   margin: 0;

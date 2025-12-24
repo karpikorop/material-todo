@@ -35,10 +35,11 @@ export class ProfileFormComponent {
   public avatarReset = output<void>();
 
   private notificationService = inject(NotificationService);
+  private fb =  inject(FormBuilder);
 
   protected profileForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor() {
     this.profileForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]]
     });

@@ -5,7 +5,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import {AuthProvider, AuthUser} from '../../../../services/auth-service/auth.service';
 import {MatDivider} from '@angular/material/list';
 import {InfoBannerComponent} from '../../../../components/banners/info-banner/info-banner.component';
@@ -34,6 +33,7 @@ export class SecurityLoginComponent {
   public googleAccountChange = output<void>();
   public googleAccountRemove = output<void>();
   public googleAccountLink = output<void>();
+  public passwordReset = output<void>();
 
   protected emailForm: FormGroup;
 
@@ -77,10 +77,13 @@ export class SecurityLoginComponent {
     });
   }
 
-  protected onSubmit() {
+  protected onEmailChange() {
     if (this.emailForm.valid && this.isEmailChanged()) {
       this.emailUpdate.emit(this.emailForm.value.email);
     }
+    this.emailForm.setValue({
+      email: this.passwordProvider()?.email
+    });
   }
 
   protected isEmailChanged(): boolean {
@@ -102,6 +105,10 @@ export class SecurityLoginComponent {
 
   protected onGoogleAccountRemove() {
     this.googleAccountRemove.emit();
+  }
+
+  protected onPasswordReset() {
+    this.passwordReset.emit();
   }
 }
 

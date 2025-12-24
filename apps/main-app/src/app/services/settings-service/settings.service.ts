@@ -8,15 +8,16 @@ import {
 import {AuthService} from '../auth-service/auth.service';
 import {Observable, of} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
+import {getTimeZonesList} from '@shared/lib/utils/timezones.utils'
+import {TimeZone} from '@vvo/tzdb';
+
+export const SETTINGS_DOCUMENT_ID = 'preferences';
 
 /**
  * Interface representing the user's application-specific settings.
  */
 export interface UserSettings {
-  emailNotifications: boolean;
-  pushNotifications: boolean;
-  newsletterEmails: boolean;
-  theme: string; // TODO: Define possible themes or maybe prime color
+  theme?: string; // TODO: Define possible themes or maybe prime color
   timeZone: string; // IANA Time Zone Name (e.g., 'Europe/Kyiv')
 }
 
@@ -27,10 +28,9 @@ export class SettingsService {
   private firestore: Firestore = inject(Firestore);
   private authService: AuthService = inject(AuthService);
 
+
+
   private readonly defaultSettings: UserSettings = {
-    emailNotifications: true,
-    pushNotifications: true,
-    newsletterEmails: false,
     theme: 'default',
     timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
   };
@@ -39,7 +39,7 @@ export class SettingsService {
   /**
    * An observable that streams the current user's settings profile.
    * It listens to changes in the '/users/{userId}/settings/preferences' document.
-   * Emits null if no user is logged in.
+   * Emits null if no user is not logged in.
    */
   public userSettings$: Observable<UserSettings | null> =
     this.authService.currentUser$.pipe(
@@ -47,7 +47,7 @@ export class SettingsService {
         if (user) {
           const settingsRef = doc(
             this.firestore,
-            `users/${user.uid}/settings/preferences`
+            `users/${user.uid}/settings/${SETTINGS_DOCUMENT_ID}`
           );
           return docData(settingsRef) as Observable<Partial<UserSettings> | null>;
         } else {
@@ -87,10 +87,24 @@ export class SettingsService {
     userId: string,
     data: Partial<UserSettings>
   ): Promise<void> {
+    const { id, ...cleanData } = data as any; // remove id if present
+
     const settingsRef = doc(
       this.firestore,
-      `users/${userId}/settings/preferences`
+      `users/${userId}/settings/${SETTINGS_DOCUMENT_ID}`
     );
-    return updateDoc(settingsRef, data);
+    return updateDoc(settingsRef, cleanData);
+  }
+
+  /**
+   * Returns a list of all supported timezones.
+   * @returns An array of TimeZone obj representing the timezones.
+   */
+  public get timezones(): TimeZone[] {
+    return getTimeZonesList();
+  }
+
+  public get timezoneNames(): string[] {
+    return this.timezones.map(tz => tz.name);
   }
 }

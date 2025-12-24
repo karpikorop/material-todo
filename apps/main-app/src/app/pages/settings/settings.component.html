@@ -19,11 +19,11 @@
       (emailUpdate)="updateEmail($event)"
       (googleAccountLink)="handleGoogleAccountLink()"
       (googleAccountChange)="handleGoogleAccountChange()"
-      (googleAccountRemove)="handleGoogleAccountRemove()">
+      (googleAccountRemove)="handleGoogleAccountRemove()"
+      (passwordReset)="resetUserPassword()">
     </security-login-settings>
 
-    <password-management-settings></password-management-settings>
-    <notifications-settings></notifications-settings>
+    <!-- <notifications-settings></notifications-settings> -->
     <personalization-settings></personalization-settings>
     <danger-zone-settings></danger-zone-settings>
   </div>

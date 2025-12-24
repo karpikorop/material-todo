@@ -170,7 +170,7 @@ export class UserService {
    */
   async updateUserProfile(
     data: Partial<UserProfileInterface>,
-    userId = this.userId!,
+    userId = this.userId,
   ): Promise<void> {
     if (!userId) {
       throw new Error('Cannot update user profile: no user ID provided');

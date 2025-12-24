@@ -3,19 +3,22 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
 import { ProfileFormComponent } from './components/profile-form/profile-form.component';
 import { SecurityLoginComponent } from './components/security-login/security-login.component';
-import { PasswordManagementComponent } from './components/password-management/password-management.component';
 import { DangerZoneComponent } from './components/danger-zone/danger-zone.component';
-import { NotificationsComponent } from './components/notifications/notifications.component';
 import { PersonalizationComponent } from './components/personalization/personalization.component';
 import {UserProfileInterface, UserService} from '../../services/user-service/user.service';
 import {AsyncPipe} from '@angular/common';
 import {NotificationService} from '../../services/notification-service/notification.service';
-import {ConfirmationDialogComponent} from '../../components/dialogs/confirmation-dialog/confirmation-dialog.component';
+import {
+  ConfirmationDialogComponent,
+  ConfirmDialogData
+} from '../../components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {
+  PasswordDialogData,
   PasswordInputDialogComponent
 } from '../../components/dialogs/password-input-dialog/password-input-dialog.component';
 import {AuthService} from '../../services/auth-service/auth.service';
+import {DialogService} from '../../components/dialogs/dialog-service/dialog.service';
 
 @Component({
   selector: 'app-settings',
@@ -24,9 +27,7 @@ import {AuthService} from '../../services/auth-service/auth.service';
     MatIconModule,
     ProfileFormComponent,
     SecurityLoginComponent,
-    PasswordManagementComponent,
     DangerZoneComponent,
-    NotificationsComponent,
     PersonalizationComponent,
     AsyncPipe
   ],
@@ -38,6 +39,7 @@ export class SettingsComponent {
   private notificationService = inject(NotificationService);
   private dialog = inject(MatDialog);
   protected authService = inject(AuthService);
+  private dialogService = inject(DialogService);
 
   public async updateProfile(userProfile: Partial<UserProfileInterface>) {
     try {
@@ -49,43 +51,37 @@ export class SettingsComponent {
   }
 
   public async updateEmail(email: string) {
-    const confirmDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: {
-        title: 'Email change confirmation',
-        message: `Are you sure you want to change email to "${email}"?`,
-        mainButtonText: 'Yes',
-        secondaryButtonText: 'No'
-      },
+    const result = await this.dialogService.openDialog<ConfirmDialogData, boolean>(ConfirmationDialogComponent, {
+      title: 'Email change confirmation',
+      message: `Are you sure you want to change email to "${email}"?`,
+      mainButtonText: 'Yes',
+      secondaryButtonText: 'No'
+    }, {
       width: '500px',
     });
 
-    confirmDialogRef.afterClosed().subscribe(async (result: boolean) => {
-      if (!result) {
-        return;
-      }
+    if (!result) {
+      return;
+    }
 
-      const passwordEnterDialogRef = this.dialog.open(PasswordInputDialogComponent, {
-        data: {
-          title: 'Enter your password',
-          message: 'Enter your password to confirm email change.',
-        },
-        width: '500px',
-      });
-
-      passwordEnterDialogRef.afterClosed().subscribe(async (result: string) => {
-        if (!result?.trim()) {
-          return;
-        }
-
-        try {
-          await this.authService.reauthenticate(result);
-          await this.authService.changeUserAuthEmail(email);
-          this.notificationService.showSuccess(`Email verification sent to "${email}". Please check your email to confirm the change.`, 9999);
-        } catch (error: any) {
-          this.notificationService.showError('Failed to update email:', error);
-        }
-      });
+    const password = await this.dialogService.openDialog<PasswordDialogData, string>(PasswordInputDialogComponent, {
+      title: 'Enter your password',
+      message: 'Enter your password to confirm email change.',
+    }, {
+      width: '500px',
     });
+
+    if (!password?.trim()) {
+      return;
+    }
+
+    try {
+      await this.authService.reauthenticate(password);
+      await this.authService.changeUserAuthEmail(email);
+      this.notificationService.showSuccess(`Email verification sent to "${email}". Please check your email to confirm the change.`, 9999);
+    } catch (error: any) {
+      this.notificationService.showError('Failed to update email:', error);
+    }
   }
 
   public async handleGoogleAccountChange() {
@@ -166,4 +162,21 @@ export class SettingsComponent {
     }
   }
 
+  protected async resetUserPassword() {
+    const response = await this.dialogService.openDialog<ConfirmDialogData, boolean>(ConfirmationDialogComponent, {
+      title: 'Reset Password',
+      message: 'Are you sure you want to reset your password?',
+      mainButtonText: 'Set Reset Email',
+    })
+    if (!response) {
+      return;
+    }
+    this.authService.sendPasswordResetEmail()
+      .then(() => {
+        this.notificationService.showInfo('Password reset email sent. Please check your inbox.');
+      })
+      .catch((error: any) => {
+        this.notificationService.showError('Failed to send password reset email:', error);
+      });
+  }
 }

@@ -7,7 +7,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {FormsModule, NgModel} from '@angular/forms';
 
-interface PasswordDialogData {
+export interface PasswordDialogData {
   title?: string,
   message?: string,
 }

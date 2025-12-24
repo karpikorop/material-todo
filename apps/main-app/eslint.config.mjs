@@ -8,6 +8,14 @@ export default [
   {
     files: ['**/*.ts'],
     rules: {
+      '@angular-eslint/template/interactive-supports-focus': 'off',
+
+      '@angular-eslint/template/click-events-have-key-events': 'off',
+
+      '@angular-eslint/component-selector': 'off',
+
+      '@angular-eslint/prefer-inject': 'off',
+
       '@angular-eslint/directive-selector': [
         'error',
         {
@@ -16,25 +24,12 @@ export default [
           style: 'camelCase',
         },
       ],
-      '@angular-eslint/component-selector': [
-        'error',
-        {
-          type: 'element',
-          prefix: 'app',
-          style: 'kebab-case',
-        },
-      ],
     },
   },
   {
     files: ['**/*.html'],
     // Override or add rules here
     rules: {
-      '@angular-eslint/template/interactive-supports-focus': 'off',
-
-      '@angular-eslint/template/click-events-have-key-events': 'off',
-
-      '@angular-eslint/component-selector': 'off',
     },
   },
 ];

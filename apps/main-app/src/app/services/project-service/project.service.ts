@@ -116,13 +116,8 @@ export class ProjectService {
       this.functions,
       'deleteProjectAndTodos'
     );
-
-    try {
-      console.log(`Calling cloud function to delete project: ${projectId}`);
-      const result = await deleteProjectFn({projectId: projectId});
-      console.log('Cloud function executed:', result.data);
-    } catch (error) {
-      throw error;
-    }
+    console.log(`Calling cloud function to delete project: ${projectId}`);
+    const result = await deleteProjectFn({projectId: projectId});
+    console.log('Cloud function executed:', result.data);
   }
 }

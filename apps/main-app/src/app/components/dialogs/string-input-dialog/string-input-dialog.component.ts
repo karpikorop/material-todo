@@ -6,12 +6,12 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 
-interface InputDialogData {
+export interface InputDialogData {
   title: string,
   message: string,
-  placeholder: string,
-  mainButtonText: string,
-  maxLength: number;
+  placeholder?: string,
+  mainButtonText?: string,
+  maxLength?: number;
 }
 
 @Component({

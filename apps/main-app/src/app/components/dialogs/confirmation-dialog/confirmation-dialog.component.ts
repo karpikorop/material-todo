@@ -6,11 +6,11 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 
-interface ConfirmDialogData {
+export interface ConfirmDialogData {
   title: string,
   message: string,
-  mainButtonText: string,
-  secondaryButtonText: string,
+  mainButtonText?: string,
+  secondaryButtonText?: string,
 }
 
 @Component({

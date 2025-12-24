@@ -39,9 +39,6 @@ export class TodoService {
   private firestore: Firestore = inject(Firestore);
   private authService: AuthService = inject(AuthService);
 
-  constructor() {
-  }
-
   /**
    * Retrieves a real-time list of tasks for a specific project.
    * @param projectId - The ID (string) of the project to get tasks from.
