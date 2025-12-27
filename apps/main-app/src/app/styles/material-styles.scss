@@ -1,0 +1,75 @@
+// Specific fix for aligning the material icon button
+.mat-mdc-icon-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+//MAT MENU STYLES - Global improvements for all menus
+// Override default Material menu styles to be more modern and spacious
+.mat-mdc-menu-panel {
+  min-width: 220px !important;
+  background-color: var(--mat-sys-surface-container-highest) !important;
+  border-radius: 12px !important;
+  padding: 8px !important;
+}
+
+.mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+.mat-mdc-menu-item {
+  min-height: 48px !important;
+  padding: 12px 16px !important;
+  border-radius: 8px !important;
+  margin: 2px 0 !important;
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+  // Icons in menu items
+  .mat-icon {
+    margin-right: 16px !important;
+    color: var(--mat-sys-on-surface-variant) !important;
+    transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  // Text styling
+  .mdc-list-item__primary-text {
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    color: var(--mat-sys-on-surface) !important;
+  }
+
+  // Hover state
+  &:hover:not([disabled]) {
+    background-color: var(--mat-sys-primary-container) !important;
+
+    .mat-icon {
+      color: var(--mat-sys-primary) !important;
+    }
+
+    .mdc-list-item__primary-text {
+      color: var(--mat-sys-on-primary-container) !important;
+    }
+  }
+
+  // Focus state
+  &.cdk-program-focused:not([disabled]),
+  &.cdk-keyboard-focused:not([disabled]) {
+    background-color: var(--mat-sys-primary-container) !important;
+
+    .mat-icon {
+      color: var(--mat-sys-primary) !important;
+    }
+  }
+
+  // Active state
+  &:active:not([disabled]) {
+    background-color: var(--mat-sys-secondary-container) !important;
+    transform: scale(0.98) !important;
+  }
+
+  // Disabled state
+  &[disabled] {
+    opacity: 0.38 !important;
+  }
+}

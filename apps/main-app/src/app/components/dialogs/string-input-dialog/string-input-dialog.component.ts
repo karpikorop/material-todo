@@ -6,7 +6,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 
-export interface InputDialogData {
+export interface StringDialogData {
   title: string,
   message: string,
   placeholder?: string,
@@ -30,7 +30,7 @@ export class StringInputDialogComponent {
   returnString = '';
 
   private dialogRef = inject(MatDialogRef<StringInputDialogComponent>);
-  protected readonly data: InputDialogData = inject<InputDialogData>(MAT_DIALOG_DATA);
+  protected readonly data: StringDialogData = inject<StringDialogData>(MAT_DIALOG_DATA);
 
   protected onCancel(): void {
     this.dialogRef.close();

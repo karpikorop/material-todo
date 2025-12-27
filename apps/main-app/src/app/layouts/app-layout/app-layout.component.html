@@ -4,7 +4,7 @@
     [opened]="sidenavOpen()"
     (openedChange)="sidenavOpen.set($event)"
   >
-    <app-sidebar (close)="sidenavOpen.set(false)"></app-sidebar>
+    <app-sidebar (closeSidebar)="sidenavOpen.set(false)"></app-sidebar>
   </mat-sidenav>
   <mat-sidenav-content>
     @if (!sidenavOpen() || isMobileView()) {

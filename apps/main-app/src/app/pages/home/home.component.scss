@@ -12,7 +12,7 @@
 }
 
 .feature-section {
-  background-color: var(--mat-sys-surface-variant);
+  background-color: var(--mat-sys-surface-container-low);
   min-height: 50vh;
 }
 
@@ -43,5 +43,5 @@
   width: 64px;
   font-size: 64px;
   margin: 2rem 0;
-  color: var(--mat-sys-on-secondary-container);
+  color: var(--mat-sys-primary);
 }

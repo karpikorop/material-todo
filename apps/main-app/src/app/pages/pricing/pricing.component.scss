@@ -2,12 +2,13 @@
   display: flex;
   flex-direction: column;
   padding: 3rem 2rem !important;
-  background-color: var(--mat-sys-surface-variant);
-  box-shadow: var(--mat-sys-level1);
+  background-color: var(--mat-sys-surface-container-high);
+  box-shadow: var(--mat-sys-level2);
 }
 
 .supporter-card {
-  border: 1px solid var(--mat-sys-primary);
+  border: 2px solid var(--mat-sys-primary);
+  background-color: var(--mat-sys-primary-container);
 }
 
 .price-section {
@@ -28,7 +29,7 @@
     margin-bottom: 20px;
 
     mat-icon {
-      color: #4caf50;
+      color: var(--mat-sys-tertiary);
       margin-right: 12px;
     }
   }
@@ -41,12 +42,13 @@
 
 // faq section styles
 .faq-section {
-  background-color: var(--mat-sys-surface-variant);
+  background-color: var(--mat-sys-surface-container-low);
 
   .mat-expansion-panel {
     box-shadow: none !important;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--mat-sys-outline-variant);
     border-radius: 8px !important;
+    background-color: var(--mat-sys-surface-container);
 
     &:not(:last-child) {
       margin-bottom: 8px;

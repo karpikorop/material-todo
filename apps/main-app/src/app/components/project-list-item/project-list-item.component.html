@@ -18,15 +18,9 @@
   </button>
 </div>
 <mat-menu #projectMenu="matMenu">
-  <button mat-menu-item matTooltip="Not Active For Now">
-    <mat-icon>style</mat-icon>
-    <span>Change Icon</span>
-  </button>
-  <button mat-menu-item matTooltip="Not Active For Now">
-    <mat-icon
-    ><span class="material-symbols-rounded"> text_format </span></mat-icon
-    >
-    <span>Rename</span>
+  <button mat-menu-item (click)="editProject()">
+    <mat-icon>edit</mat-icon>
+    <span>Edit</span>
   </button>
   <button mat-menu-item (click)="deleteProject()">
     <mat-icon>delete</mat-icon>

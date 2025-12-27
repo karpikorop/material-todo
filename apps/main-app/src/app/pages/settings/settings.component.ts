@@ -5,7 +5,7 @@ import { ProfileFormComponent } from './components/profile-form/profile-form.com
 import { SecurityLoginComponent } from './components/security-login/security-login.component';
 import { DangerZoneComponent } from './components/danger-zone/danger-zone.component';
 import { PersonalizationComponent } from './components/personalization/personalization.component';
-import {UserProfileInterface, UserService} from '../../services/user-service/user.service';
+import {UserService} from '../../services/user-service/user.service';
 import {AsyncPipe} from '@angular/common';
 import {NotificationService} from '../../services/notification-service/notification.service';
 import {
@@ -19,6 +19,7 @@ import {
 } from '../../components/dialogs/password-input-dialog/password-input-dialog.component';
 import {AuthService} from '../../services/auth-service/auth.service';
 import {DialogService} from '../../components/dialogs/dialog-service/dialog.service';
+import {UserProfileInterface} from '@shared/lib/models/user';
 
 @Component({
   selector: 'app-settings',

@@ -26,8 +26,8 @@
 .add-todo-container {
   margin: 1rem 0;
   padding: 0.5rem 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--mat-sys-outline-variant);
+  box-shadow: var(--mat-sys-level1);
   border-radius: 8px;
   flex-shrink: 0;
 }
@@ -38,5 +38,5 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  color: #999;
+  color: var(--mat-sys-on-surface-variant);
 }

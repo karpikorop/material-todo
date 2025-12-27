@@ -10,7 +10,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {AuthService, AuthProvider} from '../../services/auth-service/auth.service';
+import {AuthService} from '../../services/auth-service/auth.service';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import {NotificationService} from '../../services/notification-service/notification.service';

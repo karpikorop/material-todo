@@ -8,7 +8,7 @@
   <form class="signup-form border-grey" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
     <div class="w-full text-left mb-5">
       <h2 class="mb-3 font-bold text-lg">Create an Account</h2>
-      <span class="text-sm">Enter your info below to sign up to your account</span>
+      <span class="text-sm text-tertiary">Enter your info below to sign up to your account</span>
     </div>
 
     <mat-form-field class="w-full">
@@ -43,9 +43,9 @@
       <mat-icon svgIcon="google"></mat-icon>
     </button>
 
-    <p class="mt-5 text-center text-sm">
+    <p class="mt-5 text-center text-sm text-tertiary link-button">
       Already have an account?
-      <a routerLink="/login" class="underline hover:text-sky-900">Login here</a>
+      <a routerLink="/login" class="underline">Login here</a>
     </p>
   </form>
 </div>

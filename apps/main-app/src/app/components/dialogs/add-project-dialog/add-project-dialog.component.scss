@@ -1,0 +1,11 @@
+.flex.items-center {
+  align-items: flex-start;
+
+  button[mat-icon-button] {
+    margin-top: 8px;
+  }
+}
+.primary-icon-color {
+  color: var(--mat-sys-primary);
+}
+

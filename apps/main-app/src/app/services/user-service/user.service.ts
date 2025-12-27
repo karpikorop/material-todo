@@ -14,22 +14,7 @@ import {switchMap} from 'rxjs/operators';
 import {ProjectService} from '../project-service/project.service';
 import {SettingsService} from '../settings-service/settings.service';
 import {getDownloadURL, ref, Storage, uploadBytes} from '@angular/fire/storage';
-
-export interface UserProfileInterface {
-  id: string;
-  /**
-   * If possible, use email from Auth Service currentUser$ instead.
-   */
-  email: string;
-  username: string;
-  avatarUrl: string;
-  supporter: boolean;
-  createdAt: Timestamp;
-}
-
-export type UserProfile = UserProfileInterface | null;
-
-export const PLACEHOLDER_AVATAR_URL = "https://placehold.net/avatar-4.png";
+import {UserProfile, UserProfileInterface, PLACEHOLDER_AVATAR_URL} from "@shared/lib/models/user";
 
 @Injectable({
   providedIn: 'root',

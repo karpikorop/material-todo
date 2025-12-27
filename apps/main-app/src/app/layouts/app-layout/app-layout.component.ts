@@ -22,7 +22,4 @@ import {IS_MOBILE} from '../../tokens';
 export class AppLayoutComponent {
   protected isMobileView = inject(IS_MOBILE);
   protected sidenavOpen = signal(!this.isMobileView());
-
-  constructor() {
-  }
 }

@@ -10,7 +10,7 @@ import {
   PLACEHOLDER_AVATAR_URL,
   UserProfile,
   UserProfileInterface
-} from '../../../../services/user-service/user.service';
+} from '@shared/lib/models/user';
 import {NotificationService} from '../../../../services/notification-service/notification.service';
 
 @Component({

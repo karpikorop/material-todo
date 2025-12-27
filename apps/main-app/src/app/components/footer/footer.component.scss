@@ -1,4 +1,9 @@
 .toolbar {
-  background-color: var(--mat-sys-surface-variant);
+  background-color: var(--mat-sys-surface-container);
   color: var(--mat-sys-on-surface-variant);
+}
+
+// GitHub icon inherits color from parent context
+a[aria-label="GitHub repository link"] .mat-icon {
+  color: var(--mat-sys-on-surface);
 }

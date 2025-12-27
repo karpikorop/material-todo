@@ -141,7 +141,7 @@ firebase deploy --only functions
 This project uses a custom Angular Material theme. To generate and apply a new color palette run the generator in your terminal.
 
 ```zsh
-ng generate @angular/material:theme-color
+nx g @angular/material:theme-color --project=main-app
 ```
 
 The CLI will then prompt you for a primary color and path for a theme file(src/app/styles recommended).

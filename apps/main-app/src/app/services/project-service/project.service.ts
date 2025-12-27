@@ -1,30 +1,22 @@
-import {Injectable, inject} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {
-  Firestore,
+  addDoc,
   collection,
   collectionData,
   doc,
-  addDoc,
-  updateDoc,
-  query,
+  Firestore,
   orderBy,
+  query,
+  serverTimestamp,
   setDoc,
   Timestamp,
-  serverTimestamp,
+  updateDoc,
 } from '@angular/fire/firestore';
 import {AuthService} from '../auth-service/auth.service';
 import {Observable, of} from 'rxjs';
 import {shareReplay, switchMap} from 'rxjs/operators';
 import {Functions, httpsCallable} from '@angular/fire/functions';
-
-export interface Project {
-  id: string; // Firestore ID
-  name: string;
-  icon: string;
-  sortOrder?: number;
-  createdAt: Timestamp;
-  userId: string;
-}
+import {Project} from '@shared/lib/models/project';
 
 @Injectable({
   providedIn: 'root',
