@@ -8,7 +8,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
-    "isolatedModules": true,
     "esModuleInterop": true,
     "moduleResolution": "bundler",
     "importHelpers": true,

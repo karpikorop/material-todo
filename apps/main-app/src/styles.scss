@@ -1,32 +1,60 @@
 @use "@angular/material" as mat;
 @use "./app/styles/_theme-colors" as app;
-@import "tailwindcss";
+@import url("tailwindcss");
+@import url("./app/styles/ng-select-custom.scss");
 
-@import "./app/styles/ng-select-custom.scss";
 // Angular material theme variables
 // https://material.angular.dev/guide/system-variables
 
+$app-font: "Inter", sans-serif;
+
+$light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: app.$primary-palette,
+    tertiary: app.$tertiary-palette,
+  ),
+  typography: (
+    plain-family: $app-font,
+    brand-family: $app-font,
+  ),
+));
+
+// 3. DEFINE THE DARK THEME
+// We reuse the SAME palettes. Material automatically flips the colors.
+$dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: app.$primary-palette,
+    tertiary: app.$tertiary-palette,
+  ),
+  typography: (
+    plain-family: $app-font,
+    brand-family: $app-font,
+  ),
+));
+
 html {
-  @include mat.theme(
-      (
-        color:
-        (
-          primary: app.$primary-palette,
-          tertiary: app.$tertiary-palette,
-          theme-type: light,
-        ),
-        typography: (
-          font-family: var(--font-sans),
-        ),
-      )
-  );
+  @include mat.all-component-themes($light-theme);
+  @include mat.system-level-colors($light-theme);
+  @include mat.system-level-typography($light-theme);
+
+  font-family: $app-font;
+  font-feature-settings: 'cv11', 'salt'; // specific for inter font
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+html.dark-theme {
+  @include mat.all-component-colors($dark-theme);
+  @include mat.system-level-colors($dark-theme);
+}
 
 body {
   margin: 0;
   background-color: var(--mat-sys-surface);
-  @apply font-sans antialiased;
 }
 
 .mat-icon-filled {
@@ -85,6 +113,7 @@ body {
   height: 1px;
   display: flex;
   align-items: center;
+  color: var(--mat-sys-on-surface-variant);
 
   &::before,
   &::after {

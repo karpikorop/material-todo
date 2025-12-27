@@ -6,10 +6,10 @@
 </div>
 
 <div class="grid place-items-center h-dvh w-full main-container">
-  <form class="signup-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <form class="signup-form border-grey" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="w-full text-left mb-5">
       <h2 class="mb-3 font-bold text-lg">Login to your account</h2>
-      <span>Enter your info below to login to your account</span>
+      <span class="text-sm">Enter your info below to login to your account</span>
     </div>
 
     <mat-form-field class="w-full">
@@ -44,7 +44,7 @@
       <mat-icon svgIcon="google"></mat-icon>
     </button>
 
-    <p class="mt-5 text-center">
+    <p class="mt-5 text-center text-sm">
       Don't have an account?
       <a routerLink="/signup" class="underline hover:text-sky-900"
       >Sign up here</a

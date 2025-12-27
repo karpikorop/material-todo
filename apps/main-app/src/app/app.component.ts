@@ -7,6 +7,7 @@ import {inject} from '@angular/core';
 import {UserService} from './services/user-service/user.service';
 import {IS_EMULATOR} from './tokens';
 import {NotificationService} from './services/notification-service/notification.service';
+import {ThemeService} from './services/theme-service/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -17,8 +18,9 @@ import {NotificationService} from './services/notification-service/notification.
 export class AppComponent implements OnInit {
   private iconService: IconService = inject(IconService);
   private matIconReg: MatIconRegistry = inject(MatIconRegistry);
-  private userService = inject(UserService); // Ensure userService constructor is called
   private notificationService = inject(NotificationService);
+  private userService = inject(UserService); // Ensure userService constructor is called
+  private themeService = inject(ThemeService); // Ensure themeService constructor is called
   private isEmulator = inject(IS_EMULATOR);
 
   title = 'todo-material-angular-app';

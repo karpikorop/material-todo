@@ -1,11 +1,9 @@
-@import "tailwindcss";
-
 .plan-card {
   display: flex;
   flex-direction: column;
   padding: 3rem 2rem !important;
   background-color: var(--mat-sys-surface-variant);
-  @apply shadow-lg;
+  box-shadow: var(--mat-sys-level1);
 }
 
 .supporter-card {

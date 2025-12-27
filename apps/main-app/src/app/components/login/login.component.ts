@@ -1,4 +1,5 @@
 import {Component, inject} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {MatButton} from '@angular/material/button';
 import {RouterLink, Router} from '@angular/router';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -9,7 +10,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {AuthService} from '../../services/auth-service/auth.service';
+import {AuthService, AuthProvider} from '../../services/auth-service/auth.service';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import {NotificationService} from '../../services/notification-service/notification.service';
@@ -40,6 +41,14 @@ export class LoginComponent {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
+
+    this.authService.currentUser$
+      .pipe(takeUntilDestroyed())
+      .subscribe((user) => {
+        if (user) {
+          this.router.navigate(['/app']).then();
+        }
+      });
   }
 
 
@@ -47,7 +56,6 @@ export class LoginComponent {
     const data = this.loginForm.value;
     try {
       await this.authService.logIn(data.email, data.password);
-      console.log('Redirecting to /app after successful login...');
       await this.router.navigate(['/app']);
     } catch (error) {
       this.notificationService.showError("Error logging in");

@@ -4,8 +4,13 @@
     <div class="flex flex-col w-md">
 
       <mat-card-subtitle>Change Theme</mat-card-subtitle>
-      <ng-select class="mt-4 mb-4" [placeholder]="'Default'">
-        <ng-option>Default</ng-option>
+      <ng-select
+        class="mt-4 mb-4"
+        [items]="themes"
+        [formControl]="themeControl"
+        [placeholder]="'Select Theme'"
+        [clearable]="false"
+        [searchable]="false">
       </ng-select>
 
 

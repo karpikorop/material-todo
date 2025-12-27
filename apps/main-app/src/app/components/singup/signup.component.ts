@@ -12,6 +12,7 @@ import {
 import {AuthService} from '../../services/auth-service/auth.service';
 import {MatIconModule} from '@angular/material/icon';
 import {NotificationService} from '../../services/notification-service/notification.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-signup',
@@ -39,6 +40,14 @@ export class SignupComponent {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
+
+    this.authService.currentUser$
+      .pipe(takeUntilDestroyed())
+      .subscribe((user) => {
+        if (user) {
+          this.router.navigate(['/app']).then();
+        }
+      });
   }
 
   protected async onSubmit(): Promise<void> {

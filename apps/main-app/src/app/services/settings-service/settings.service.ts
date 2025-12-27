@@ -6,18 +6,23 @@ import {
   updateDoc, setDoc,
 } from '@angular/fire/firestore';
 import {AuthService} from '../auth-service/auth.service';
-import {Observable, of} from 'rxjs';
-import {map, switchMap} from 'rxjs/operators';
+import {distinctUntilChanged, Observable, of} from 'rxjs';
+import {map, shareReplay, switchMap} from 'rxjs/operators';
 import {getTimeZonesList} from '@shared/lib/utils/timezones.utils'
 import {TimeZone} from '@vvo/tzdb';
 
 export const SETTINGS_DOCUMENT_ID = 'preferences';
 
+export enum Themes {
+  LIGHT = 'light',
+  DARK = 'dark',
+}
+
 /**
  * Interface representing the user's application-specific settings.
  */
 export interface UserSettings {
-  theme?: string; // TODO: Define possible themes or maybe prime color
+  theme?: Themes;
   timeZone: string; // IANA Time Zone Name (e.g., 'Europe/Kyiv')
 }
 
@@ -31,7 +36,7 @@ export class SettingsService {
 
 
   private readonly defaultSettings: UserSettings = {
-    theme: 'default',
+    theme: Themes.LIGHT,
     timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
   };
 
@@ -62,7 +67,9 @@ export class SettingsService {
           return {...this.defaultSettings, ...settingsFromDb};
         }
         return null;
-      })
+      }),
+      distinctUntilChanged(),
+      shareReplay(1)
     );
 
   /**
