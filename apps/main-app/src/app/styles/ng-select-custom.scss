@@ -283,6 +283,8 @@ $ng-select-dropdown-option-disabled: var(--mat-sys-surface-disabled) !default;
   border: 1px solid $ng-select-dropdown-border;
   box-shadow: none;
   left: 0;
+  max-width: 100%;
+  box-sizing: border-box;
   &.ng-select-top {
     bottom: 100%;
     border-top-right-radius: $ng-select-border-radius;

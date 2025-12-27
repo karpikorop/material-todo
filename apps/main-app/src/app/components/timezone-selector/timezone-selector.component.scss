@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  max-width: 100%;
+}
+
+ng-select {
+  max-width: 100%;
+
+  ::ng-deep .ng-select-container {
+    max-width: 100%;
+  }
+
+  ::ng-deep .ng-dropdown-panel {
+    max-width: 100%;
+  }
+}
+
