@@ -17,7 +17,7 @@ export class TodoService {
       .collection(getTodosCollectionPath(userId))
       .where('userId', '==', userId);
 
-    if (isStringEmpty(projectId)) {
+    if (!isStringEmpty(projectId)) {
       query = query.where('projectId', '==', projectId);
     }
 
