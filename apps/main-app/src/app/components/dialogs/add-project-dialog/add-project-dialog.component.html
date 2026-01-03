@@ -29,15 +29,15 @@
     <mat-menu #iconMenu="matMenu" class="icon-picker-menu">
       <div class="grid grid-cols-4 gap-2 p-3">
         @for (icon of availableIcons; track icon) {
-        <button mat-icon-button (click)="selectIcon(icon)" class="!w-10 !h-10">
-          <mat-icon
-            class="mat-icon-filled"
-            [class.primary-icon-color]="selectedIcon === icon"
-            [class.text-primary]="selectedIcon !== icon"
-          >
-            {{ icon }}
-          </mat-icon>
-        </button>
+          <button mat-icon-button (click)="selectIcon(icon)" class="!w-10 !h-10">
+            <mat-icon
+              class="mat-icon-filled"
+              [class.primary-icon-color]="selectedIcon === icon"
+              [class.text-primary]="selectedIcon !== icon"
+            >
+              {{ icon }}
+            </mat-icon>
+          </button>
         }
       </div>
     </mat-menu>

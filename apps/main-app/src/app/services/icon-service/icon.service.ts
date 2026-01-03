@@ -24,7 +24,10 @@ export enum IconsNames {
   providedIn: 'root',
 })
 export class IconService {
-  constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {}
+  constructor(
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {}
 
   public registerIcons(): void {
     try {

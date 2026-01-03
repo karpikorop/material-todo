@@ -6,10 +6,6 @@
  * - Checks if firebase.config.ts already exists
  * - If not, copies it from firebase.config.template.ts
  * - Prevents build failures due to missing configuration file
- *
- * Usage:
- * This script is typically run as a pre-build or postinstall step in package.json
- * to guarantee the configuration file is present for local development.
  */
 const fs = require('fs');
 const path = require('path');

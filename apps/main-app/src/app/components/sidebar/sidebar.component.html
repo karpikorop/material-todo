@@ -2,16 +2,16 @@
   <div class="sidebar-header">
     <button mat-button class="user-profile-button" [matMenuTriggerFor]="userMenu">
       @if (userProfile$ | async; as user) {
-      <div class="user-profile-content">
-        <img
-          [ngSrc]="user.avatarUrl || PLACEHOLDER_AVATAR_URL"
-          alt="User Avatar"
-          class="user-avatar"
-          width="24"
-          height="24"
-        />
-        <span class="username">{{ user.username }}</span>
-      </div>
+        <div class="user-profile-content">
+          <img
+            [ngSrc]="user.avatarUrl || PLACEHOLDER_AVATAR_URL"
+            alt="User Avatar"
+            class="user-avatar"
+            width="24"
+            height="24"
+          />
+          <span class="username">{{ user.username }}</span>
+        </div>
       }
     </button>
 
@@ -34,11 +34,13 @@
   <div class="divider ml-4 mr-4"></div>
 
   <mat-nav-list class="project-list">
-    @if (projects$ | async; as projects) { @for (project of projects; track project.id) {
-    <project-list-item [project]="project"></project-list-item>
-    } @empty {
-    <div class="empty">No projects yet</div>
-    } }
+    @if (projects$ | async; as projects) {
+      @for (project of projects; track project.id) {
+        <project-list-item [project]="project"></project-list-item>
+      } @empty {
+        <div class="empty">No projects yet</div>
+      }
+    }
   </mat-nav-list>
 
   <div class="add-project-action">

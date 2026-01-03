@@ -1,13 +1,16 @@
 <div class="snackbar-container" [ngClass]="data.type">
   <div class="icon-container">
     @if (data.type === 'success') {
-    <mat-icon>check_circle</mat-icon>
-    } @if (data.type === 'error') {
-    <mat-icon>error</mat-icon>
-    } @if (data.type === 'info') {
-    <mat-icon>chat</mat-icon>
-    } @if (data.type === 'warning') {
-    <mat-icon>warning</mat-icon>
+      <mat-icon>check_circle</mat-icon>
+    }
+    @if (data.type === 'error') {
+      <mat-icon>error</mat-icon>
+    }
+    @if (data.type === 'info') {
+      <mat-icon>chat</mat-icon>
+    }
+    @if (data.type === 'warning') {
+      <mat-icon>warning</mat-icon>
     }
   </div>
 

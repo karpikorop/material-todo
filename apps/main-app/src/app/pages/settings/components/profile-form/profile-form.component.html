@@ -58,11 +58,13 @@
           />
           <mat-icon matPrefix>person</mat-icon>
           @if (profileForm.get('username')?.invalid && profileForm.get('username')?.touched) {
-          <mat-error>
-            @if (profileForm.get('username')?.hasError('required')) { Username is required } @else
-            if (profileForm.get('username')?.hasError('minlength')) { Username must be at least 3
-            characters }
-          </mat-error>
+            <mat-error>
+              @if (profileForm.get('username')?.hasError('required')) {
+                Username is required
+              } @else if (profileForm.get('username')?.hasError('minlength')) {
+                Username must be at least 3 characters
+              }
+            </mat-error>
           }
         </mat-form-field>
       </form>

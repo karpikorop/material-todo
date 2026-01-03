@@ -31,7 +31,7 @@ export class TodoService {
         ({
           ...doc.data(),
           id: doc.id,
-        } as Todo)
+        }) as Todo
     );
   }
 }

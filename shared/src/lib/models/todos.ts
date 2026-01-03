@@ -7,11 +7,11 @@ export interface Todo {
   description?: string;
   status: 'todo' | 'done' | 'archived';
   priority?: 'low' | 'medium' | 'high';
-  dueDate?: Timestamp | FieldValue;
-  reminderDate?: Timestamp | FieldValue;
+  dueDate?: Timestamp;
+  reminderDate?: Timestamp;
   projectId: string;
-  createdAt: Timestamp | FieldValue;
-  updatedAt: Timestamp | FieldValue;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
 }
 
 export type newTodoData = Omit<Todo, 'id' | 'userId' | 'createdAt' | 'updatedAt' | 'status'>;

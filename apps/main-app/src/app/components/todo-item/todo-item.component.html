@@ -11,32 +11,34 @@
     <span class="title">{{ todo.title }}</span>
 
     @if (todo.dueDate) {
-    <span class="due-date">{{ todo.dueDate.toDate() | date : 'MMM d' }}</span>
-    } @if (isHovered()) {
-    <div class="actions">
-      <button mat-icon-button matTooltip="Edit task" (click)="onEdit()">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-icon-button matTooltip="Set due date" (click)="onSetTime()">
-        <mat-icon>event</mat-icon>
-      </button>
-      <button mat-icon-button matTooltip="Delete task" color="warn" (click)="onDelete()">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
+      <span class="due-date">{{ todo.dueDate.toDate() | date: 'MMM d' }}</span>
+    }
+    @if (isHovered()) {
+      <div class="actions">
+        <button mat-icon-button matTooltip="Edit task" (click)="onEdit()">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Set due date" (click)="onSetTime()">
+          <mat-icon>event</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Delete task" color="warn" (click)="onDelete()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
     }
   </div>
 
   @if (todo.description || todo.reminderDate) {
-  <div class="details-row">
-    @if (todo.description) {
-    <mat-icon matTooltip="{{ todo.description }}">notes</mat-icon>
-    <span class="description">{{ todo.description }}</span>
-    } @if (todo.reminderDate) {
-    <mat-icon matTooltip="Reminder set for {{ todo.reminderDate.toDate() | date : 'short' }}">
-      notifications
-    </mat-icon>
-    }
-  </div>
+    <div class="details-row">
+      @if (todo.description) {
+        <mat-icon matTooltip="{{ todo.description }}">notes</mat-icon>
+        <span class="description">{{ todo.description }}</span>
+      }
+      @if (todo.reminderDate) {
+        <mat-icon matTooltip="Reminder set for {{ todo.reminderDate.toDate() | date: 'short' }}">
+          notifications
+        </mat-icon>
+      }
+    </div>
   }
 </div>
