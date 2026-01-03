@@ -2,7 +2,7 @@ import { Component, inject, output } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
-import { PLACEHOLDER_AVATAR_URL, UserProfile } from '@shared/lib/models/user';
+import { PLACEHOLDER_AVATAR_URL, UserProfile } from '@shared';
 import { ProjectService } from '../../services/project-service/project.service';
 
 import { MatListModule } from '@angular/material/list';
@@ -20,7 +20,7 @@ import {
   AddProjectDialogData,
   AddProjectDialogState,
 } from '../dialogs/add-project-dialog/add-project-dialog.component';
-import { Project } from '@shared/lib/models/project';
+import { Project } from '@shared';
 import { UserService } from '../../services/user-service/user.service';
 
 @Component({
