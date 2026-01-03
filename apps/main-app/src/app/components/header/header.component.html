@@ -5,50 +5,54 @@
   </button>
 
   @if (isMobileView()) {
-  <span class="example-spacer"></span>
-  <button mat-icon-button class="mr-4" (click)="toggleDropdown()">
-    <mat-icon>{{ menu_icon() }}</mat-icon>
-  </button>
-
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="mr-4" (click)="toggleDropdown()">
+      <mat-icon>{{ menu_icon() }}</mat-icon>
+    </button>
   } @else {
-  <a mat-button routerLink="/pricing" class="mr-2">Pricing</a>
-  <a mat-button routerLink="/downloads" class="mr-2">Downloads</a>
-  <a mat-button routerLink="/about" class="mr-2">About</a>
+    <a mat-button routerLink="/pricing" class="mr-2">Pricing</a>
+    <a mat-button routerLink="/downloads" class="mr-2">Downloads</a>
+    <a mat-button routerLink="/about" class="mr-2">About</a>
 
-  <span class="example-spacer"></span>
+    <span class="example-spacer"></span>
 
-  <button matButton="filled" class="mr-2" routerLink="/signup">Start for free</button>
-  <button mat-button routerLink="/login">
-    Login
-    <mat-icon>login</mat-icon>
-  </button>
-  }
-</mat-toolbar>
-@if (isMobileView()) {
-<div class="drop-down" [@dropdownAnimation]="showDropdown() ? 'open' : 'closed'">
-  <button matButton routerLink="/pricing" class="drop-down-button mb-3" (click)="toggleDropdown()">
-    Pricing
-  </button>
-  <button
-    matButton
-    routerLink="/downloads"
-    class="drop-down-button mb-3"
-    (click)="toggleDropdown()"
-  >
-    Downloads
-  </button>
-  <button matButton routerLink="/about" class="drop-down-button mb-3" (click)="toggleDropdown()">
-    About
-  </button>
-
-  <div class="divider mb-5 mt-1"></div>
-
-  <div class="flex justify-center">
-    <button matButton="filled" class="mr-5" routerLink="/signup">Start for free</button>
-    <button matButton="tonal" routerLink="/login">
+    <button matButton="filled" class="mr-2" routerLink="/signup">Start for free</button>
+    <button mat-button routerLink="/login">
       Login
       <mat-icon>login</mat-icon>
     </button>
+  }
+</mat-toolbar>
+@if (isMobileView()) {
+  <div class="drop-down" [@dropdownAnimation]="showDropdown() ? 'open' : 'closed'">
+    <button
+      matButton
+      routerLink="/pricing"
+      class="drop-down-button mb-3"
+      (click)="toggleDropdown()"
+    >
+      Pricing
+    </button>
+    <button
+      matButton
+      routerLink="/downloads"
+      class="drop-down-button mb-3"
+      (click)="toggleDropdown()"
+    >
+      Downloads
+    </button>
+    <button matButton routerLink="/about" class="drop-down-button mb-3" (click)="toggleDropdown()">
+      About
+    </button>
+
+    <div class="divider mb-5 mt-1"></div>
+
+    <div class="flex justify-center">
+      <button matButton="filled" class="mr-5" routerLink="/signup">Start for free</button>
+      <button matButton="tonal" routerLink="/login">
+        Login
+        <mat-icon>login</mat-icon>
+      </button>
+    </div>
   </div>
-</div>
 }

@@ -9,7 +9,10 @@ import {
 
 @injectable()
 export class ProjectsService {
-  constructor(private firebase: FirebaseAdminService, private batchSave: BatchSaveService) {}
+  constructor(
+    private firebase: FirebaseAdminService,
+    private batchSave: BatchSaveService
+  ) {}
 
   /**
    * Deletes a project and its associated todos.

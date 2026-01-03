@@ -8,11 +8,11 @@
   </mat-sidenav>
   <mat-sidenav-content>
     @if (!sidenavOpen() || isMobileView()) {
-    <div class="absolute">
-      <button mat-icon-button (click)="sidenavOpen.set(true)" class="top-4 left-4">
-        <mat-icon>side_navigation</mat-icon>
-      </button>
-    </div>
+      <div class="absolute">
+        <button mat-icon-button (click)="sidenavOpen.set(true)" class="top-4 left-4">
+          <mat-icon>side_navigation</mat-icon>
+        </button>
+      </div>
     }
 
     <router-outlet></router-outlet>

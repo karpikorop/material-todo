@@ -9,6 +9,7 @@ import {
   orderBy,
   query,
   serverTimestamp,
+  Timestamp,
   updateDoc,
   where,
 } from '@angular/fire/firestore';
@@ -59,8 +60,8 @@ export class TodoService {
       status: 'todo', // default status can be overridden by passed todoData
       ...todoData,
       userId: userId,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
+      createdAt: serverTimestamp() as Timestamp,
+      updatedAt: serverTimestamp() as Timestamp,
     };
     await addDoc(todosRef, newTodo);
   }
