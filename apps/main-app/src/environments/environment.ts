@@ -1,4 +1,4 @@
-import {firebaseConfig} from './firebase.config';
+import { firebaseConfig } from './firebase.config';
 
 /**
  * Environment Configuration
@@ -13,5 +13,5 @@ import {firebaseConfig} from './firebase.config';
 export const environment = {
   production: false,
   useEmulators: false,
-  firebase: firebaseConfig
+  firebase: firebaseConfig,
 };

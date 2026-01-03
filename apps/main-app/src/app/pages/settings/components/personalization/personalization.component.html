@@ -2,7 +2,6 @@
 <mat-card appearance="outlined">
   <mat-card-content>
     <div class="flex flex-col">
-
       <mat-card-subtitle>Change Theme</mat-card-subtitle>
       <ng-select
         class="mt-4 mb-4 w-100"
@@ -10,12 +9,12 @@
         [formControl]="themeControl"
         [placeholder]="'Select Theme'"
         [clearable]="false"
-        [searchable]="false">
+        [searchable]="false"
+      >
       </ng-select>
 
-
       <mat-card-subtitle>Change Time Zone</mat-card-subtitle>
-    <timezone-selector class="w-120 mt-4 mb-2"></timezone-selector>
+      <timezone-selector class="w-120 mt-4 mb-2"></timezone-selector>
     </div>
   </mat-card-content>
 </mat-card>

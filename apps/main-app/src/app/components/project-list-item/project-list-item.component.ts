@@ -1,24 +1,24 @@
-import {Component, inject, input} from '@angular/core';
-import {ProjectService} from '../../services/project-service/project.service';
-import {RouterLink, RouterLinkActive} from '@angular/router';
-import {MatIconModule} from '@angular/material/icon';
-import {MatIconButton} from '@angular/material/button';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {NotificationService} from '../../services/notification-service/notification.service';
-import {Router} from '@angular/router';
-import {DialogService} from '../dialogs/dialog-service/dialog.service';
+import { Component, inject, input } from '@angular/core';
+import { ProjectService } from '../../services/project-service/project.service';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NotificationService } from '../../services/notification-service/notification.service';
+import { Router } from '@angular/router';
+import { DialogService } from '../dialogs/dialog-service/dialog.service';
 import {
   ConfirmationDialogComponent,
-  ConfirmDialogData
+  ConfirmDialogData,
 } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
-import {Project} from '@shared/lib/models/project';
+import { Project } from '@shared/lib/models/project';
 import {
   AddProjectDialogComponent,
   AddProjectDialogData,
-  AddProjectDialogState
+  AddProjectDialogState,
 } from '../dialogs/add-project-dialog/add-project-dialog.component';
-import {UserService} from '../../services/user-service/user.service';
+import { UserService } from '../../services/user-service/user.service';
 
 @Component({
   selector: 'project-list-item',
@@ -44,7 +44,7 @@ export class ProjectListItemComponent {
   public project = input.required<Project>();
 
   protected async deleteProject() {
-    if(this.checkInbox()) return;
+    if (this.checkInbox()) return;
 
     const result = await this.dialogService.openDialog<ConfirmDialogData, boolean>(
       ConfirmationDialogComponent,
@@ -71,22 +71,30 @@ export class ProjectListItemComponent {
 
       await this.projectService.deleteProject(this.project().id);
     } catch (error: any) {
-      this.notificationService.showError('Failed to delete project. Please try again later.', error);
+      this.notificationService.showError(
+        'Failed to delete project. Please try again later.',
+        error
+      );
       this.isHidden = false;
     }
   }
 
   protected async editProject() {
-    if(this.checkInbox()) return;
+    if (this.checkInbox()) return;
 
-    const projConfig = await this.dialogService.openDialog<AddProjectDialogData, AddProjectDialogState>(
-      AddProjectDialogComponent, {
+    const projConfig = await this.dialogService.openDialog<
+      AddProjectDialogData,
+      AddProjectDialogState
+    >(
+      AddProjectDialogComponent,
+      {
         editMode: true,
         currentState: {
           name: this.project().name,
           icon_name: this.project().icon,
-        }
-      }, {
+        },
+      },
+      {
         width: '500px',
       }
     );
@@ -97,20 +105,20 @@ export class ProjectListItemComponent {
       return;
     }
 
-    if(this.isProjectNameChanged(name) || this.isProjectIconChanged(icon)){
+    if (this.isProjectNameChanged(name) || this.isProjectIconChanged(icon)) {
       try {
         const userId = this.userService.currentUser?.id;
         if (!userId) {
           throw new Error('You must be logged in to edit a project.');
         }
-        await this.projectService.updateProject(userId, this.project().id, {name: name, icon: icon});
+        await this.projectService.updateProject(userId, this.project().id, {
+          name: name,
+          icon: icon,
+        });
       } catch (error) {
-        this.notificationService.showError(
-          'Error editing project:', error
-        );
+        this.notificationService.showError('Error editing project:', error);
       }
     }
-
   }
 
   private isProjectNameChanged(name: string, current_name = this.project().name): boolean {

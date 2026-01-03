@@ -14,16 +14,15 @@
  * from GitHub Secrets during the deployment process.
  */
 
-
 /**
  * Firebase configuration template with empty values.
  * Replace these values with your Firebase project credentials for local development.
  */
 export const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
+  apiKey: '',
+  authDomain: '',
+  projectId: '',
+  storageBucket: '',
+  messagingSenderId: '',
+  appId: '',
 };

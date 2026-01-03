@@ -1,4 +1,4 @@
-import {Component, input, output, effect, inject} from '@angular/core';
+import { Component, input, output, effect, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,12 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { NgOptimizedImage } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {
-  PLACEHOLDER_AVATAR_URL,
-  UserProfile,
-  UserProfileInterface
-} from '@shared/lib/models/user';
-import {NotificationService} from '../../../../services/notification-service/notification.service';
+import { PLACEHOLDER_AVATAR_URL, UserProfile, UserProfileInterface } from '@shared/lib/models/user';
+import { NotificationService } from '../../../../services/notification-service/notification.service';
 
 @Component({
   selector: 'profile-form-settings',
@@ -26,7 +22,7 @@ import {NotificationService} from '../../../../services/notification-service/not
     ReactiveFormsModule,
   ],
   templateUrl: './profile-form.component.html',
-  styleUrl: './profile-form.component.scss'
+  styleUrl: './profile-form.component.scss',
 })
 export class ProfileFormComponent {
   public userProfile = input.required<UserProfile>();
@@ -35,13 +31,13 @@ export class ProfileFormComponent {
   public avatarReset = output<void>();
 
   private notificationService = inject(NotificationService);
-  private fb =  inject(FormBuilder);
+  private fb = inject(FormBuilder);
 
   protected profileForm: FormGroup;
 
   constructor() {
     this.profileForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]]
+      username: ['', [Validators.required, Validators.minLength(3)]],
     });
 
     // Use effect to react to userProfile signal changes
@@ -49,7 +45,7 @@ export class ProfileFormComponent {
       const profile = this.userProfile();
       if (profile) {
         this.profileForm.patchValue({
-          username: profile.username || ''
+          username: profile.username || '',
         });
       }
     });
@@ -58,7 +54,7 @@ export class ProfileFormComponent {
   protected onSubmit() {
     if (this.profileForm.valid && this.isUsernameChanged()) {
       const updateData: Partial<UserProfileInterface> = {
-        username: this.profileForm.value.username
+        username: this.profileForm.value.username,
       };
 
       this.profileUpdate.emit(updateData);

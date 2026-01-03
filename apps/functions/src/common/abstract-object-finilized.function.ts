@@ -32,7 +32,7 @@ export abstract class AbstractObjectFinalizedFunction {
         bucket: event.bucket,
         name: event.data.name,
         contentType: event.data.contentType,
-        size: event.data.size
+        size: event.data.size,
       });
 
       await this.execute(event);

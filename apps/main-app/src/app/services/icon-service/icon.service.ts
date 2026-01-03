@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {MatIconRegistry} from '@angular/material/icon';
-import {DomSanitizer} from '@angular/platform-browser';
+import { Injectable } from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 /**
  * Defines the icon names used in the application.
@@ -24,11 +24,7 @@ export enum IconsNames {
   providedIn: 'root',
 })
 export class IconService {
-  constructor(
-    private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
-  ) {
-  }
+  constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {}
 
   public registerIcons(): void {
     try {
@@ -60,8 +56,7 @@ export class IconService {
         console.log(`Registering icon: ${key}`);
 
         const iconPath = `${iconUrl}/${key}.svg`;
-        const sanitizedUrl =
-          this.domSanitizer.bypassSecurityTrustResourceUrl(iconPath);
+        const sanitizedUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(iconPath);
 
         if (!sanitizedUrl) {
           console.error(`Failed to sanitize URL for icon: ${key}`);

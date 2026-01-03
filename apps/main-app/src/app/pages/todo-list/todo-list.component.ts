@@ -1,21 +1,22 @@
-import {Component, inject, ViewChild} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Observable, map, take, firstValueFrom} from 'rxjs';
+import { Component, inject, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, map, take, firstValueFrom } from 'rxjs';
 
-import {TodoItemComponent} from '../../components/todo-item/todo-item.component';
-import {AddTodoComponent} from '../../components/add-todo/add-todo.component';
-import {Todo, TodoService} from '../../services/todo-service/todo.service';
-import {AuthService} from '../../services/auth-service/auth.service';
-import {NotificationService} from '../../services/notification-service/notification.service';
+import { TodoItemComponent } from '../../components/todo-item/todo-item.component';
+import { AddTodoComponent } from '../../components/add-todo/add-todo.component';
+import { TodoService } from '../../services/todo-service/todo.service';
+import { AuthService } from '../../services/auth-service/auth.service';
+import { NotificationService } from '../../services/notification-service/notification.service';
 
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {shareReplay, switchMap} from 'rxjs/operators';
-import {MatDialog} from '@angular/material/dialog';
-import {ConfirmationDialogComponent} from '../../components/dialogs/confirmation-dialog/confirmation-dialog.component';
-import {ProjectService} from '../../services/project-service/project.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { shareReplay, switchMap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../components/dialogs/confirmation-dialog/confirmation-dialog.component';
+import { ProjectService } from '../../services/project-service/project.service';
+import { Todo } from '@shared/lib/models/todos';
 
 @Component({
   selector: 'app-todo-list',
@@ -40,7 +41,6 @@ export class TodoListComponent {
   private projectService = inject(ProjectService);
   private dialog = inject(MatDialog);
 
-
   @ViewChild(AddTodoComponent) addTodoComponent!: AddTodoComponent;
 
   protected projectId$: Observable<string> = this.route.params.pipe(
@@ -50,15 +50,16 @@ export class TodoListComponent {
 
   protected todos$: Observable<Todo[]> = this.projectId$.pipe(
     switchMap((id: string) => this.todoService.getTodosByProject(id)),
-    map(todos => todos.sort((a, b) => {
-      if (a.status === b.status) return 0;
-      return a.status === 'done' ? 1 : -1;
-    })),
+    map((todos) =>
+      todos.sort((a, b) => {
+        if (a.status === b.status) return 0;
+        return a.status === 'done' ? 1 : -1;
+      })
+    ),
     shareReplay(1)
   );
 
-  constructor() {
-  }
+  constructor() {}
 
   // Lifecycle hook to focus the input field after the view is checked
   // Focus is set to the input field of the AddTodoComponent
@@ -69,17 +70,12 @@ export class TodoListComponent {
     }
   }*/
 
-  protected updateTodo(event: {
-    todoId: string;
-    data: Partial<Omit<Todo, 'id'>>;
-  }): void {
+  protected updateTodo(event: { todoId: string; data: Partial<Omit<Todo, 'id'>> }): void {
     this.authService.currentUser$.pipe(take(1)).subscribe((user) => {
       if (user) {
         this.todoService
           .updateTodo(user.uid, event.todoId, event.data)
-          .catch(() =>
-            this.notificationService.showError('Failed to update task.')
-          );
+          .catch(() => this.notificationService.showError('Failed to update task.'));
       }
     });
   }
@@ -92,9 +88,7 @@ export class TodoListComponent {
           .then(() => {
             this.notificationService.showSuccess('Task deleted successfully.');
           })
-          .catch(() =>
-            this.notificationService.showError('Failed to delete task.')
-          );
+          .catch(() => this.notificationService.showError('Failed to delete task.'));
       }
     });
   }
@@ -128,6 +122,6 @@ export class TodoListComponent {
           this.notificationService.showError('Failed to delete project.', error);
         }
       }
-    })
+    });
   }
 }

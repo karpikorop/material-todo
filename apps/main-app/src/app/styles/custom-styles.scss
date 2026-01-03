@@ -1,6 +1,6 @@
 // Change met icon style to filled
 .mat-icon-filled {
-  font-variation-settings: "FILL" 1;
+  font-variation-settings: 'FILL' 1;
 }
 
 // TEXT COLORS
@@ -39,7 +39,6 @@
   box-shadow: var(--mat-sys-level5);
 }
 
-
 //DIVIDER (use on div)
 .divider {
   height: 1px;
@@ -58,7 +57,7 @@
   &::before,
   &::after {
     flex: 1;
-    content: "";
+    content: '';
     height: 1px;
     margin: 0.5rem;
     background-color: var(--mat-sys-outline-variant);

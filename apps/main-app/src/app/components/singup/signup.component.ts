@@ -1,18 +1,13 @@
-import {Component, inject} from '@angular/core';
-import {MatButton} from '@angular/material/button';
-import {RouterLink, Router} from '@angular/router';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import {AuthService} from '../../services/auth-service/auth.service';
-import {MatIconModule} from '@angular/material/icon';
-import {NotificationService} from '../../services/notification-service/notification.service';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import { Component, inject } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { RouterLink, Router } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth-service/auth.service';
+import { MatIconModule } from '@angular/material/icon';
+import { NotificationService } from '../../services/notification-service/notification.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-signup',
@@ -28,7 +23,6 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   styleUrl: './signup.component.scss',
 })
 export class SignupComponent {
-
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -41,13 +35,11 @@ export class SignupComponent {
       password: ['', Validators.required],
     });
 
-    this.authService.currentUser$
-      .pipe(takeUntilDestroyed())
-      .subscribe((user) => {
-        if (user) {
-          this.router.navigate(['/app']).then();
-        }
-      });
+    this.authService.currentUser$.pipe(takeUntilDestroyed()).subscribe((user) => {
+      if (user) {
+        this.router.navigate(['/app']).then();
+      }
+    });
   }
 
   protected async onSubmit(): Promise<void> {
@@ -59,7 +51,7 @@ export class SignupComponent {
       );
       await this.router.navigate(['/app']);
     } catch (error) {
-      this.notificationService.showError("Error signing up");
+      this.notificationService.showError('Error signing up');
       console.error('Error signing up:', error);
     }
   }
@@ -69,7 +61,7 @@ export class SignupComponent {
       await this.authService.loginWithGoogle();
       await this.router.navigate(['/app']);
     } catch (error) {
-      this.notificationService.showError("Error logging in with Google");
+      this.notificationService.showError('Error logging in with Google');
       console.error('Error logging in with Google:', error);
     }
   }

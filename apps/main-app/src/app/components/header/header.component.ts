@@ -1,20 +1,14 @@
-import {Component} from '@angular/core';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {RouterLink} from '@angular/router';
-import {MatListModule} from '@angular/material/list';
-import {signal} from '@angular/core';
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-} from '@angular/animations';
-import {IS_MOBILE} from '../../tokens';
-import {inject} from '@angular/core';
+import { Component } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { RouterLink } from '@angular/router';
+import { MatListModule } from '@angular/material/list';
+import { signal } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { IS_MOBILE } from '../../tokens';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -61,8 +55,7 @@ export class HeaderComponent {
   protected menu_icon = signal<'menu' | 'close'>('menu');
   protected isMobileView = inject(IS_MOBILE);
 
-  constructor() {
-  }
+  constructor() {}
 
   toggleDropdown() {
     this.showDropdown.set(!this.showDropdown());

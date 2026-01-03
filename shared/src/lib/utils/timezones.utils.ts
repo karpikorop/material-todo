@@ -1,4 +1,4 @@
-import {getTimeZones, TimeZone} from '@vvo/tzdb';
+import { getTimeZones, TimeZone } from '@vvo/tzdb';
 
 let cachedTimeZones: TimeZone[];
 /**
@@ -13,11 +13,13 @@ export function getTimeZonesList(): TimeZone[] {
   return cachedTimeZones;
 }
 
-
 /**
  * Finds a matched timezone in a grouped list
  */
-export function findTimeZone(timezone: string, timeZones = getTimeZonesList()): TimeZone | undefined {
+export function findTimeZone(
+  timezone: string,
+  timeZones = getTimeZonesList()
+): TimeZone | undefined {
   return timeZones.find((timeZone) => {
     return timezone === timeZone.name || timeZone.group.includes(timezone);
   });

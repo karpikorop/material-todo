@@ -20,17 +20,17 @@ You can use the live version of the application [here](https://to-note-angular-a
 
 ### Tech Stack
 
-- **Workspace:** [Nx](https://nx.dev/ "null") (Monorepo handling Main App + Cloud Functions)
+- **Workspace:** [Nx](https://nx.dev/ 'null') (Monorepo handling Main App + Cloud Functions)
 
-- **Framework:** [Angular](https://angular.dev/ "null") (v21.x.x) with Standalone Components
+- **Framework:** [Angular](https://angular.dev/ 'null') (v21.x.x) with Standalone Components
 
-- **UI Components:** [Angular Material](https://material.angular.io/ "null")
+- **UI Components:** [Angular Material](https://material.angular.io/ 'null')
 
-- **Backend & Database:** [Firebase](https://firebase.google.com/ "null") (Authentication, Firestore and Storage) & [Google Cloud Functions](https://cloud.google.com/functions "null")
+- **Backend & Database:** [Firebase](https://firebase.google.com/ 'null') (Authentication, Firestore and Storage) & [Google Cloud Functions](https://cloud.google.com/functions 'null')
 
-- **Styling:** SCSS & [Tailwind CSS](https://tailwindcss.com/ "null")
+- **Styling:** SCSS & [Tailwind CSS](https://tailwindcss.com/ 'null')
 
----  
+---
 
 ## For Developers
 
@@ -38,17 +38,17 @@ Interested in running the project locally or contributing? Follow these steps.
 
 ### 1. Prerequisites
 
-- [Node.js](https://nodejs.org/ "null")
+- [Node.js](https://nodejs.org/ 'null')
 
-- [Angular CLI](https://angular.dev/tools/cli "null")
+- [Angular CLI](https://angular.dev/tools/cli 'null')
 
 - A Google account for creating a Firebase project.
 
----  
+---
 
 ### 2. Firebase Setup (Crucial Step)
 
-This project requires a Firebase backend to function. You will need to set up your own free project on the [Firebase Console](https://console.firebase.google.com/ "null").
+This project requires a Firebase backend to function. You will need to set up your own free project on the [Firebase Console](https://console.firebase.google.com/ 'null').
 
 1. **Create a Web App** in your Firebase project.
 
@@ -56,31 +56,31 @@ This project requires a Firebase backend to function. You will need to set up yo
 
 3. Copy your Firebase configuration object into the `apps/main-app/src/environments/firebase.config.ts`(create from template). Do not commit.
 
----  
+---
 
 ### 3. Local Installation & Setup
 
 1. **Clone the repository:**
 
-```  
-git clone https://github.com/karpikorop/material-todo.git   
-```  
+```
+git clone https://github.com/karpikorop/material-todo.git
+```
 
 2. **Install dependencies:**
 
-```  
-npm install  
-```  
+```
+npm install
+```
 
 3. **Run the development server:**
 
-```  
-npm start 
-```  
+```
+npm start
+```
 
 Navigate to `http://localhost:4200/`.
-  
----  
+
+---
 
 ### 4. Emulator Workflow
 
@@ -149,7 +149,7 @@ The CLI will then prompt you for a primary color and path for a theme file(src/a
 Import the theme inside global styles.scss like:
 
 ```scss
-@use "./app/styles/_theme-colors" as app;
+@use './app/styles/_theme-colors' as app;
 ```
 
 and apply using:
@@ -168,7 +168,7 @@ and apply using:
 
 - **Mobile Detection:** Use the `IS_MOBILE` token to determine if the app is in mobile view.
 
----  
+---
 
 ### License
 

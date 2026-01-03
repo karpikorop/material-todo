@@ -10,10 +10,8 @@ export class LayoutService {
   private breakpointObserver = inject(BreakpointObserver);
 
   constructor() {
-    this.breakpointObserver
-      .observe([Breakpoints.Handset])
-      .subscribe((result) => {
-        this.isMobileView.set(result.matches);
-      });
+    this.breakpointObserver.observe([Breakpoints.Handset]).subscribe((result) => {
+      this.isMobileView.set(result.matches);
+    });
   }
 }

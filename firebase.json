@@ -1,20 +1,14 @@
 {
   "hosting": {
     "public": "dist/apps/main-app/browser",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
       }
     ],
-    "predeploy": [
-      "npx nx build main-app"
-    ]
+    "predeploy": ["npx nx build main-app"]
   },
   "functions": [
     {
@@ -28,9 +22,7 @@
         "*.local",
         "package-lock.json"
       ],
-      "predeploy": [
-        "npx nx build functions"
-      ],
+      "predeploy": ["npx nx build functions"],
       "runtime": "nodejs22"
     }
   ],

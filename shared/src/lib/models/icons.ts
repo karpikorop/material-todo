@@ -3,7 +3,7 @@ export const AVAILABLE_LIST_ICONS = [
   'inbox',
   'calendar_today',
   'list',
-  'star',
+  'celebration',
   'work',
   'home',
   'shopping_cart',
@@ -15,7 +15,10 @@ export const AVAILABLE_LIST_ICONS = [
   'savings',
   'pets',
   'build',
-  'code'
+  'code',
+  'music_note_2',
+  'sports_esports',
+  'person',
 ] as const;
 
-export type ListIcon = typeof AVAILABLE_LIST_ICONS[number];
+export type ListIcon = (typeof AVAILABLE_LIST_ICONS)[number];

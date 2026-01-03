@@ -13,12 +13,14 @@
  */
 const fs = require('fs');
 const path = require('path');
-const {constants} = require("node:fs");
-
+const { constants } = require('node:fs');
 
 const projectRoot = process.cwd();
 
-const templatePath = path.join(projectRoot, 'apps/main-app/src/environments/firebase.config.template.ts');
+const templatePath = path.join(
+  projectRoot,
+  'apps/main-app/src/environments/firebase.config.template.ts'
+);
 const configPath = path.join(projectRoot, 'apps/main-app/src/environments/firebase.config.ts');
 
 try {

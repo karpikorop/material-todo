@@ -1,40 +1,44 @@
-@use "@angular/material" as mat;
-@use "app/styles/_theme-colors" as app;
-@use "app/styles/material-styles";
-@use "app/styles/custom-styles";
-@use "app/styles/ng-select-custom";
-@import url("tailwindcss");
+@use '@angular/material' as mat;
+@use 'app/styles/_theme-colors' as app;
+@use 'app/styles/material-styles';
+@use 'app/styles/custom-styles';
+@use 'app/styles/ng-select-custom';
+@import url('tailwindcss');
 
 // Angular material theme variables
 // https://material.angular.dev/guide/system-variables
 
-$app-font: "Inter", sans-serif;
+$app-font: 'Inter', sans-serif;
 
-$light-theme: mat.define-theme((
-  color: (
-    theme-type: light,
-    primary: app.$primary-palette,
-    tertiary: app.$tertiary-palette,
-  ),
-  typography: (
-    plain-family: $app-font,
-    brand-family: $app-font,
-  ),
-));
+$light-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: app.$primary-palette,
+      tertiary: app.$tertiary-palette,
+    ),
+    typography: (
+      plain-family: $app-font,
+      brand-family: $app-font,
+    ),
+  )
+);
 
 // 3. DEFINE THE DARK THEME
 // We reuse the SAME palettes. Material automatically flips the colors.
-$dark-theme: mat.define-theme((
-  color: (
-    theme-type: dark,
-    primary: app.$primary-palette,
-    tertiary: app.$tertiary-palette,
-  ),
-  typography: (
-    plain-family: $app-font,
-    brand-family: $app-font,
-  ),
-));
+$dark-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: dark,
+      primary: app.$primary-palette,
+      tertiary: app.$tertiary-palette,
+    ),
+    typography: (
+      plain-family: $app-font,
+      brand-family: $app-font,
+    ),
+  )
+);
 
 html {
   @include mat.all-component-themes($light-theme);

@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, Output, signal} from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import {type Todo} from '../../services/todo-service/todo.service';
-import {inject} from '@angular/core';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {NotificationService} from '../../services/notification-service/notification.service';
+import { inject } from '@angular/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NotificationService } from '../../services/notification-service/notification.service';
+import { Todo } from '@shared/lib/models/todos';
 
 @Component({
   selector: 'app-todo-item',
@@ -24,7 +24,7 @@ import {NotificationService} from '../../services/notification-service/notificat
 })
 export class TodoItemComponent {
   private notificationService = inject(NotificationService);
-  @Input({required: true}) todo!: Todo;
+  @Input({ required: true }) todo!: Todo;
 
   @Output() update = new EventEmitter<{ todoId: string; data: Partial<Omit<Todo, 'id'>> }>();
   @Output() delete = new EventEmitter<string>();
@@ -41,16 +41,12 @@ export class TodoItemComponent {
   }
 
   protected onEdit(): void {
-    this.notificationService.showInfo(
-      'Edit functionality is not implemented yet.'
-    );
+    this.notificationService.showInfo('Edit functionality is not implemented yet.');
     console.log('Edit clicked for todo:', this.todo.id);
   }
 
   protected onSetTime(): void {
-    this.notificationService.showInfo(
-      'Set time functionality is not implemented yet.'
-    );
+    this.notificationService.showInfo('Set time functionality is not implemented yet.');
     console.log('Set time clicked for todo:', this.todo.id);
   }
 }

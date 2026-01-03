@@ -1,22 +1,24 @@
-import {Component, EventEmitter, Input, Output, inject, ViewChild, ElementRef} from '@angular/core';
-
 import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import {take} from 'rxjs/operators';
-import {TodoService} from '../../services/todo-service/todo.service';
-import {AuthService} from '../../services/auth-service/auth.service';
-import {NotificationService} from '../../services/notification-service/notification.service';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {IS_MOBILE} from '../../tokens';
-import {MatTooltip} from '@angular/material/tooltip';
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  inject,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { take } from 'rxjs/operators';
+import { TodoService } from '../../services/todo-service/todo.service';
+import { AuthService } from '../../services/auth-service/auth.service';
+import { NotificationService } from '../../services/notification-service/notification.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { IS_MOBILE } from '../../tokens';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-add-todo',
@@ -27,13 +29,13 @@ import {MatTooltip} from '@angular/material/tooltip';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatTooltip
-],
+    MatTooltip,
+  ],
   templateUrl: './add-todo.component.html',
   styleUrl: './add-todo.component.scss',
 })
 export class AddTodoComponent {
-  @Input({required: true}) projectId!: string;
+  @Input({ required: true }) projectId!: string;
   @Output() todoAdded = new EventEmitter<void>();
   @ViewChild('taskInput') taskInput!: ElementRef<HTMLInputElement>;
 

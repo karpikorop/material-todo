@@ -7,6 +7,8 @@
     "build": "nx build",
     "watch": "nx build --watch --configuration development",
     "test": "nx test",
+    "format": "prettier --write \"**/*.{ts,js,json,css,scss,html}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,css,scss,html}\"",
     "postinstall": "node scripts/ensure-env.js"
   },
   "private": true,

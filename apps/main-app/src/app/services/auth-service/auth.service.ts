@@ -1,5 +1,5 @@
-import {Injectable, inject} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import {
   Auth,
   User,
@@ -16,9 +16,9 @@ import {
   linkWithPopup,
   unlink,
   verifyBeforeUpdateEmail,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
 } from '@angular/fire/auth';
-import {NotificationService} from '../notification-service/notification.service';
+import { NotificationService } from '../notification-service/notification.service';
 
 export enum AuthProvider {
   Password = 'password',
@@ -60,7 +60,7 @@ export class AuthService {
   }
 
   public getPasswordEmail(user = this.userSnapshot): string | null {
-    const passProvider = user?.providerData.find(p => p.providerId === AuthProvider.Password);
+    const passProvider = user?.providerData.find((p) => p.providerId === AuthProvider.Password);
     return passProvider?.email || null;
   }
 
@@ -114,7 +114,6 @@ export class AuthService {
     const credential = EmailAuthProvider.credential(user.email, password);
     await reauthenticateWithCredential(user, credential);
   }
-
 
   /**
    * Sends a password reset email to the user.
@@ -170,13 +169,15 @@ export class AuthService {
       throw new Error('No user logged in to unlink Google account.');
     }
 
-    const hasGoogleProvider = user.providerData.some(p => p.providerId === AuthProvider.Google);
+    const hasGoogleProvider = user.providerData.some((p) => p.providerId === AuthProvider.Google);
     if (!hasGoogleProvider) {
       throw new Error('Google account is not linked to this user.');
     }
 
     if (user.providerData.length <= 1) {
-      throw new Error('Cannot unlink Google account. You must have at least one authentication method.');
+      throw new Error(
+        'Cannot unlink Google account. You must have at least one authentication method.'
+      );
     }
 
     try {
@@ -211,7 +212,7 @@ export class AuthService {
    */
   public async emitNextUser(user: AuthUser): Promise<void> {
     this.currentUser.next(null);
-    await new Promise(resolve => setTimeout(resolve, 0));
+    await new Promise((resolve) => setTimeout(resolve, 0));
     this.currentUser.next(user);
   }
 

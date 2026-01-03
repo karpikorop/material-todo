@@ -1,15 +1,15 @@
-import {Component, inject, ViewChild} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {FormsModule, NgModel} from '@angular/forms';
+import { Component, inject, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule, NgModel } from '@angular/forms';
 
 export interface PasswordDialogData {
-  title?: string,
-  message?: string,
+  title?: string;
+  message?: string;
 }
 
 const MIN_PASSWORD_LENGTH = 6;
@@ -22,10 +22,10 @@ const MIN_PASSWORD_LENGTH = 6;
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './password-input-dialog.component.html',
-  styleUrl: './password-input-dialog.component.scss'
+  styleUrl: './password-input-dialog.component.scss',
 })
 export class PasswordInputDialogComponent {
   @ViewChild('passwordInput') passwordInput!: NgModel;
