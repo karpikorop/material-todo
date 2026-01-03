@@ -4,6 +4,7 @@ import { AuthService } from '../auth-service/auth.service';
 import { distinctUntilChanged, Observable, of } from 'rxjs';
 import { map, shareReplay, switchMap } from 'rxjs/operators';
 import { getTimeZonesList, SETTINGS_DOCUMENT_ID, Themes, UserSettings } from '@shared';
+import {TimeZone} from '@vvo/tzdb';
 
 @Injectable({
   providedIn: 'root',
