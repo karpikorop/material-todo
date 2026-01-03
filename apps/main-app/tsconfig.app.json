@@ -4,9 +4,6 @@
     "outDir": "../../dist/out-tsc",
     "types": [],
     "baseUrl": "../../",
-    "paths": {
-      "@shared/*": ["shared/src/*"]
-    },
     "emitDecoratorMetadata": false,
     "isolatedModules": true
   },

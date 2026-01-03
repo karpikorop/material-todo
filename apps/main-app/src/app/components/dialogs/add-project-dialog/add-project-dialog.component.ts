@@ -8,7 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
-import { AVAILABLE_LIST_ICONS } from '@shared/lib/models/icons';
+import { AVAILABLE_LIST_ICONS } from '@shared';
 
 export interface AddProjectDialogData {
   editMode?: boolean;

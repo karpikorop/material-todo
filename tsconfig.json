@@ -15,6 +15,7 @@
     "module": "ES2022",
     "baseUrl": ".",
     "paths": {
+      "@shared": ["shared/src/index.ts"],
       "@shared/*": ["shared/src/*"]
     },
     "experimentalDecorators": true,
@@ -25,5 +26,16 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "references": [
+    {
+      "path": "./apps/main-app"
+    },
+    {
+      "path": "./apps/functions"
+    },
+    {
+      "path": "./shared"
+    }
+  ]
 }

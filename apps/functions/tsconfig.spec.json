@@ -5,10 +5,7 @@
     "module": "commonjs",
     "moduleResolution": "node10",
     "types": ["jest", "node"],
-    "baseUrl": "../../",
-    "paths": {
-      "@shared/*": ["shared/src/*"]
-    }
+    "baseUrl": "../../"
   },
   "include": [
     "jest.config.ts",

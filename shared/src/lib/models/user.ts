@@ -1,7 +1,7 @@
 import { Timestamp } from '@firebase/firestore';
+import {WithId} from './withId';
 
-export interface UserProfileInterface {
-  id: string;
+export interface UserProfileInterface extends WithId{
   /**
    * If possible, use email from Auth Service currentUser$ instead.
    */

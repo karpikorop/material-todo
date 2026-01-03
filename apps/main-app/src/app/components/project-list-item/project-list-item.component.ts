@@ -12,7 +12,7 @@ import {
   ConfirmationDialogComponent,
   ConfirmDialogData,
 } from '../dialogs/confirmation-dialog/confirmation-dialog.component';
-import { Project } from '@shared/lib/models/project';
+import { Project } from '@shared';
 import {
   AddProjectDialogComponent,
   AddProjectDialogData,

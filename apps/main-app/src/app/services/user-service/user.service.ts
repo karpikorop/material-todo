@@ -10,13 +10,13 @@ import {
   serverTimestamp,
 } from '@angular/fire/firestore';
 import { User } from '@angular/fire/auth';
-import { AuthService } from '../auth-service/auth.service';
+import {AuthProvider, AuthService} from '../auth-service/auth.service';
 import { BehaviorSubject, Observable, of, switchAll } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ProjectService } from '../project-service/project.service';
 import { SettingsService } from '../settings-service/settings.service';
 import { getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
-import { UserProfile, UserProfileInterface, PLACEHOLDER_AVATAR_URL } from '@shared/lib/models/user';
+import { UserProfile, UserProfileInterface, PLACEHOLDER_AVATAR_URL, getProjectsCollectionPath, getSettingsCollectionPath, USERS_COLLECTION, INBOX_ID, SETTINGS_DOCUMENT_ID } from '@shared';
 
 // TODO fix google avatar error, to much requests, maybe cache the image, or move to storage
 
@@ -59,7 +59,7 @@ export class UserService {
     const user = this.authService.userSnapshot;
     if (!user) return false;
 
-    return user.providerData.some((profile) => profile.providerId === 'password');
+    return user.providerData.some((profile) => profile.providerId === AuthProvider.Password);
   }
 
   constructor() {
@@ -71,7 +71,7 @@ export class UserService {
           }
           await this.checkAndCreateUserProfile(authUser);
 
-          return docData(doc(this.firestore, `users/${authUser.uid}`), {
+          return docData(doc(this.firestore, `${USERS_COLLECTION}/${authUser.uid}`), {
             idField: 'id',
           }) as Observable<UserProfile>;
         }),
@@ -89,7 +89,7 @@ export class UserService {
    * @param user - User object received from Firebase Auth
    */
   private async checkAndCreateUserProfile(user: User): Promise<void> {
-    const userRef = doc(this.firestore, `users/${user.uid}`);
+    const userRef = doc(this.firestore, `${USERS_COLLECTION}/${user.uid}`);
     const docSnap = await getDoc(userRef);
 
     if (!docSnap.exists()) {
@@ -119,7 +119,7 @@ export class UserService {
   }
 
   private async healDefaultInbox(user: User): Promise<void> {
-    const inboxRef = doc(this.firestore, `users/${user.uid}/projects/inbox`);
+    const inboxRef = doc(this.firestore, `${getProjectsCollectionPath(user.uid)}/${INBOX_ID}`);
     const inboxSnap = await getDoc(inboxRef);
 
     if (!inboxSnap.exists()) {
@@ -128,7 +128,7 @@ export class UserService {
   }
 
   private async healDefaultSettings(user: User): Promise<void> {
-    const settingsRef = doc(this.firestore, `users/${user.uid}/settings/preferences`);
+    const settingsRef = doc(this.firestore, `${getSettingsCollectionPath(user.uid)}/${SETTINGS_DOCUMENT_ID}`);
     const settingsSnap = await getDoc(settingsRef);
 
     if (!settingsSnap.exists()) {
@@ -140,7 +140,7 @@ export class UserService {
   private async healUserProfileEmail(user: User) {
     const firestoreEmail = this.currentUserProfile.value?.email;
     if (user.email && firestoreEmail !== user.email) {
-      const userRef = doc(this.firestore, `users/${user.uid}`);
+      const userRef = doc(this.firestore, `${USERS_COLLECTION}/${user.uid}`);
       await updateDoc(userRef, { email: user.email });
       console.log('Synced Firestore email with new Auth email');
     }
@@ -162,7 +162,7 @@ export class UserService {
     }
 
     const { id, email, ...cleanData } = data;
-    const userRef = doc(this.firestore, `users/${userId}`);
+    const userRef = doc(this.firestore, `${USERS_COLLECTION}/${userId}`);
     return updateDoc(userRef, cleanData);
   }
 
@@ -178,7 +178,7 @@ export class UserService {
 
     // Define the path: users/{userId}/avatar
     // We use a fixed name so we don't pile up garbage files.
-    const filePath = `users/${user.id}/avatar`;
+    const filePath = `${USERS_COLLECTION}/${user.id}/avatar`;
     const storageRef = ref(this.storage, filePath);
 
     // Upload the file

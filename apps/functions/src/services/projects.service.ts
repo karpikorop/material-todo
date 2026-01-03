@@ -5,7 +5,7 @@ import { BatchAction, BatchSaveService } from './batch-save.service';
 import {
   getProjectsCollectionPath,
   getTodosCollectionPath,
-} from '@shared/lib/models/collection_names';
+} from '@shared';
 
 @injectable()
 export class ProjectsService {

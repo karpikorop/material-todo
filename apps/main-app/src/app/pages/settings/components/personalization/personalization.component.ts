@@ -11,7 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { UserService } from '../../../../services/user-service/user.service';
-import { Themes } from '@shared/lib/models/settings';
+import { Themes } from '@shared';
 
 @Component({
   selector: 'personalization-settings',

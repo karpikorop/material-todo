@@ -1,7 +1,7 @@
-import { FieldValue, Timestamp } from '@firebase/firestore';
+import { Timestamp } from '@firebase/firestore';
+import {WithId} from './withId';
 
-export interface Todo {
-  id: string; // Firestore ID
+export interface Todo extends WithId {
   userId: string;
   title: string;
   description?: string;
