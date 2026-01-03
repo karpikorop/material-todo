@@ -1,4 +1,4 @@
-import {firebaseConfig} from './firebase.config';
+import { firebaseConfig } from './firebase.config';
 
 /**
  * Production Environment Configuration
@@ -7,5 +7,5 @@ import {firebaseConfig} from './firebase.config';
 export const environment = {
   production: true,
   useEmulators: false,
-  firebase: firebaseConfig
+  firebase: firebaseConfig,
 };

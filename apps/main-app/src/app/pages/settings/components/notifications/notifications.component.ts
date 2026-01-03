@@ -5,13 +5,8 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 @Component({
   selector: 'notifications-settings',
   standalone: true,
-  imports: [
-    MatCardModule,
-    MatSlideToggle
-  ],
+  imports: [MatCardModule, MatSlideToggle],
   templateUrl: './notifications.component.html',
-  styleUrl: './notifications.component.scss'
+  styleUrl: './notifications.component.scss',
 })
-export class NotificationsComponent {
-
-}
+export class NotificationsComponent {}

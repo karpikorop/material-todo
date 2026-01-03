@@ -1,10 +1,10 @@
-import {ComponentType} from '@angular/cdk/portal';
-import {inject, Injectable} from '@angular/core';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {firstValueFrom} from 'rxjs';
+import { ComponentType } from '@angular/cdk/portal';
+import { inject, Injectable } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DialogService {
   private dialog = inject(MatDialog);
@@ -15,10 +15,12 @@ export class DialogService {
     config?: MatDialogConfig<D>
   ): Promise<R> {
     return await firstValueFrom(
-      this.dialog.open(component, {
-        ...config,
-        data: data ?? config?.data,
-      }).afterClosed()
+      this.dialog
+        .open(component, {
+          ...config,
+          data: data ?? config?.data,
+        })
+        .afterClosed()
     );
   }
 }

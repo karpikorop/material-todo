@@ -1,19 +1,14 @@
-import {Component, inject} from '@angular/core';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {MatButton} from '@angular/material/button';
-import {RouterLink, Router} from '@angular/router';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import {AuthService} from '../../services/auth-service/auth.service';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatIconModule} from '@angular/material/icon';
-import {NotificationService} from '../../services/notification-service/notification.service';
+import { Component, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatButton } from '@angular/material/button';
+import { RouterLink, Router } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth-service/auth.service';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { NotificationService } from '../../services/notification-service/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -42,15 +37,12 @@ export class LoginComponent {
       password: ['', Validators.required],
     });
 
-    this.authService.currentUser$
-      .pipe(takeUntilDestroyed())
-      .subscribe((user) => {
-        if (user) {
-          this.router.navigate(['/app']).then();
-        }
-      });
+    this.authService.currentUser$.pipe(takeUntilDestroyed()).subscribe((user) => {
+      if (user) {
+        this.router.navigate(['/app']).then();
+      }
+    });
   }
-
 
   protected async onSubmit(): Promise<void> {
     const data = this.loginForm.value;
@@ -58,7 +50,7 @@ export class LoginComponent {
       await this.authService.logIn(data.email, data.password);
       await this.router.navigate(['/app']);
     } catch (error) {
-      this.notificationService.showError("Error logging in");
+      this.notificationService.showError('Error logging in');
       console.error('Error logging in:', error);
     }
   }
@@ -68,9 +60,8 @@ export class LoginComponent {
       await this.authService.loginWithGoogle();
       await this.router.navigate(['/app']);
     } catch (error) {
-      this.notificationService.showError("Error logging in with Google");
+      this.notificationService.showError('Error logging in with Google');
       console.error('Error logging in with Google:', error);
     }
   }
-
 }

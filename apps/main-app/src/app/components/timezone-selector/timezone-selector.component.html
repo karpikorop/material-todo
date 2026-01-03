@@ -1,5 +1,9 @@
-<ng-select [ngModel]="selectedTimezone()" (ngModelChange)="onSelectedTimezoneChange($event)" [clearable]="false">
+<ng-select
+  [ngModel]="selectedTimezone()"
+  (ngModelChange)="onSelectedTimezoneChange($event)"
+  [clearable]="false"
+>
   @for (tz of timezoneOptions; track tz.value) {
-    <ng-option [value]="tz.value">{{tz.label}}</ng-option>
+  <ng-option [value]="tz.value">{{ tz.label }}</ng-option>
   }
 </ng-select>

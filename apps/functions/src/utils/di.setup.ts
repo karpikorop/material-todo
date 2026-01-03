@@ -1,18 +1,19 @@
 import 'reflect-metadata';
 import { container, InjectionToken } from 'tsyringe';
 import {
-  onCall, CallableOptions,
-  onRequest, HttpsOptions, CallableRequest
+  onCall,
+  CallableOptions,
+  onRequest,
+  HttpsOptions,
+  CallableRequest,
 } from 'firebase-functions/v2/https';
-import {
-  onSchedule, ScheduledEvent, ScheduleOptions
-} from 'firebase-functions/v2/scheduler';
+import { onSchedule, ScheduledEvent, ScheduleOptions } from 'firebase-functions/v2/scheduler';
 import { onObjectFinalized, StorageOptions, StorageEvent } from 'firebase-functions/v2/storage';
 
 function extractClass(module: any): InjectionToken<any> {
   if (module.default) return module.default;
 
-  const found = Object.values(module).find(exp => typeof exp === 'function');
+  const found = Object.values(module).find((exp) => typeof exp === 'function');
   if (!found) {
     throw new Error(`No class found in module. Did you forget to 'export default'?`);
   }
@@ -41,7 +42,6 @@ async function runHandler(
   importFn: () => Promise<any>,
   executeFn: (instance: any) => Promise<any>
 ) {
-
   const module = await importFn();
   const ClassToken = extractClass(module);
   const instance = container.resolve(ClassToken);
@@ -52,10 +52,7 @@ async function runHandler(
 /**
  * Creates a Callable Function (Lazy Singleton)
  */
-export function createCall(
-  options: CallableOptions,
-  importFn: () => Promise<any>
-) {
+export function createCall(options: CallableOptions, importFn: () => Promise<any>) {
   const getInstance = createLazyLoader(importFn);
 
   return onCall(options, async (req: CallableRequest) => {
@@ -67,10 +64,7 @@ export function createCall(
 /**
  * Creates an HTTP Function (Lazy Singleton)
  */
-export function createRequest(
-  options: HttpsOptions,
-  importFn: () => Promise<any>
-) {
+export function createRequest(options: HttpsOptions, importFn: () => Promise<any>) {
   const getInstance = createLazyLoader(importFn);
 
   return onRequest(options, async (req, res) => {
@@ -95,14 +89,10 @@ export function createSchedule(
   });
 }
 
-
 /**
  * Creates a Storage Object Finalized Function (Lazy Singleton)
  */
-export function createObjectFinalized(
-  options: StorageOptions,
-  importFn: () => Promise<any>
-) {
+export function createObjectFinalized(options: StorageOptions, importFn: () => Promise<any>) {
   const getInstance = createLazyLoader(importFn);
 
   return onObjectFinalized(options, async (event: StorageEvent) => {

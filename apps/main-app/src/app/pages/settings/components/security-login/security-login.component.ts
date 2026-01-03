@@ -1,14 +1,14 @@
-import {Component, effect, input, output, computed} from '@angular/core';
+import { Component, effect, input, output, computed } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {AuthProvider, AuthUser} from '../../../../services/auth-service/auth.service';
-import {MatDivider} from '@angular/material/list';
-import {InfoBannerComponent} from '../../../../components/banners/info-banner/info-banner.component';
-import {WarningBannerComponent} from '../../../../components/banners/warning-banner/warning-banner.component';
+import { AuthProvider, AuthUser } from '../../../../services/auth-service/auth.service';
+import { MatDivider } from '@angular/material/list';
+import { InfoBannerComponent } from '../../../../components/banners/info-banner/info-banner.component';
+import { WarningBannerComponent } from '../../../../components/banners/warning-banner/warning-banner.component';
 
 @Component({
   selector: 'security-login-settings',
@@ -22,10 +22,10 @@ import {WarningBannerComponent} from '../../../../components/banners/warning-ban
     ReactiveFormsModule,
     MatDivider,
     InfoBannerComponent,
-    WarningBannerComponent
-],
+    WarningBannerComponent,
+  ],
   templateUrl: './security-login.component.html',
-  styleUrl: './security-login.component.scss'
+  styleUrl: './security-login.component.scss',
 })
 export class SecurityLoginComponent {
   public user = input.required<AuthUser>();
@@ -38,11 +38,11 @@ export class SecurityLoginComponent {
   protected emailForm: FormGroup;
 
   protected passwordProvider = computed(() => {
-    return  this.user()?.providerData.find(p => p.providerId === AuthProvider.Password);
+    return this.user()?.providerData.find((p) => p.providerId === AuthProvider.Password);
   });
 
   protected googleProvider = computed(() => {
-    return this.user()?.providerData.find(p => p.providerId === AuthProvider.Google);
+    return this.user()?.providerData.find((p) => p.providerId === AuthProvider.Google);
   });
 
   protected hasPasswordProvider = computed(() => !!this.passwordProvider());
@@ -50,7 +50,7 @@ export class SecurityLoginComponent {
 
   constructor(private fb: FormBuilder) {
     this.emailForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email]],
     });
 
     // Use effect to react to user changes
@@ -59,7 +59,7 @@ export class SecurityLoginComponent {
       const passwordProv = this.passwordProvider();
       if (currentUser && passwordProv) {
         this.emailForm.patchValue({
-          email: passwordProv.email || ''
+          email: passwordProv.email || '',
         });
       }
     });
@@ -82,7 +82,7 @@ export class SecurityLoginComponent {
       this.emailUpdate.emit(this.emailForm.value.email);
     }
     this.emailForm.setValue({
-      email: this.passwordProvider()?.email
+      email: this.passwordProvider()?.email,
     });
   }
 
@@ -111,4 +111,3 @@ export class SecurityLoginComponent {
     this.passwordReset.emit();
   }
 }
-

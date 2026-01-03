@@ -7,16 +7,11 @@
     "module": "es2022",
     "moduleResolution": "bundler",
     "types": ["node"],
-    "baseUrl": ".",
+    "baseUrl": "../../",
     "paths": {
-      "@shared/*": ["../../shared/src/*"]
+      "@shared/*": ["shared/src/*"]
     }
   },
   "include": ["src/**/*.ts"],
-  "exclude": [
-    "jest.config.ts",
-    "jest.config.cts",
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts"
-  ]
+  "exclude": ["jest.config.ts", "jest.config.cts", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }

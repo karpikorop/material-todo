@@ -1,10 +1,10 @@
-import {Component} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
-import {MatButtonModule} from '@angular/material/button';
-import {HeaderComponent} from '../../components/header/header.component';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatListModule} from '@angular/material/list';
-import {FooterComponent} from '../../components/footer/footer.component';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { HeaderComponent } from '../../components/header/header.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { FooterComponent } from '../../components/footer/footer.component';
 
 @Component({
   selector: 'app-public-layout',
@@ -19,5 +19,4 @@ import {FooterComponent} from '../../components/footer/footer.component';
   templateUrl: './public-layout.component.html',
   styleUrl: './public-layout.component.scss',
 })
-export class PublicLayoutComponent {
-}
+export class PublicLayoutComponent {}

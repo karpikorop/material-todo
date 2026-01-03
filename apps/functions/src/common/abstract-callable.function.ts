@@ -1,4 +1,4 @@
-import {CallableRequest, HttpsError} from 'firebase-functions/v2/https';
+import { CallableRequest, HttpsError } from 'firebase-functions/v2/https';
 import * as logger from 'firebase-functions/logger';
 
 /**
@@ -9,7 +9,6 @@ import * as logger from 'firebase-functions/logger';
  * @template TOutput - The type of output data returned by the callable function
  */
 export abstract class AbstractCallableFunction<TInput, TOutput> {
-
   /**
    * Determines whether the function requires authentication.
    * When true, unauthenticated requests will be rejected with an HttpsError.
@@ -58,5 +57,4 @@ export abstract class AbstractCallableFunction<TInput, TOutput> {
       throw new HttpsError('internal', 'An unexpected error occurred.');
     }
   };
-
 }

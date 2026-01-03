@@ -1,11 +1,8 @@
-import {
-  NgOptionComponent,
-  NgSelectComponent
-} from '@ng-select/ng-select';
+import { NgOptionComponent, NgSelectComponent } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
-import {Component, signal, output} from '@angular/core';
-import {getTimeZonesList, findTimeZone} from '@shared/lib/utils/timezones.utils';
-import {TimeZone} from '@vvo/tzdb';
+import { Component, signal, output } from '@angular/core';
+import { getTimeZonesList, findTimeZone } from '@shared/lib/utils/timezones.utils';
+import { TimeZone } from '@vvo/tzdb';
 
 export interface SelectorOption<T = any> {
   label: string;
@@ -17,14 +14,9 @@ export interface SelectorOption<T = any> {
   standalone: true,
   templateUrl: './timezone-selector.component.html',
   styleUrl: './timezone-selector.component.scss',
-  imports: [
-    NgSelectComponent,
-    FormsModule,
-    NgOptionComponent,
-  ],
+  imports: [NgSelectComponent, FormsModule, NgOptionComponent],
 })
 export class TimezoneSelectorComponent {
-
   protected readonly timezoneOptions: SelectorOption<string>[] = this.getTimezoneOptions();
 
   public selectedTimezone = signal<string>('UTC');
@@ -42,7 +34,6 @@ export class TimezoneSelectorComponent {
     this.selectedTimezoneChange.emit(value);
   }
 
-
   private findMatchingTimeZone(): void {
     const tz = findTimeZone(this.selectedTimezone());
     this.selectedTimezoneObject.set(tz);
@@ -50,15 +41,15 @@ export class TimezoneSelectorComponent {
 
   private getTimezoneOptions(): SelectorOption<string>[] {
     const timezones = getTimeZonesList();
-    return timezones.map(tz => ({
+    return timezones.map((tz) => ({
       label: this.getTimezoneDisplay(tz),
-      value: tz.name
+      value: tz.name,
     }));
   }
 
   private getTimezoneDisplay(tz: TimeZone): string {
     const offset = tz.rawFormat.split(' ')[0];
-    if(tz.mainCities[0]){
+    if (tz.mainCities[0]) {
       return `(${offset}) ${tz.alternativeName} - ${tz.mainCities[0]}`;
     }
     return `(${offset}) ${tz.alternativeName}`;

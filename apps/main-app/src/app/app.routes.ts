@@ -12,8 +12,7 @@ export const routes: Routes = [
   {
     path: 'app',
     canActivate: [authGuard],
-    loadChildren: () =>
-      import('./private.routes').then((m) => m.PRIVATE_ROUTES),
+    loadChildren: () => import('./private.routes').then((m) => m.PRIVATE_ROUTES),
   },
 
   // --- PUBLIC ROUTES ---

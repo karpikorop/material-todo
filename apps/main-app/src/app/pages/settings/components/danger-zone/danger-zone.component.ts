@@ -5,13 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'danger-zone-settings',
   standalone: true,
-  imports: [
-    MatCardModule,
-    MatButtonModule,
-  ],
+  imports: [MatCardModule, MatButtonModule],
   templateUrl: './danger-zone.component.html',
-  styleUrl: './danger-zone.component.scss'
+  styleUrl: './danger-zone.component.scss',
 })
-export class DangerZoneComponent {
-
-}
+export class DangerZoneComponent {}

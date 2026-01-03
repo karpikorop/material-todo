@@ -1,10 +1,12 @@
-import {FireTimestamp} from './fire-timestamp';
+import { Timestamp } from '@firebase/firestore';
+
+export const INBOX_ID = 'inbox';
 
 export interface Project {
   id: string; // Firestore ID
   name: string;
   icon: string;
   sortOrder?: number;
-  createdAt: FireTimestamp;
+  createdAt: Timestamp;
   userId: string;
 }

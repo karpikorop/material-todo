@@ -4,141 +4,134 @@
     <mat-card-subtitle>Manage your email and authentication settings</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="mt-4">
-
     <!-- Google Provider Section -->
     @if (hasGoogleProvider()) {
-      <div class="provider-section">
-        <h3 class="section-title">Connected Accounts</h3>
-        <div class="provider-card">
-          <div class="provider-info-container">
-            <div class="provider-info">
-              <mat-icon svgIcon="google" class="provider-icon"></mat-icon>
-              <div class="provider-details">
-                <p class="provider-label">Google Email</p>
-                <p class="provider-email">{{ googleProvider()?.email }}</p>
-              </div>
+    <div class="provider-section">
+      <h3 class="section-title">Connected Accounts</h3>
+      <div class="provider-card">
+        <div class="provider-info-container">
+          <div class="provider-info">
+            <mat-icon svgIcon="google" class="provider-icon"></mat-icon>
+            <div class="provider-details">
+              <p class="provider-label">Google Email</p>
+              <p class="provider-email">{{ googleProvider()?.email }}</p>
             </div>
+          </div>
 
-            <div class="provider-actions">
-              <button mat-stroked-button color="primary" (click)="onGoogleAccountChange()">
-                <mat-icon>swap_horiz</mat-icon>
-                Change Account
-              </button>
-              <button mat-stroked-button color="warn" (click)="onGoogleAccountRemove()">
-                <mat-icon>link_off</mat-icon>
-                Disconnect
-              </button>
-            </div>
+          <div class="provider-actions">
+            <button mat-stroked-button color="primary" (click)="onGoogleAccountChange()">
+              <mat-icon>swap_horiz</mat-icon>
+              Change Account
+            </button>
+            <button mat-stroked-button color="warn" (click)="onGoogleAccountRemove()">
+              <mat-icon>link_off</mat-icon>
+              Disconnect
+            </button>
           </div>
         </div>
       </div>
+    </div>
     } @else if (hasPasswordProvider()) {
-      <!-- Link Google Account Section (when not connected) -->
-      <div class="provider-section">
-        <h3 class="section-title">Link Additional Account</h3>
-        <div class="provider-card">
-          <div class="provider-info-container">
-            <div class="provider-info">
-              <mat-icon svgIcon="google" class="provider-icon"></mat-icon>
-              <div class="provider-details">
-                <p class="provider-label">Google Account</p>
-                <p class="provider-email">Not connected</p>
-              </div>
+    <!-- Link Google Account Section (when not connected) -->
+    <div class="provider-section">
+      <h3 class="section-title">Link Additional Account</h3>
+      <div class="provider-card">
+        <div class="provider-info-container">
+          <div class="provider-info">
+            <mat-icon svgIcon="google" class="provider-icon"></mat-icon>
+            <div class="provider-details">
+              <p class="provider-label">Google Account</p>
+              <p class="provider-email">Not connected</p>
             </div>
+          </div>
 
-            <div class="provider-actions">
-              <button mat-flat-button color="primary" (click)="onGoogleAccountLink()">
-                <mat-icon>link</mat-icon>
-                Link Google Account
-              </button>
-            </div>
+          <div class="provider-actions">
+            <button mat-flat-button color="primary" (click)="onGoogleAccountLink()">
+              <mat-icon>link</mat-icon>
+              Link Google Account
+            </button>
           </div>
         </div>
       </div>
+    </div>
     }
 
     <!-- Password Provider Email Section -->
-    @if (hasPasswordProvider()) {
-      @if (hasGoogleProvider()) {
-        <mat-divider class="section-divider"></mat-divider>
-      }
+    @if (hasPasswordProvider()) { @if (hasGoogleProvider()) {
+    <mat-divider class="section-divider"></mat-divider>
+    }
 
-      <div class="provider-section">
-        <h3 class="section-title">Email Address</h3>
-        <div class="provider-card">
-          <form [formGroup]="emailForm" (ngSubmit)="onEmailChange()" class="email-form">
-            <div class="email-form-content">
-              <div class="email-input-section">
-                <mat-icon class="provider-icon">email</mat-icon>
-                <mat-form-field appearance="outline" subscriptSizing="dynamic" class="email-field">
-                  <input matInput
-                         type="email"
-                         placeholder="your@email.com"
-                         formControlName="email"
-                         autocomplete="off">
+    <div class="provider-section">
+      <h3 class="section-title">Email Address</h3>
+      <div class="provider-card">
+        <form [formGroup]="emailForm" (ngSubmit)="onEmailChange()" class="email-form">
+          <div class="email-form-content">
+            <div class="email-input-section">
+              <mat-icon class="provider-icon">email</mat-icon>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic" class="email-field">
+                <input
+                  matInput
+                  type="email"
+                  placeholder="your@email.com"
+                  formControlName="email"
+                  autocomplete="off"
+                />
 
-                  @if (emailForm.get('email')?.invalid && emailForm.get('email')?.touched) {
-                    <mat-error>
-                      @if (emailForm.get('email')?.hasError('required')) {
-                        Email is required
-                      } @else if (emailForm.get('email')?.hasError('email')) {
-                        Please enter a valid email address
-                      }
-                    </mat-error>
-                  }
-                </mat-form-field>
-              </div>
-
-              <div class="email-actions">
-                <button mat-flat-button color="primary" [disabled]="!isSaveEnabled()" type="submit">
-                  <mat-icon>save</mat-icon>
-                  Update Email
-                </button>
-              </div>
+                @if (emailForm.get('email')?.invalid && emailForm.get('email')?.touched) {
+                <mat-error>
+                  @if (emailForm.get('email')?.hasError('required')) { Email is required } @else if
+                  (emailForm.get('email')?.hasError('email')) { Please enter a valid email address }
+                </mat-error>
+                }
+              </mat-form-field>
             </div>
 
-            <app-info-banner class="email-info-banner"
-              message="Changing your email will require verification.">
-            </app-info-banner>
-          </form>
-        </div>
-      </div>
-
-      <mat-divider class="section-divider"></mat-divider>
-
-      <div class="provider-section">
-        <h3 class="section-title">Password</h3>
-        <div class="provider-card">
-          <div class="provider-info-container">
-            <div class="provider-info">
-              <mat-icon class="provider-icon">lock</mat-icon>
-              <div class="provider-details">
-                <p class="provider-label">Change Password</p>
-                <p class="provider-email">A password reset link will be sent to your email.</p>
-              </div>
-            </div>
-
-            <div class="provider-actions">
-              <button mat-flat-button color="primary" (click)="onPasswordReset()">
-                <mat-icon>mail_outline</mat-icon>
-                Send Reset Link
+            <div class="email-actions">
+              <button mat-flat-button color="primary" [disabled]="!isSaveEnabled()" type="submit">
+                <mat-icon>save</mat-icon>
+                Update Email
               </button>
             </div>
           </div>
+
+          <app-info-banner
+            class="email-info-banner"
+            message="Changing your email will require verification."
+          >
+          </app-info-banner>
+        </form>
+      </div>
+    </div>
+
+    <mat-divider class="section-divider"></mat-divider>
+
+    <div class="provider-section">
+      <h3 class="section-title">Password</h3>
+      <div class="provider-card">
+        <div class="provider-info-container">
+          <div class="provider-info">
+            <mat-icon class="provider-icon">lock</mat-icon>
+            <div class="provider-details">
+              <p class="provider-label">Change Password</p>
+              <p class="provider-email">A password reset link will be sent to your email.</p>
+            </div>
+          </div>
+
+          <div class="provider-actions">
+            <button mat-flat-button color="primary" (click)="onPasswordReset()">
+              <mat-icon>mail_outline</mat-icon>
+              Send Reset Link
+            </button>
+          </div>
         </div>
       </div>
+    </div>
 
     }
-
-
-
 
     <!-- No providers warning -->
     @if (!hasPasswordProvider() && !hasGoogleProvider()) {
-      <app-warning-banner
-        message="No authentication providers found.">
-      </app-warning-banner>
+    <app-warning-banner message="No authentication providers found."> </app-warning-banner>
     }
   </mat-card-content>
 </mat-card>
-

@@ -1,20 +1,24 @@
-import {Injectable, inject} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
   doc,
   docData,
   setDoc,
   updateDoc,
-  getDoc, Timestamp, serverTimestamp,
+  getDoc,
+  Timestamp,
+  serverTimestamp,
 } from '@angular/fire/firestore';
 import { User } from '@angular/fire/auth';
-import {AuthService} from '../auth-service/auth.service';
-import {BehaviorSubject, Observable, of, switchAll} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
-import {ProjectService} from '../project-service/project.service';
-import {SettingsService} from '../settings-service/settings.service';
-import {getDownloadURL, ref, Storage, uploadBytes} from '@angular/fire/storage';
-import {UserProfile, UserProfileInterface, PLACEHOLDER_AVATAR_URL} from "@shared/lib/models/user";
+import { AuthService } from '../auth-service/auth.service';
+import { BehaviorSubject, Observable, of, switchAll } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { ProjectService } from '../project-service/project.service';
+import { SettingsService } from '../settings-service/settings.service';
+import { getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
+import { UserProfile, UserProfileInterface, PLACEHOLDER_AVATAR_URL } from '@shared/lib/models/user';
+
+// TODO fix google avatar error, to much requests, maybe cache the image, or move to storage
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +38,6 @@ export class UserService {
    * Emits null if no user is logged in.
    */
   public currentUserProfile$: Observable<UserProfile> = this.currentUserProfile.asObservable();
-
 
   /**
    * Returns the current user's profile data synchronously.
@@ -56,28 +59,27 @@ export class UserService {
     const user = this.authService.userSnapshot;
     if (!user) return false;
 
-    return user.providerData.some(
-      (profile) => profile.providerId === 'password'
-    );
+    return user.providerData.some((profile) => profile.providerId === 'password');
   }
 
-
   constructor() {
-    this.authService.currentUser$.pipe(
-      switchMap(async (authUser) => {
-        if (!authUser) {
-          return of(null);
-        }
-        await this.checkAndCreateUserProfile(authUser);
+    this.authService.currentUser$
+      .pipe(
+        switchMap(async (authUser) => {
+          if (!authUser) {
+            return of(null);
+          }
+          await this.checkAndCreateUserProfile(authUser);
 
-        return docData(
-          doc(this.firestore, `users/${authUser.uid}`), { idField: 'id' }
-        ) as Observable<UserProfile>;
-      }),
-      switchAll(),
-    ).subscribe((profile) => {
-      this.currentUserProfile.next(profile);
-    });
+          return docData(doc(this.firestore, `users/${authUser.uid}`), {
+            idField: 'id',
+          }) as Observable<UserProfile>;
+        }),
+        switchAll()
+      )
+      .subscribe((profile) => {
+        this.currentUserProfile.next(profile);
+      });
   }
 
   /**
@@ -95,13 +97,11 @@ export class UserService {
         id: user.uid,
         email: user.email!,
         username: user.displayName || user.email!.split('@')[0],
-        avatarUrl:
-          user.photoURL ||
-          PLACEHOLDER_AVATAR_URL,
+        avatarUrl: user.photoURL || PLACEHOLDER_AVATAR_URL,
         supporter: false,
         createdAt: serverTimestamp() as Timestamp, // unreliable
       };
-      await setDoc(userRef, userData, {merge: true});
+      await setDoc(userRef, userData, { merge: true });
       await this.projectService.createDefaultInbox(user.uid);
       await this.settingsService.createDefaultSettings(user.uid);
     }
@@ -114,7 +114,7 @@ export class UserService {
     await Promise.all([
       this.healDefaultInbox(user),
       this.healDefaultSettings(user),
-      this.healUserProfileEmail(user)
+      this.healUserProfileEmail(user),
     ]);
   }
 
@@ -137,7 +137,7 @@ export class UserService {
   }
 
   // Also updates the user's email if it was changed manually in settings
-  private async healUserProfileEmail(user: User){
+  private async healUserProfileEmail(user: User) {
     const firestoreEmail = this.currentUserProfile.value?.email;
     if (user.email && firestoreEmail !== user.email) {
       const userRef = doc(this.firestore, `users/${user.uid}`);
@@ -155,7 +155,7 @@ export class UserService {
    */
   async updateUserProfile(
     data: Partial<UserProfileInterface>,
-    userId = this.userId,
+    userId = this.userId
   ): Promise<void> {
     if (!userId) {
       throw new Error('Cannot update user profile: no user ID provided');
@@ -165,7 +165,6 @@ export class UserService {
     const userRef = doc(this.firestore, `users/${userId}`);
     return updateDoc(userRef, cleanData);
   }
-
 
   // TODO: Move to cloud function with compression
   /**
@@ -194,6 +193,7 @@ export class UserService {
   }
 
   public resetUserAvatar(): Promise<void> {
+    // TODO delete existing file
     return this.updateUserProfile({ avatarUrl: PLACEHOLDER_AVATAR_URL });
   }
 }

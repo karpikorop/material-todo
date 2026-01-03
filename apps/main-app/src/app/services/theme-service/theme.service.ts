@@ -1,10 +1,10 @@
-import {effect, inject, Injectable, PLATFORM_ID, signal} from '@angular/core';
-import {isPlatformBrowser} from '@angular/common';
-import {SettingsService} from '../settings-service/settings.service';
-import {Themes} from '@shared/lib/models/settings';
+import { effect, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { SettingsService } from '../settings-service/settings.service';
+import { Themes } from '@shared/lib/models/settings';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThemeService {
   private platformId = inject(PLATFORM_ID);

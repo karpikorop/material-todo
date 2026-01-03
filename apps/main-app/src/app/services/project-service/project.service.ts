@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   addDoc,
   collection,
@@ -12,11 +12,11 @@ import {
   Timestamp,
   updateDoc,
 } from '@angular/fire/firestore';
-import {AuthService} from '../auth-service/auth.service';
-import {Observable, of} from 'rxjs';
-import {shareReplay, switchMap} from 'rxjs/operators';
-import {Functions, httpsCallable} from '@angular/fire/functions';
-import {Project} from '@shared/lib/models/project';
+import { AuthService } from '../auth-service/auth.service';
+import { Observable, of } from 'rxjs';
+import { shareReplay, switchMap } from 'rxjs/operators';
+import { Functions, httpsCallable } from '@angular/fire/functions';
+import { Project } from '@shared/lib/models/project';
 
 @Injectable({
   providedIn: 'root',
@@ -33,18 +33,15 @@ export class ProjectService {
   public projects$: Observable<Project[]> = this.authService.currentUser$.pipe(
     switchMap((user) => {
       if (user) {
-        const projectsRef = collection(
-          this.firestore,
-          `users/${user.uid}/projects`
-        );
+        const projectsRef = collection(this.firestore, `users/${user.uid}/projects`);
         const q = query(projectsRef, orderBy('createdAt', 'asc'));
 
-        return collectionData(q, {idField: 'id'}) as Observable<Project[]>;
+        return collectionData(q, { idField: 'id' }) as Observable<Project[]>;
       } else {
         return of([]);
       }
     }),
-    shareReplay(1),
+    shareReplay(1)
   );
 
   /**
@@ -91,10 +88,7 @@ export class ProjectService {
     projectId: string,
     data: Partial<Omit<Project, 'id'>>
   ): Promise<void> {
-    const projectRef = doc(
-      this.firestore,
-      `users/${userId}/projects/${projectId}`
-    );
+    const projectRef = doc(this.firestore, `users/${userId}/projects/${projectId}`);
     return updateDoc(projectRef, data);
   }
 
@@ -104,12 +98,9 @@ export class ProjectService {
    * @param projectId - ID of the project to delete
    */
   async deleteProject(projectId: string): Promise<void> {
-    const deleteProjectFn = httpsCallable(
-      this.functions,
-      'deleteProjectAndTodos'
-    );
+    const deleteProjectFn = httpsCallable(this.functions, 'deleteProjectAndTodos');
     console.log(`Calling cloud function to delete project: ${projectId}`);
-    const result = await deleteProjectFn({projectId: projectId});
+    const result = await deleteProjectFn({ projectId: projectId });
     console.log('Cloud function executed:', result.data);
   }
 }

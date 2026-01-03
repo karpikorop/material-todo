@@ -9,7 +9,8 @@
         mat-icon-button
         [matMenuTriggerFor]="iconMenu"
         class="bg-surface-container-highest flex-shrink-0"
-        matTooltip="Pick an icon">
+        matTooltip="Pick an icon"
+      >
         <mat-icon class="text-primary mat-icon-filled">{{ selectedIcon }}</mat-icon>
       </button>
 
@@ -20,34 +21,32 @@
           placeholder="Project name"
           [maxlength]="20"
           cdkFocusInitial
-          (keydown.enter)="onSubmit()">
+          (keydown.enter)="onSubmit()"
+        />
       </mat-form-field>
     </div>
 
     <mat-menu #iconMenu="matMenu" class="icon-picker-menu">
       <div class="grid grid-cols-4 gap-2 p-3">
         @for (icon of availableIcons; track icon) {
-          <button
-            mat-icon-button
-            (click)="selectIcon(icon)"
-            class="!w-10 !h-10">
-            <mat-icon
-              class="mat-icon-filled"
-              [class.primary-icon-color]="selectedIcon === icon"
-              [class.text-primary]="selectedIcon !== icon">
-              {{ icon }}
-            </mat-icon>
-          </button>
+        <button mat-icon-button (click)="selectIcon(icon)" class="!w-10 !h-10">
+          <mat-icon
+            class="mat-icon-filled"
+            [class.primary-icon-color]="selectedIcon === icon"
+            [class.text-primary]="selectedIcon !== icon"
+          >
+            {{ icon }}
+          </mat-icon>
+        </button>
         }
       </div>
     </mat-menu>
-
   </mat-dialog-content>
 
-<mat-dialog-actions align="end" class="!p-0">
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-flat-button (click)="onSubmit()" [disabled]="!projectName.trim()">
-    {{ mainButtonLabel}}
-  </button>
-</mat-dialog-actions>
+  <mat-dialog-actions align="end" class="!p-0">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button (click)="onSubmit()" [disabled]="!projectName.trim()">
+      {{ mainButtonLabel }}
+    </button>
+  </mat-dialog-actions>
 </div>

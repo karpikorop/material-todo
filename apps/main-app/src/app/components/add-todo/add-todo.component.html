@@ -9,33 +9,18 @@
 
   <div class="action-buttons">
     @if (isMobileView()) {
-      <button
-        matButton="filled"
-        type="submit"
-        [disabled]="addTodoForm.invalid"
-        matTooltip="Add task"
-      >
-        Add
-      </button>
+    <button matButton="filled" type="submit" [disabled]="addTodoForm.invalid" matTooltip="Add task">
+      Add
+    </button>
     } @else {
-      <button
-        matButton="filled"
-        type="submit"
-        [disabled]="addTodoForm.invalid"
-        matTooltip="Add task"
-      >
-        <span>Add Task</span>
+    <button matButton="filled" type="submit" [disabled]="addTodoForm.invalid" matTooltip="Add task">
+      <span>Add Task</span>
 
-        <mat-icon>add</mat-icon>
-      </button>
+      <mat-icon>add</mat-icon>
+    </button>
     }
 
-    <button
-      mat-icon-button
-      type="button"
-      matTooltip="Add details"
-      (click)="openDetailsDialog()"
-    >
+    <button mat-icon-button type="button" matTooltip="Add details" (click)="openDetailsDialog()">
       <mat-icon>edit_note</mat-icon>
     </button>
   </div>

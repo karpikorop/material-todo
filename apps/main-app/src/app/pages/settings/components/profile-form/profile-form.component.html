@@ -4,18 +4,19 @@
     <mat-card-subtitle>Manage your profile picture and personal information</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="mt-4">
-
     <!-- Profile Picture Section -->
     <div class="profile-section">
       <h3 class="section-title">Profile Picture</h3>
       <div class="avatar-card">
         <div class="avatar-content">
           <div class="avatar-wrapper">
-            <img [ngSrc]="this.userAvatarUrl"
-                 alt="User Avatar"
-                 class="avatar-image"
-                 width="80"
-                 height="80"/>
+            <img
+              [ngSrc]="this.userAvatarUrl"
+              alt="User Avatar"
+              class="avatar-image"
+              width="80"
+              height="80"
+            />
           </div>
           <div class="avatar-info">
             <p class="avatar-label">Your Avatar</p>
@@ -33,7 +34,7 @@
             (change)="onImageSelected($event)"
             accept="image/*"
             class="hidden"
-          >
+          />
           <button mat-stroked-button color="warn" (click)="onAvatarReset()">
             <mat-icon>delete</mat-icon>
             Remove
@@ -49,33 +50,29 @@
       <h3 class="section-title">Username</h3>
       <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full">
-          <input matInput
-                 placeholder="Enter your display name"
-                 formControlName="username"
-                 autocomplete="off">
+          <input
+            matInput
+            placeholder="Enter your display name"
+            formControlName="username"
+            autocomplete="off"
+          />
           <mat-icon matPrefix>person</mat-icon>
           @if (profileForm.get('username')?.invalid && profileForm.get('username')?.touched) {
-            <mat-error>
-              @if (profileForm.get('username')?.hasError('required')) {
-                Username is required
-              } @else if (profileForm.get('username')?.hasError('minlength')) {
-                Username must be at least 3 characters
-              }
-            </mat-error>
+          <mat-error>
+            @if (profileForm.get('username')?.hasError('required')) { Username is required } @else
+            if (profileForm.get('username')?.hasError('minlength')) { Username must be at least 3
+            characters }
+          </mat-error>
           }
         </mat-form-field>
       </form>
 
       <div class="action-buttons">
-        <button mat-flat-button
-                color="primary"
-                [disabled]="!isSaveEnabled()"
-                (click)="onSubmit()">
+        <button mat-flat-button color="primary" [disabled]="!isSaveEnabled()" (click)="onSubmit()">
           <mat-icon class="mr-1">save</mat-icon>
           Save Changes
         </button>
       </div>
     </div>
-
   </mat-card-content>
 </mat-card>

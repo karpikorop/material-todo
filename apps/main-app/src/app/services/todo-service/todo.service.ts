@@ -1,36 +1,21 @@
-import {Injectable, inject} from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
-  Firestore,
+  addDoc,
   collection,
   collectionData,
-  doc,
-  addDoc,
-  updateDoc,
   deleteDoc,
-  query,
-  where,
+  doc,
+  Firestore,
   orderBy,
-Timestamp, serverTimestamp,
+  query,
+  serverTimestamp,
+  updateDoc,
+  where,
 } from '@angular/fire/firestore';
-import {AuthService} from '../auth-service/auth.service';
-import {Observable, of} from 'rxjs';
-import {shareReplay, switchMap} from 'rxjs/operators';
-
-export interface Todo {
-  id: string; // Firestore ID
-  userId: string;
-  title: string;
-  description?: string;
-  status: 'todo' | 'done' | 'archived';
-  priority?: 'low' | 'medium' | 'high';
-  dueDate?: Timestamp;
-  reminderDate?: Timestamp;
-  projectId: string;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-}
-
-type newTodoData = Omit<Todo, 'id' | 'userId' | 'createdAt' | 'updatedAt' | 'status'>;
+import { AuthService } from '../auth-service/auth.service';
+import { Observable, of } from 'rxjs';
+import { shareReplay, switchMap } from 'rxjs/operators';
+import { newTodoData, Todo } from '@shared/lib/models/todos';
 
 @Injectable({
   providedIn: 'root',
@@ -55,15 +40,11 @@ export class TodoService {
         }
 
         const todosRef = collection(this.firestore, `users/${user.uid}/todos`);
-        const q = query(
-          todosRef,
-          where('projectId', '==', projectId),
-          orderBy('createdAt', 'asc')
-        );
+        const q = query(todosRef, where('projectId', '==', projectId), orderBy('createdAt', 'asc'));
 
-        return collectionData(q, {idField: 'id'}) as Observable<Todo[]>;
+        return collectionData(q, { idField: 'id' }) as Observable<Todo[]>;
       }),
-      shareReplay(1),
+      shareReplay(1)
     );
   }
 
@@ -72,17 +53,14 @@ export class TodoService {
    * @param todoData - Object containing data for the new task (without id and userId)
    * @param userId - Current user's ID
    */
-  async addTodo(
-    todoData: newTodoData,
-    userId: string
-  ): Promise<void> {
+  async addTodo(todoData: newTodoData, userId: string): Promise<void> {
     const todosRef = collection(this.firestore, `users/${userId}/todos`);
     const newTodo: Omit<Todo, 'id'> = {
-      status: 'todo', // default status, can be overridden by passed todoData
+      status: 'todo', // default status can be overridden by passed todoData
       ...todoData,
       userId: userId,
-      createdAt: serverTimestamp() as Timestamp,
-      updatedAt: serverTimestamp() as Timestamp,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     };
     await addDoc(todosRef, newTodo);
   }
@@ -111,13 +89,9 @@ export class TodoService {
    * @param todoId - ID of the task to move
    * @param newProjectId - ID of the new project
    */
-  async moveTodo(
-    userId: string,
-    todoId: string,
-    newProjectId: string
-  ): Promise<void> {
+  async moveTodo(userId: string, todoId: string, newProjectId: string): Promise<void> {
     const todoRef = doc(this.firestore, `users/${userId}/todos/${todoId}`);
-    return updateDoc(todoRef, {projectId: newProjectId});
+    return updateDoc(todoRef, { projectId: newProjectId });
   }
 
   /**

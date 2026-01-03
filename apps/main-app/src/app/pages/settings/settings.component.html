@@ -1,11 +1,10 @@
-<div class="settings-container  mt-20">
+<div class="settings-container mt-20">
   <header class="settings-header">
     <h1 class="text-3xl font-bold mb-4">Settings</h1>
     <p class="text-lg text-tertiary mb-2">Manage your account and application preferences.</p>
   </header>
 
   <div class="settings-content pb-8">
-
     <profile-form-settings
       [userProfile]="this.userService.currentUserProfile$ | async"
       (profileUpdate)="updateProfile($event)"
@@ -20,7 +19,8 @@
       (googleAccountLink)="handleGoogleAccountLink()"
       (googleAccountChange)="handleGoogleAccountChange()"
       (googleAccountRemove)="handleGoogleAccountRemove()"
-      (passwordReset)="resetUserPassword()">
+      (passwordReset)="resetUserPassword()"
+    >
     </security-login-settings>
 
     <!-- <notifications-settings></notifications-settings> -->
