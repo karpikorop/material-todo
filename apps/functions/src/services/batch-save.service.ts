@@ -1,7 +1,6 @@
 import { injectable } from 'tsyringe';
 import { FirebaseAdminService } from './firebase-admin.service';
-import { makeChunks } from '@shared/lib/utils/make-chunks.utils';
-import { WithId } from '@shared/lib/models/withId';
+import { makeChunks, WithId } from '@shared';
 
 export interface BatchOperations<T> {
   create?: T[];

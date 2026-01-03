@@ -1,8 +1,6 @@
 import { injectable } from 'tsyringe';
 import { FirebaseAdminService } from './firebase-admin.service';
-import { getTodosCollectionPath } from '@shared/lib/models/collection_names';
-import { Todo } from '@shared/lib/models/todos';
-import { isStringEmpty } from '@shared/lib/utils/is-empty';
+import { getTodosCollectionPath, Todo, isStringEmpty } from '@shared';
 
 @injectable()
 export class TodoService {

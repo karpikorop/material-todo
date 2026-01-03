@@ -19,7 +19,7 @@ import {
 } from '../../components/dialogs/password-input-dialog/password-input-dialog.component';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { DialogService } from '../../components/dialogs/dialog-service/dialog.service';
-import { UserProfileInterface } from '@shared/lib/models/user';
+import { UserProfileInterface } from '@shared';
 
 @Component({
   selector: 'app-settings',

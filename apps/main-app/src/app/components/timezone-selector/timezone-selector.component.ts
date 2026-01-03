@@ -1,7 +1,7 @@
 import { NgOptionComponent, NgSelectComponent } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { Component, signal, output } from '@angular/core';
-import { getTimeZonesList, findTimeZone } from '@shared/lib/utils/timezones.utils';
+import { getTimeZonesList, findTimeZone } from '@shared';
 import { TimeZone } from '@vvo/tzdb';
 
 export interface SelectorOption<T = any> {

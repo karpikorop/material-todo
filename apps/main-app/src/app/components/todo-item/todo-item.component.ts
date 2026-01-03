@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NotificationService } from '../../services/notification-service/notification.service';
-import { Todo } from '@shared/lib/models/todos';
+import { Todo } from '@shared';
 
 @Component({
   selector: 'app-todo-item',

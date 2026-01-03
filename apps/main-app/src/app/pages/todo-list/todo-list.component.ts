@@ -16,7 +16,7 @@ import { shareReplay, switchMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { ProjectService } from '../../services/project-service/project.service';
-import { Todo } from '@shared/lib/models/todos';
+import { Todo } from '@shared';
 
 @Component({
   selector: 'app-todo-list',

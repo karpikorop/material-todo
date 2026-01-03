@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { NgOptimizedImage } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PLACEHOLDER_AVATAR_URL, UserProfile, UserProfileInterface } from '@shared/lib/models/user';
+import { PLACEHOLDER_AVATAR_URL, UserProfile, UserProfileInterface } from '@shared';
 import { NotificationService } from '../../../../services/notification-service/notification.service';
 
 @Component({

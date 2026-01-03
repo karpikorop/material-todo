@@ -52,7 +52,7 @@ export class NotificationService {
     });
   }
 
-  private showNotification(message: string, action: string = 'Close', duration: number = 3000) {
+  private showNotification(message: string, action = 'Close', duration = 3000) {
     this._snackBar.open(message, action, {
       duration: duration,
       horizontalPosition: 'right',

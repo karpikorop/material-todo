@@ -3,9 +3,8 @@ import { doc, docData, Firestore, setDoc, updateDoc } from '@angular/fire/firest
 import { AuthService } from '../auth-service/auth.service';
 import { distinctUntilChanged, Observable, of } from 'rxjs';
 import { map, shareReplay, switchMap } from 'rxjs/operators';
-import { getTimeZonesList } from '@shared/lib/utils/timezones.utils';
-import { TimeZone } from '@vvo/tzdb';
-import { SETTINGS_DOCUMENT_ID, Themes, UserSettings } from '@shared/lib/models/settings';
+import { getTimeZonesList, SETTINGS_DOCUMENT_ID, Themes, UserSettings } from '@shared';
+import {TimeZone} from '@vvo/tzdb';
 
 @Injectable({
   providedIn: 'root',
