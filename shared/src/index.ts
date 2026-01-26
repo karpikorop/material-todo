@@ -10,6 +10,6 @@ export * from './lib/models/void-function-response';
 export * from './lib/models/withId';
 
 export * from './lib/utils/is-empty';
-export * from './lib/utils/make-chunks.utils';
+export * from './lib/utils/make-chunks';
 export * from './lib/utils/timezones.utils';
 

@@ -10,6 +10,13 @@ import {
 import { onSchedule, ScheduledEvent, ScheduleOptions } from 'firebase-functions/v2/scheduler';
 import { onObjectFinalized, StorageOptions, StorageEvent } from 'firebase-functions/v2/storage';
 
+/**
+ * Extracts an injectable class token from an imported module.
+ *
+ * - Returns `module.default` if present.
+ * - Otherwise finds the first exported function (class/constructor) and returns it.
+ * - Throws an error if no class/function export is found.
+ */
 function extractClass(module: any): InjectionToken<any> {
   if (module.default) return module.default;
 

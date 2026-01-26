@@ -1,19 +1,18 @@
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { inject } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NotificationService } from '../../services/notification-service/notification.service';
-import { Todo } from '@shared';
+import {Task, TaskStatus} from '@shared';
 
 @Component({
   selector: 'app-todo-item',
   standalone: true,
   imports: [
     CommonModule,
-    DatePipe,
     MatCheckboxModule,
     MatIconModule,
     MatButtonModule,
@@ -24,15 +23,15 @@ import { Todo } from '@shared';
 })
 export class TodoItemComponent {
   private notificationService = inject(NotificationService);
-  @Input({ required: true }) todo!: Todo;
+  @Input({ required: true }) todo!: Task;
 
-  @Output() update = new EventEmitter<{ todoId: string; data: Partial<Omit<Todo, 'id'>> }>();
+  @Output() update = new EventEmitter<{ todoId: string; data: Partial<Omit<Task, 'id'>> }>();
   @Output() delete = new EventEmitter<string>();
 
   protected isHovered = signal(false);
 
   protected onStatusChange(checked: boolean): void {
-    const newStatus = checked ? 'done' : 'todo';
+    const newStatus = checked ? TaskStatus.DONE : TaskStatus.TODO;
     this.update.emit({ todoId: this.todo.id, data: { status: newStatus } });
   }
 

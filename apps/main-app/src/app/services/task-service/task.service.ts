@@ -16,12 +16,12 @@ import {
 import { AuthService } from '../auth-service/auth.service';
 import { Observable, of } from 'rxjs';
 import { shareReplay, switchMap } from 'rxjs/operators';
-import { newTodoData, Todo, getTodosCollectionPath } from '@shared';
+import { newTaskData, Task, getTodosCollectionPath } from '@shared';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TodoService {
+export class TaskService {
   private firestore: Firestore = inject(Firestore);
   private authService: AuthService = inject(AuthService);
 
@@ -29,7 +29,7 @@ export class TodoService {
    * Retrieves a real-time list of tasks for a specific project.
    * @param projectId - The ID (string) of the project to get tasks from.
    */
-  getTodosByProject(projectId: string): Observable<Todo[]> {
+  getTodosByProject(projectId: string): Observable<Task[]> {
     if (!projectId) {
       return of([]);
     }
@@ -43,7 +43,7 @@ export class TodoService {
         const todosRef = collection(this.firestore, getTodosCollectionPath(user.uid));
         const q = query(todosRef, where('projectId', '==', projectId), orderBy('createdAt', 'asc'));
 
-        return collectionData(q, { idField: 'id' }) as Observable<Todo[]>;
+        return collectionData(q, { idField: 'id' }) as Observable<Task[]>;
       }),
       shareReplay(1)
     );
@@ -54,10 +54,10 @@ export class TodoService {
    * @param todoData - Object containing data for the new task (without id and userId)
    * @param userId - Current user's ID
    */
-  async addTodo(todoData: newTodoData, userId: string): Promise<void> {
+  async addTodo(todoData: newTaskData, userId: string): Promise<void> {
     const todosRef = collection(this.firestore, getTodosCollectionPath(userId));
-    const newTodo: Omit<Todo, 'id'> = {
-      status: 'todo', // default status can be overridden by passed todoData
+    const newTodo: Omit<Task, 'id'> = {
+      // default status can be overridden by passed todoData
       ...todoData,
       userId: userId,
       createdAt: serverTimestamp() as Timestamp,
@@ -75,7 +75,7 @@ export class TodoService {
   async updateTodo(
     userId: string,
     todoId: string,
-    data: Partial<Omit<Todo, 'id' | 'userId'>>
+    data: Partial<Omit<Task, 'id' | 'userId'>>
   ): Promise<void> {
     const todoRef = doc(this.firestore, `${getTodosCollectionPath(userId)}/${todoId}`);
     return updateDoc(todoRef, {

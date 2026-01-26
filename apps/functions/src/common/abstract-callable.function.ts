@@ -1,5 +1,6 @@
 import { CallableRequest, HttpsError } from 'firebase-functions/v2/https';
 import * as logger from 'firebase-functions/logger';
+import {AuthData} from 'firebase-functions/tasks';
 
 /**
  * Abstract base class for Firebase-Callable Functions.
@@ -26,7 +27,7 @@ export abstract class AbstractCallableFunction<TInput, TOutput> {
    * @protected
    * @abstract
    */
-  protected abstract execute(data: TInput, auth?: any): Promise<TOutput>;
+  protected abstract execute(data: TInput, auth?: AuthData): Promise<TOutput>;
 
   /**
    * Handles incoming callable requests with authentication checking, error handling, and logging.

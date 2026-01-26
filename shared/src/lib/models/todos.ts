@@ -1,17 +1,51 @@
 import { Timestamp } from '@firebase/firestore';
 import {WithId} from './withId';
 
-export interface Todo extends WithId {
+export interface BaseItem extends WithId {
   userId: string;
+  projectId: string;
+
   title: string;
   description?: string;
-  status: 'todo' | 'done' | 'archived';
-  priority?: 'low' | 'medium' | 'high';
-  dueDate?: Timestamp;
-  reminderDate?: Timestamp;
-  projectId: string;
+  startTime?: string;
+  endTime?: string;
+  isAllDay?: boolean;
+
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
 
-export type newTodoData = Omit<Todo, 'id' | 'userId' | 'createdAt' | 'updatedAt' | 'status'>;
+export interface Task extends BaseItem {
+  type: ItemType.TASK;
+  status?: TaskStatus;
+  priority?: TaskPriority;
+}
+
+export interface Event extends BaseItem {
+  type: ItemType.EVENT;
+}
+
+export enum ItemType {
+  TASK = 'task',
+  EVENT = 'event'
+}
+
+export enum TaskStatus {
+  TODO = 'todo',
+  DONE = 'done',
+  IN_PROGRESS = 'in_progress',
+  CANCELLED = 'cancelled'
+}
+
+export enum TaskPriority {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high'
+}
+
+export type ScheduledItem = Task | Event;
+
+
+type SystemFields = 'id' | 'userId' | 'createdAt' | 'updatedAt';
+
+export type newTaskData = Omit<Task, SystemFields>;

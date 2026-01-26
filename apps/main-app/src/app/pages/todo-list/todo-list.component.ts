@@ -5,7 +5,7 @@ import { Observable, map, take, firstValueFrom } from 'rxjs';
 
 import { TodoItemComponent } from '../../components/todo-item/todo-item.component';
 import { AddTodoComponent } from '../../components/add-todo/add-todo.component';
-import { TodoService } from '../../services/todo-service/todo.service';
+import { TaskService } from '../../services/task-service/task.service';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { NotificationService } from '../../services/notification-service/notification.service';
 
@@ -16,7 +16,7 @@ import { shareReplay, switchMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { ProjectService } from '../../services/project-service/project.service';
-import { Todo } from '@shared';
+import { Task } from '@shared';
 
 @Component({
   selector: 'app-todo-list',
@@ -35,7 +35,7 @@ import { Todo } from '@shared';
 export class TodoListComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private todoService = inject(TodoService);
+  private todoService = inject(TaskService);
   private authService = inject(AuthService);
   private notificationService = inject(NotificationService);
   private projectService = inject(ProjectService);
@@ -48,7 +48,7 @@ export class TodoListComponent {
     shareReplay(1)
   );
 
-  protected todos$: Observable<Todo[]> = this.projectId$.pipe(
+  protected todos$: Observable<Task[]> = this.projectId$.pipe(
     switchMap((id: string) => this.todoService.getTodosByProject(id)),
     map((todos) =>
       todos.sort((a, b) => {
@@ -58,9 +58,7 @@ export class TodoListComponent {
     ),
     shareReplay(1)
   );
-
-  constructor() {}
-
+  
   // Lifecycle hook to focus the input field after the view is checked
   // Focus is set to the input field of the AddTodoComponent
   /* Disabled because it works bad on mobile(triggers keybord)
@@ -70,7 +68,7 @@ export class TodoListComponent {
     }
   }*/
 
-  protected updateTodo(event: { todoId: string; data: Partial<Omit<Todo, 'id'>> }): void {
+  protected updateTodo(event: { todoId: string; data: Partial<Omit<Task, 'id'>> }): void {
     this.authService.currentUser$.pipe(take(1)).subscribe((user) => {
       if (user) {
         this.todoService

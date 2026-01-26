@@ -3,8 +3,10 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "types": [],
-    "baseUrl": "../../",
     "emitDecoratorMetadata": false,
+    "experimentalDecorators": true,
+    "module": "es2022",
+    "moduleResolution": "bundler",
     "isolatedModules": true
   },
   "include": ["src/**/*.ts"],

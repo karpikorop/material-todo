@@ -1,6 +1,6 @@
 import { injectable } from 'tsyringe';
 import { FirebaseAdminService } from './firebase-admin.service';
-import { getTodosCollectionPath, Todo, isStringEmpty } from '@shared';
+import { getTodosCollectionPath, Task, isStringEmpty } from '@shared';
 
 @injectable()
 export class TodoService {
@@ -9,8 +9,8 @@ export class TodoService {
   public async getTodos(
     userId: string,
     projectId?: string,
-    columns?: (keyof Todo)[]
-  ): Promise<Todo[]> {
+    columns?: (keyof Task)[]
+  ): Promise<Task[]> {
     let query = this.firebaseAdmin.firestore
       .collection(getTodosCollectionPath(userId))
       .where('userId', '==', userId);
@@ -29,7 +29,7 @@ export class TodoService {
         ({
           ...doc.data(),
           id: doc.id,
-        }) as Todo
+        }) as Task
     );
   }
 }
