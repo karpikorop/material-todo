@@ -5,7 +5,7 @@ import { Observable, map, take, firstValueFrom } from 'rxjs';
 
 import { TodoItemComponent } from '../../components/todo-item/todo-item.component';
 import { AddTodoComponent } from '../../components/add-todo/add-todo.component';
-import { TaskService } from '../../services/task-service/task.service';
+import { EntryService } from '../../services/entry-service/entry.service';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { NotificationService } from '../../services/notification-service/notification.service';
 
@@ -35,7 +35,7 @@ import { Task } from '@shared';
 export class TodoListComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private todoService = inject(TaskService);
+  private todoService = inject(EntryService);
   private authService = inject(AuthService);
   private notificationService = inject(NotificationService);
   private projectService = inject(ProjectService);
@@ -58,7 +58,7 @@ export class TodoListComponent {
     ),
     shareReplay(1)
   );
-  
+
   // Lifecycle hook to focus the input field after the view is checked
   // Focus is set to the input field of the AddTodoComponent
   /* Disabled because it works bad on mobile(triggers keybord)

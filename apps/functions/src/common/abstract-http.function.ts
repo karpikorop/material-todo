@@ -7,7 +7,7 @@ import * as logger from 'firebase-functions/logger';
  * Provides error handling and response management.
  * @abstract
  */
-export abstract class AbstractHttpFunction {
+export abstract class AbstractHttpFunction<T = any> {
   /**
    * Executes the HTTP function logic.
    * Must be implemented by derived classes.
@@ -18,7 +18,7 @@ export abstract class AbstractHttpFunction {
    * @protected
    * @abstract
    */
-  protected abstract execute(req: Request, res: Response): Promise<never>;
+  protected abstract execute(req: Request, res: Response): Promise<T | void>;
 
   /**
    * Handles incoming HTTP requests with error handling.
@@ -33,13 +33,20 @@ export abstract class AbstractHttpFunction {
     try {
       const result = await this.execute(req, res);
 
-      if (!res.headersSent && result !== undefined) {
+      if (res.headersSent){
+        return;
+      }
+
+      if (result != null) {
         res.status(200).json(result);
       }
+
+      res.status(204).send();
     } catch (error: any) {
       logger.error('HTTP Function crashed', error);
 
       if (!res.headersSent) {
+        // 500 response will be handled by queue as an error and may retry
         res.status(500).json({
           error: 'Internal Server Error',
           message: error.message,

@@ -16,12 +16,12 @@ import {
 import { AuthService } from '../auth-service/auth.service';
 import { Observable, of } from 'rxjs';
 import { shareReplay, switchMap } from 'rxjs/operators';
-import { newTaskData, Task, getTodosCollectionPath } from '@shared';
+import { newTaskData, Task, getEntriesCollectionPath } from '@shared';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TaskService {
+export class EntryService {
   private firestore: Firestore = inject(Firestore);
   private authService: AuthService = inject(AuthService);
 
@@ -40,7 +40,7 @@ export class TaskService {
           return of([]);
         }
 
-        const todosRef = collection(this.firestore, getTodosCollectionPath(user.uid));
+        const todosRef = collection(this.firestore, getEntriesCollectionPath(user.uid));
         const q = query(todosRef, where('projectId', '==', projectId), orderBy('createdAt', 'asc'));
 
         return collectionData(q, { idField: 'id' }) as Observable<Task[]>;
@@ -55,7 +55,7 @@ export class TaskService {
    * @param userId - Current user's ID
    */
   async addTodo(todoData: newTaskData, userId: string): Promise<void> {
-    const todosRef = collection(this.firestore, getTodosCollectionPath(userId));
+    const todosRef = collection(this.firestore, getEntriesCollectionPath(userId));
     const newTodo: Omit<Task, 'id'> = {
       // default status can be overridden by passed todoData
       ...todoData,
@@ -77,7 +77,7 @@ export class TaskService {
     todoId: string,
     data: Partial<Omit<Task, 'id' | 'userId'>>
   ): Promise<void> {
-    const todoRef = doc(this.firestore, `${getTodosCollectionPath(userId)}/${todoId}`);
+    const todoRef = doc(this.firestore, `${getEntriesCollectionPath(userId)}/${todoId}`);
     return updateDoc(todoRef, {
       ...data,
       updatedAt: Date.now(),
@@ -91,7 +91,7 @@ export class TaskService {
    * @param newProjectId - ID of the new project
    */
   async moveTodo(userId: string, todoId: string, newProjectId: string): Promise<void> {
-    const todoRef = doc(this.firestore, `${getTodosCollectionPath(userId)}/${todoId}`);
+    const todoRef = doc(this.firestore, `${getEntriesCollectionPath(userId)}/${todoId}`);
     return updateDoc(todoRef, { projectId: newProjectId });
   }
 
@@ -101,7 +101,7 @@ export class TaskService {
    * @param todoId - ID of the task to delete
    */
   async deleteTodo(userId: string, todoId: string): Promise<void> {
-    const todoRef = doc(this.firestore, `${getTodosCollectionPath(userId)}/${todoId}`);
+    const todoRef = doc(this.firestore, `${getEntriesCollectionPath(userId)}/${todoId}`);
     return deleteDoc(todoRef);
   }
 }

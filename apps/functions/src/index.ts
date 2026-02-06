@@ -13,3 +13,5 @@ export const deleteProjectAndTodos = createCall(
   },
   () => import('./functions/delete-projects.function')
 );
+
+export * as onChange from './functions/on-change';

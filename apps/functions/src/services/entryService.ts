@@ -1,18 +1,18 @@
 import { injectable } from 'tsyringe';
 import { FirebaseAdminService } from './firebase-admin.service';
-import { getTodosCollectionPath, Task, isStringEmpty } from '@shared';
+import { getEntriesCollectionPath, Task, isStringEmpty, mapFirestoreSnapshot } from '@shared';
 
 @injectable()
-export class TodoService {
+export class EntryService {
   constructor(private firebaseAdmin: FirebaseAdminService) {}
 
-  public async getTodos(
+  public async getEntries(
     userId: string,
     projectId?: string,
     columns?: (keyof Task)[]
   ): Promise<Task[]> {
     let query = this.firebaseAdmin.firestore
-      .collection(getTodosCollectionPath(userId))
+      .collection(getEntriesCollectionPath(userId))
       .where('userId', '==', userId);
 
     if (!isStringEmpty(projectId)) {
@@ -24,12 +24,8 @@ export class TodoService {
     }
 
     const todoSnapshots = await query.get();
-    return todoSnapshots.docs.map(
-      (doc) =>
-        ({
-          ...doc.data(),
-          id: doc.id,
-        }) as Task
-    );
+    return todoSnapshots.docs
+      .map((doc) => mapFirestoreSnapshot<Task>(doc))
+      .filter((task) => !!task);
   }
 }

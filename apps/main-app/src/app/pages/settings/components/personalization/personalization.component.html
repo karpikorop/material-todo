@@ -14,7 +14,11 @@
       </ng-select>
 
       <mat-card-subtitle>Change Time Zone</mat-card-subtitle>
-      <timezone-selector class="w-120 mt-4 mb-2"></timezone-selector>
+      <timezone-selector
+        class="w-120 mt-4 mb-2"
+        [timezone]="currentTimezone"
+        (selectedTimezoneChange)="onTimezoneChange($event)"
+      ></timezone-selector>
     </div>
   </mat-card-content>
 </mat-card>
