@@ -1,12 +1,13 @@
 import { injectable } from 'tsyringe';
 import { FirebaseAdminService } from './firebase-admin.service';
-import { WithId} from '@shared/models/withId';
+import { WithId } from '@shared/models/withId';
 import { makeChunks } from '@shared/utils/make-chunks';
 import { isObjectEmpty } from '@shared/utils/is-empty';
 
 export interface BatchOperations<T> {
   create?: T[];
   update?: T[];
+  /** ids of items to delete.**/
   delete?: string[];
 }
 
@@ -48,7 +49,9 @@ export class BatchSaveService {
     if (operations.update) {
       operations.update.forEach((item) => {
         if (!item.id) {
-          throw new Error(`Item in update list missing 'id' field: ${JSON.stringify(isObjectEmpty(item))}`);
+          throw new Error(
+            `Item in update list missing 'id' field. Object empty: ${isObjectEmpty(item)}`
+          );
         }
         const ref = collectionRef.doc(item.id);
         actions.push({ type: 'update', ref, data: item });

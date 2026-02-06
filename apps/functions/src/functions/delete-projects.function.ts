@@ -4,6 +4,7 @@ import { ProjectsService } from '../services/projects.service';
 import * as logger from 'firebase-functions/logger';
 import { AbstractCallableFunction } from '../common/abstract-callable.function';
 import type { VoidResponseInterface } from '@shared';
+import {CallableRequest} from 'firebase-functions/https';
 
 interface deleteProjectRequest {
   projectId: string;
@@ -18,15 +19,16 @@ export default class DeleteProject extends AbstractCallableFunction<
     super();
   }
 
-  public async execute(data: deleteProjectRequest, auth?: any): Promise<VoidResponseInterface> {
-    if (!data.projectId) {
+  public async execute(request: CallableRequest<deleteProjectRequest>): Promise<VoidResponseInterface> {
+
+    if (!request.data.projectId) {
       throw new HttpsError('invalid-argument', 'Project ID is required.');
     }
 
-    logger.info('Deleting project', { uid: auth.uid, projectId: data.projectId });
+    logger.info('Deleting project', { uid: request.auth?.uid, projectId: request.data.projectId });
 
     try {
-      await this.projectsService.deleteProject(data.projectId, auth.uid);
+      await this.projectsService.deleteProject(request.data.projectId, request.auth?.uid as string);
       return { success: true, message: 'Project deleted successfully' };
     } catch (error: any) {
       logger.error('Delete failed', error);

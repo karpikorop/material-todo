@@ -1,6 +1,6 @@
 import { NgOptionComponent, NgSelectComponent } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
-import { Component, signal, output } from '@angular/core';
+import { Component, signal, output, input, effect } from '@angular/core';
 import { getTimeZonesList, findTimeZone } from '@shared';
 import { TimeZone } from '@vvo/tzdb';
 
@@ -19,6 +19,8 @@ export interface SelectorOption<T = any> {
 export class TimezoneSelectorComponent {
   protected readonly timezoneOptions: SelectorOption<string>[] = this.getTimezoneOptions();
 
+  public timezone = input<string>('UTC');
+
   public selectedTimezone = signal<string>('UTC');
 
   public selectedTimezoneObject = signal<TimeZone | undefined>(undefined);
@@ -26,12 +28,17 @@ export class TimezoneSelectorComponent {
   public selectedTimezoneChange = output<string>();
 
   constructor() {
-    this.findMatchingTimeZone();
+    effect(() => {
+      const tz = this.timezone();
+      this.selectedTimezone.set(tz);
+      this.findMatchingTimeZone();
+    });
   }
 
   protected onSelectedTimezoneChange(value: string): void {
     this.selectedTimezone.set(value);
     this.selectedTimezoneChange.emit(value);
+    this.findMatchingTimeZone();
   }
 
   private findMatchingTimeZone(): void {
@@ -53,5 +60,10 @@ export class TimezoneSelectorComponent {
       return `(${offset}) ${tz.alternativeName} - ${tz.mainCities[0]}`;
     }
     return `(${offset}) ${tz.alternativeName}`;
+  }
+
+  protected formatTimezoneLabel(timeZone: string): string {
+    const tz = findTimeZone(timeZone);
+    return tz ? this.getTimezoneDisplay(tz) : timeZone;
   }
 }

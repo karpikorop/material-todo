@@ -10,7 +10,7 @@ import {
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { take } from 'rxjs/operators';
-import { TaskService } from '../../services/task-service/task.service';
+import { EntryService } from '../../services/entry-service/entry.service';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { NotificationService } from '../../services/notification-service/notification.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,7 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { IS_MOBILE } from '../../tokens';
 import { MatTooltip } from '@angular/material/tooltip';
-import {ItemType, TaskStatus, newTaskData} from '@shared';
+import { EntryType, TaskStatus, newTaskData } from '@shared';
 
 @Component({
   selector: 'app-add-todo',
@@ -41,7 +41,7 @@ export class AddTodoComponent {
   @ViewChild('taskInput') taskInput!: ElementRef<HTMLInputElement>;
 
   private fb = inject(FormBuilder);
-  private todoService = inject(TaskService);
+  private todoService = inject(EntryService);
   private authService = inject(AuthService);
   private notificationService = inject(NotificationService);
   protected isMobileView = inject(IS_MOBILE);
@@ -65,10 +65,10 @@ export class AddTodoComponent {
     this.authService.currentUser$.pipe(take(1)).subscribe((user) => {
       if (user) {
         const newTodoData: newTaskData = {
-          type: ItemType.TASK,
+          type: EntryType.TASK,
           title: this.addTodoForm.value.title,
           projectId: this.projectId,
-          status: TaskStatus.TODO
+          status: TaskStatus.TODO,
         };
 
         this.todoService

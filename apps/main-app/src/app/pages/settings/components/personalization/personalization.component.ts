@@ -32,9 +32,9 @@ export class PersonalizationComponent {
   private notificationService = inject(NotificationService);
   private userService = inject(UserService);
 
-  protected timezoneControl = new FormControl<string>('');
   protected themeControl = new FormControl<Themes>(Themes.LIGHT);
   protected themes = Object.values(Themes).map((theme) => this.capitalizeFirstLetter(theme));
+  protected currentTimezone = 'UTC';
 
   constructor() {
     this.settingService.userSettings$.pipe(takeUntilDestroyed()).subscribe((settings) => {
@@ -42,6 +42,9 @@ export class PersonalizationComponent {
         this.themeControl.setValue(this.capitalizeFirstLetter(settings.theme) as Themes, {
           emitEvent: false,
         });
+      }
+      if (settings?.timeZone) {
+        this.currentTimezone = settings.timeZone;
       }
     });
 
@@ -63,6 +66,20 @@ export class PersonalizationComponent {
           this.notificationService.showError('Failed to update theme', err);
         },
       });
+  }
+
+  protected async onTimezoneChange(timezone: string): Promise<void> {
+    try {
+      const userId = this.userService.userId;
+      if (userId && timezone) {
+        await this.settingService.updateSettings(userId, {
+          timeZone: timezone,
+        });
+        this.notificationService.showSuccess('Timezone updated successfully');
+      }
+    } catch (err) {
+      this.notificationService.showError('Failed to update timezone', err);
+    }
   }
 
   private capitalizeFirstLetter(inputString: string): string {

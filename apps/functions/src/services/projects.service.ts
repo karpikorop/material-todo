@@ -2,10 +2,7 @@ import * as logger from 'firebase-functions/logger';
 import { injectable } from 'tsyringe';
 import { FirebaseAdminService } from './firebase-admin.service';
 import { BatchAction, BatchSaveService } from './batch-save.service';
-import {
-  getProjectsCollectionPath,
-  getTodosCollectionPath,
-} from '@shared';
+import { getProjectsCollectionPath, getEntriesCollectionPath } from '@shared';
 
 @injectable()
 export class ProjectsService {
@@ -14,8 +11,27 @@ export class ProjectsService {
     private batchSave: BatchSaveService
   ) {}
 
+  public async deleteProjectEntries(projectId: string, uid: string): Promise<number> {
+    if (!projectId || !uid) {
+      throw new Error('A valid projectId and userId must be provided.');
+    }
+
+    const entriesQuery = this.firebase.firestore
+      .collection(getEntriesCollectionPath(uid))
+      .where('projectId', '==', projectId);
+
+    const todoSnapshots = await entriesQuery.get();
+    const actions: BatchAction[] = todoSnapshots.docs.map((doc) => ({
+      type: 'delete',
+      ref: doc.ref,
+    }));
+    await this.batchSave.executeBatch(actions);
+
+    return actions.length;
+  }
+
   /**
-   * Deletes a project and its associated todos.
+   * Deletes a project and its associated entries.
    * @returns Promise resolving to success status
    * @param projectId - ID of the project to delete
    * @param uid - ID of the user who owns the project
@@ -25,12 +41,12 @@ export class ProjectsService {
       throw new Error('A valid projectId must be provided.');
     }
 
-    const todosQuery = this.firebase.firestore
-      .collection(getTodosCollectionPath(uid))
+    const entriesQuery = this.firebase.firestore
+      .collection(getEntriesCollectionPath(uid))
       .where('userId', '==', uid)
       .where('projectId', '==', projectId);
 
-    const todoSnapshots = await todosQuery.get();
+    const todoSnapshots = await entriesQuery.get();
 
     const actions: BatchAction[] = todoSnapshots.docs.map((doc) => ({
       type: 'delete',

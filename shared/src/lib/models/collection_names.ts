@@ -6,7 +6,7 @@ export const PROJECTS_SUBCOLLECTION = 'projects';
 
 export const SETTINGS_SUBCOLLECTION = 'settings';
 
-export function getTodosCollectionPath(userId: string) {
+export function getEntriesCollectionPath(userId: string) {
   return `${USERS_COLLECTION}/${userId}/${TODOS_SUBCOLLECTION}`;
 }
 

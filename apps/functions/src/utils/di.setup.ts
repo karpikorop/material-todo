@@ -9,6 +9,8 @@ import {
 } from 'firebase-functions/v2/https';
 import { onSchedule, ScheduledEvent, ScheduleOptions } from 'firebase-functions/v2/scheduler';
 import { onObjectFinalized, StorageOptions, StorageEvent } from 'firebase-functions/v2/storage';
+import { DocumentOptions, onDocumentWritten } from 'firebase-functions/firestore';
+import { Change, DocumentSnapshot, FirestoreEvent } from 'firebase-functions/v2/firestore';
 
 /**
  * Extracts an injectable class token from an imported module.
@@ -32,28 +34,15 @@ function extractClass(module: any): InjectionToken<any> {
  * On later calls, it returns the cached instance immediately.
  */
 function createLazyLoader(importFn: () => Promise<any>) {
-  let cachedInstance: any = null;
+  let module: any = null;
 
   return async () => {
-    if (!cachedInstance) {
-      const module = await importFn();
-      const ClassToken = extractClass(module);
-      cachedInstance = container.resolve(ClassToken);
+    if (!module) {
+      module = await importFn();
     }
-    return cachedInstance;
+    const ClassToken = extractClass(module);
+    return container.resolve(ClassToken);
   };
-}
-
-// todo remove
-async function runHandler(
-  importFn: () => Promise<any>,
-  executeFn: (instance: any) => Promise<any>
-) {
-  const module = await importFn();
-  const ClassToken = extractClass(module);
-  const instance = container.resolve(ClassToken);
-
-  return executeFn(instance);
 }
 
 /**
@@ -106,4 +95,25 @@ export function createObjectFinalized(options: StorageOptions, importFn: () => P
     const instance = await getInstance();
     return instance.execute(event);
   });
+}
+
+export function createDocumentWritten(
+  documentPath: string,
+  options: Omit<DocumentOptions, 'document'>,
+  importFn: () => Promise<any>
+) {
+  const getInstance = createLazyLoader(importFn);
+
+  const triggerOptions: DocumentOptions = {
+    document: documentPath,
+    ...options,
+  };
+
+  return onDocumentWritten(
+    triggerOptions,
+    async (event: FirestoreEvent<Change<DocumentSnapshot> | undefined>) => {
+      const instance = await getInstance();
+      return instance.handle(event);
+    }
+  );
 }

@@ -1,50 +1,55 @@
 import { Timestamp } from '@firebase/firestore';
-import {WithId} from './withId';
+import { WithId } from './withId';
 
-export interface BaseItem extends WithId {
+export interface BaseEntry extends WithId {
   userId: string;
   projectId: string;
 
   title: string;
   description?: string;
-  startTime?: string;
-  endTime?: string;
+
   isAllDay?: boolean;
 
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
 
-export interface Task extends BaseItem {
-  type: ItemType.TASK;
+export interface DateRange {
+  /** ISO 8601 date time string **/
+  startTime: string;
+  /** ISO 8601 date time string **/
+  endTime: string;
+}
+
+export interface Task extends BaseEntry, Partial<DateRange> {
+  type: EntryType.TASK;
   status?: TaskStatus;
   priority?: TaskPriority;
 }
 
-export interface Event extends BaseItem {
-  type: ItemType.EVENT;
+export interface Event extends BaseEntry, DateRange {
+  type: EntryType.EVENT;
 }
 
-export enum ItemType {
+export enum EntryType {
   TASK = 'task',
-  EVENT = 'event'
+  EVENT = 'event',
 }
 
 export enum TaskStatus {
   TODO = 'todo',
   DONE = 'done',
   IN_PROGRESS = 'in_progress',
-  CANCELLED = 'cancelled'
+  CANCELLED = 'cancelled',
 }
 
 export enum TaskPriority {
   LOW = 'low',
   MEDIUM = 'medium',
-  HIGH = 'high'
+  HIGH = 'high',
 }
 
-export type ScheduledItem = Task | Event;
-
+export type Entry = Task | Event;
 
 type SystemFields = 'id' | 'userId' | 'createdAt' | 'updatedAt';
 

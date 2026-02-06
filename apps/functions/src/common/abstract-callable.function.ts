@@ -1,6 +1,5 @@
 import { CallableRequest, HttpsError } from 'firebase-functions/v2/https';
 import * as logger from 'firebase-functions/logger';
-import {AuthData} from 'firebase-functions/tasks';
 
 /**
  * Abstract base class for Firebase-Callable Functions.
@@ -21,13 +20,12 @@ export abstract class AbstractCallableFunction<TInput, TOutput> {
   /**
    * Executes the callable function logic.
    * Must be implemented by derived classes.
-   * @param data - The input data from the callable request
-   * @param auth - The authentication context from Firebase Auth (undefined if not authenticated)
+   * @param request - Firebase callable request object containing data and auth context
    * @returns Promise that resolves with the output data
    * @protected
    * @abstract
    */
-  protected abstract execute(data: TInput, auth?: AuthData): Promise<TOutput>;
+  protected abstract execute(request: CallableRequest<TInput>): Promise<TOutput>;
 
   /**
    * Handles incoming callable requests with authentication checking, error handling, and logging.
@@ -40,16 +38,14 @@ export abstract class AbstractCallableFunction<TInput, TOutput> {
    * @public
    */
   public handle = async (request: CallableRequest<TInput>): Promise<TOutput> => {
-    const { data, auth } = request;
-
     try {
-      logger.info(`Starting ${this.constructor.name}`, { userId: auth?.uid });
+      logger.info(`Starting ${this.constructor.name}`, { userId: request.auth?.uid });
 
-      if (this.requiresAuth && !auth) {
+      if (this.requiresAuth && !request.auth) {
         throw new HttpsError('unauthenticated', 'User must be logged in');
       }
 
-      return await this.execute(data, auth);
+      return await this.execute(request);
     } catch (error: any) {
       logger.error(`Error in ${this.constructor.name}`, error);
       if (error instanceof HttpsError) {
