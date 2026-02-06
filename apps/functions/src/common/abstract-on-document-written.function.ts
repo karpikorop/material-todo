@@ -50,10 +50,11 @@ export abstract class AbstractOnDocumentWrittenFunction<T = any> {
     this.event = event;
     this.params = event?.params;
 
-    const data = event.data;
+    const data = event?.data;
 
     if (!data) {
       logger.warn('Event triggered without data');
+      return;
     }
 
     if (data.after.exists) {

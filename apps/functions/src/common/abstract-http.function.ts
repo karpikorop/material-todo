@@ -33,12 +33,14 @@ export abstract class AbstractHttpFunction<T = any> {
     try {
       const result = await this.execute(req, res);
 
-      if (res.headersSent){
+      if (res.headersSent) {
         return;
       }
 
       if (result != null) {
         res.status(200).json(result);
+      } else {
+        res.status(204).send();
       }
 
       res.status(204).send();

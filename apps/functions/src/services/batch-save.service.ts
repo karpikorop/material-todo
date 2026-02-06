@@ -50,7 +50,7 @@ export class BatchSaveService {
       operations.update.forEach((item) => {
         if (!item.id) {
           throw new Error(
-            `Item in update list missing 'id' field: ${JSON.stringify(isObjectEmpty(item))}`
+            `Item in update list missing 'id' field. Object empty: ${isObjectEmpty(item)}`
           );
         }
         const ref = collectionRef.doc(item.id);
