@@ -56,6 +56,8 @@ This project requires a Firebase backend to function. You will need to set up yo
 
 3. Copy your Firebase configuration object into the `apps/main-app/src/environments/firebase.config.ts`(create from template). Do not commit.
 
+4. Check **the Infrastructure** section below to configure the infrastructure for a new environment.
+
 ---
 
 ### 3. Local Installation & Setup
@@ -133,8 +135,74 @@ nx run functions:build
 ```zsh
 firebase deploy --only functions
 ```
+- Deploy single function:
+```zsh
+firebase deploy --only functions:functionName
+```
 
 ---
+
+## Infrastructure
+
+This project uses **Terraform** to create storage buckets automatically. This ensures that every environment (Development, Production) has consistent settings (such as CORS) without manual configuration in the Google Cloud Console.
+
+### Architecture
+* **Terraform:** Automates the creation of physical resources (Storage Buckets).
+* **Firebase CLI:** Handles the deployment of application logic (Security Rules, Cloud Functions).
+
+### Setup Guide
+
+Follow these steps to configure the infrastructure for a new environment.
+
+**1. Authenticate**
+Terraform requires local Google Cloud credentials to create resources.
+```zsh
+gcloud auth application-default login
+```
+
+**2. Configure Secrets** A terraform.tfvars file must be created in the terraform/ directory to define project-specific variables.
+```zsh
+cp terraform/terraform.tfvars.example terraform/terraform.tfvars
+```
+- Open the newly created terraform/terraform.tfvars file.
+- Set project_id to the target Firebase Project ID.
+- Set region to the matching Cloud Functions region (e.g., us-central1).
+
+**3. Create Resources** Run the following commands to initialize Terraform and provision the buckets:
+```zsh
+npm run terraform:init
+npm run terraform:apply
+```
+Type `yes` in the terminal to confirm the action.
+
+---
+
+## Deployment & Security
+
+Application logic (Security Rules, Indexes, Functions) is managed via the Firebase CLI.
+
+### Updating Rules & Indexes
+
+It is possible to update security rules or database indexes without re-deploying the entire application (hosting/functions).
+
+**Update Security Rules (Firestore & Storage)**
+```zsh
+npm run deploy:rules
+```
+- Updates firestore.rules and storage.rules.
+- Apply this after changing permissions.
+
+### Update Database Indexes
+
+```zsh
+npm run deploy:indexes
+```
+
+- Updates firestore.indexes.json.
+- Run this if firestore.indexes.json has been changed.
+
+
+
 
 ### Theming
 

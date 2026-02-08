@@ -1,4 +1,4 @@
-export * from './lib/models/collection_names';
+export * from './lib/models/collection-names';
 export * from './lib/models/fire-timestamp';
 export * from './lib/models/function_names';
 export * from './lib/models/icons';

@@ -52,3 +52,10 @@ firebase.config.ts
 .nx/cache
 .nx/workspace-data
 .angular
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+.terraform.lock.hcl

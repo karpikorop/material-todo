@@ -1,0 +1,11 @@
+# ---------------------------------------------------------
+# Terraform Configuration Secrets
+# ---------------------------------------------------------
+# 1. Copy this file to 'terraform.tfvars'
+# 2. Replace the values below with your specific environment config
+# 3. DO NOT commit 'terraform.tfvars' to Git
+# ---------------------------------------------------------
+
+project_id    = "your-firebase-project-id"
+region        = "us-central1"
+# avatar_suffix = "-avatars" # Optional: defaults to -avatars

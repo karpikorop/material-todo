@@ -42,7 +42,7 @@ export class HealService {
       const userData: UserProfileInterface = {
         id: user.uid,
         email: user.email!,
-        username: user.displayName || user.email!.split('@')[0],
+        username: user.displayName || user.email?.split('@')[0] || 'username',
         avatarUrl: user.photoURL || PLACEHOLDER_AVATAR_URL,
         supporter: false,
         createdAt: serverTimestamp() as Timestamp, // unreliable
@@ -88,7 +88,7 @@ export class HealService {
   /** updates the user's email if it was changed manually in settings **/
   public async healUserProfileEmail(user: User, currentUserProfile?: UserProfile) {
     const firestoreEmail = currentUserProfile?.email;
-    if (user.email && firestoreEmail && firestoreEmail !== user.email) {
+    if (user?.email && firestoreEmail && firestoreEmail !== user.email) {
       const userRef = doc(this.firestore, `${USERS_COLLECTION}/${user.uid}`);
       await updateDoc(userRef, { email: user.email });
       console.log('Synced Firestore email with new Auth email');
