@@ -14,7 +14,7 @@ service firebase.storage {
     }
 
     match /users/{userId}/{fileName} {
-      allow read: if isAvatarBucket();
+      allow read: if isAvatarBucket() && isAuth();
       allow write: if isAvatarBucket() && isOwner(userId) && isImage();
     }
   }
