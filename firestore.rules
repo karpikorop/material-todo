@@ -9,6 +9,7 @@ service cloud.firestore {
       return isAuthenticated() && request.auth.uid == userId;
     }
 
+    // TODO add restrictions for specific fields(ex supporter)
     match /users/{userId}/{document=**} {
       allow read, write: if isOwner(userId);
     }
