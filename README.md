@@ -135,7 +135,7 @@ nx run functions:build
 ```zsh
 firebase deploy --only functions
 ```
-- Deploy single function:
+- Deploy a single function:
 ```zsh
 firebase deploy --only functions:functionName
 ```
@@ -144,15 +144,17 @@ firebase deploy --only functions:functionName
 
 ## Infrastructure
 
-This project uses **Terraform** to create storage buckets automatically. This ensures that every environment (Development, Production) has consistent settings (such as CORS) without manual configuration in the Google Cloud Console.
+This project uses **Terraform** to create storage buckets automatically. This ensures that every environment has consistent settings without manual configuration in the Google Cloud Console.
 
 ### Architecture
-* **Terraform:** Automates the creation of physical resources (Storage Buckets).
-* **Firebase CLI:** Handles the deployment of application logic (Security Rules, Cloud Functions).
+* **Terraform:** Automates the creation of physical resources.
+* **Firebase CLI:** Handles the deployment of application logic.
 
 ### Setup Guide
 
 Follow these steps to configure the infrastructure for a new environment.
+
+**0. Install [Terraform](https://developer.hashicorp.com/terraform/install)**
 
 **1. Authenticate**
 Terraform requires local Google Cloud credentials to create resources.
@@ -160,12 +162,12 @@ Terraform requires local Google Cloud credentials to create resources.
 gcloud auth application-default login
 ```
 
-**2. Configure Secrets** A terraform.tfvars file must be created in the terraform/ directory to define project-specific variables.
+**2. Configure Secrets** A `terraform.tfvars` file must be created in the terraform/ directory to define project-specific variables.
 ```zsh
 cp terraform/terraform.tfvars.example terraform/terraform.tfvars
 ```
-- Open the newly created terraform/terraform.tfvars file.
-- Set project_id to the target Firebase Project ID.
+- Open the newly created `terraform/terraform.tfvars` file.
+- Set `project_id` to the target Firebase Project ID.
 - Set region to the matching Cloud Functions region (e.g., us-central1).
 
 **3. Create Resources** Run the following commands to initialize Terraform and provision the buckets:
@@ -177,7 +179,7 @@ Type `yes` in the terminal to confirm the action.
 
 ---
 
-## Deployment & Security
+## Deploying rules & indexes
 
 Application logic (Security Rules, Indexes, Functions) is managed via the Firebase CLI.
 
@@ -201,10 +203,9 @@ npm run deploy:indexes
 - Updates firestore.indexes.json.
 - Run this if firestore.indexes.json has been changed.
 
+---
 
-
-
-### Theming
+## Theming
 
 This project uses a custom Angular Material theme. To generate and apply a new color palette run the generator in your terminal.
 
@@ -226,7 +227,7 @@ and apply using:
 @include mat.theme(color: app. $primary-palette);
 ```
 
-### Developer Notes
+## Developer Notes
 
 - **Notifications:** To display user notifications, inject and use the `NotificationService`. It provides methods like `showSuccess('Message')` and `showError('Message')`.
 
