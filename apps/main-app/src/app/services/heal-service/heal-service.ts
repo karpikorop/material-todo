@@ -18,10 +18,13 @@ import {
   Timestamp,
   updateDoc,
 } from '@angular/fire/firestore';
-import { inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ProjectService } from '../project-service/project.service';
 import { SettingsService } from '../settings-service/settings.service';
 
+@Injectable({
+  providedIn: 'root',
+})
 export class HealService {
   private firestore: Firestore = inject(Firestore);
   private projectService: ProjectService = inject(ProjectService);
