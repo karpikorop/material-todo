@@ -35,7 +35,7 @@ import { Task } from '@shared';
 export class TodoListComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private todoService = inject(EntryService);
+  private entryService = inject(EntryService);
   private authService = inject(AuthService);
   private notificationService = inject(NotificationService);
   private projectService = inject(ProjectService);
@@ -49,7 +49,7 @@ export class TodoListComponent {
   );
 
   protected todos$: Observable<Task[]> = this.projectId$.pipe(
-    switchMap((id: string) => this.todoService.getTodosByProject(id)),
+    switchMap((id: string) => this.entryService.getTasksByProject(id)),
     map((todos) =>
       todos.sort((a, b) => {
         if (a.status === b.status) return 0;
@@ -71,7 +71,7 @@ export class TodoListComponent {
   protected updateTodo(event: { todoId: string; data: Partial<Omit<Task, 'id'>> }): void {
     this.authService.currentUser$.pipe(take(1)).subscribe((user) => {
       if (user) {
-        this.todoService
+        this.entryService
           .updateTodo(user.uid, event.todoId, event.data)
           .catch(() => this.notificationService.showError('Failed to update task.'));
       }
@@ -81,7 +81,7 @@ export class TodoListComponent {
   protected deleteTodo(todoId: string): void {
     this.authService.currentUser$.pipe(take(1)).subscribe((user) => {
       if (user) {
-        this.todoService
+        this.entryService
           .deleteTodo(user.uid, todoId)
           .then(() => {
             this.notificationService.showSuccess('Task deleted successfully.');

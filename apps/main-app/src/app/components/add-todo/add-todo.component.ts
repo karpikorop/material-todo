@@ -41,7 +41,7 @@ export class AddTodoComponent {
   @ViewChild('taskInput') taskInput!: ElementRef<HTMLInputElement>;
 
   private fb = inject(FormBuilder);
-  private todoService = inject(EntryService);
+  private entryService = inject(EntryService);
   private authService = inject(AuthService);
   private notificationService = inject(NotificationService);
   protected isMobileView = inject(IS_MOBILE);
@@ -71,7 +71,7 @@ export class AddTodoComponent {
           status: TaskStatus.TODO,
         };
 
-        this.todoService
+        this.entryService
           .addTodo(newTodoData, user.uid)
           .then(() => {
             this.addTodoForm.reset();

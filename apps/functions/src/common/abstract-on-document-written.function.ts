@@ -12,12 +12,6 @@ export abstract class AbstractOnDocumentWrittenFunction<T = any> {
   /** Firestore collection path where the document change occurred */
   protected collectionPath!: string;
 
-  /** Document data after the write operation */
-  private newData?: T;
-
-  /** Document data before the write operation */
-  private oldData?: T;
-
   /** Firestore event containing document snapshots and metadata */
   protected event!: FirestoreEvent<Change<DocumentSnapshot>>;
 
@@ -26,6 +20,12 @@ export abstract class AbstractOnDocumentWrittenFunction<T = any> {
 
   /** List of field names that changed during an update operation */
   protected changedFields: string[] = [];
+
+  /** Document data after the write operation */
+  private newData?: T;
+
+  /** Document data before the write operation */
+  private oldData?: T;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected async onCreate(_newData: T): Promise<void> {
@@ -42,6 +42,9 @@ export abstract class AbstractOnDocumentWrittenFunction<T = any> {
     /* empty */
   }
 
+  /**
+   * Executes before the lifecycle hooks, but after the event metadata is extracted.
+   */
   protected async execute(): Promise<void> {
     /* empty */
   }

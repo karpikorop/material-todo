@@ -14,7 +14,7 @@ export default class OnProjectsChangeFunction extends AbstractOnDocumentWrittenF
     const projectId = oldData.id || this.params['projectId'];
     const userId = oldData.userId || this.params['userId'];
 
-    logger.info(`Project ${projectId} deleted. Deleting associated todos.`);
+    logger.info(`Project ${projectId} deleted. Deleting associated entries.`);
     const count = await this.projectsService.deleteProjectEntries(projectId, userId);
     logger.info(`Deleted ${count} entries.`);
   }

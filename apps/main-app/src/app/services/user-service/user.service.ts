@@ -1,22 +1,16 @@
 import { Injectable, inject } from '@angular/core';
-import {
-  Firestore,
-  doc,
-  docData,
-  setDoc,
-  updateDoc,
-  getDoc,
-  Timestamp,
-  serverTimestamp,
-} from '@angular/fire/firestore';
-import { User } from '@angular/fire/auth';
-import {AuthProvider, AuthService} from '../auth-service/auth.service';
+import { Firestore, doc, docData, updateDoc } from '@angular/fire/firestore';
+import { AuthProvider, AuthService } from '../auth-service/auth.service';
 import { BehaviorSubject, Observable, of, switchAll } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { ProjectService } from '../project-service/project.service';
-import { SettingsService } from '../settings-service/settings.service';
+import { HealService } from '../heal-service/heal-service';
 import { getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
-import { UserProfile, UserProfileInterface, PLACEHOLDER_AVATAR_URL, getProjectsCollectionPath, getSettingsCollectionPath, USERS_COLLECTION, INBOX_ID, SETTINGS_DOCUMENT_ID } from '@shared';
+import {
+  UserProfile,
+  UserProfileInterface,
+  PLACEHOLDER_AVATAR_URL,
+  USERS_COLLECTION,
+} from '@shared';
 
 // TODO fix google avatar error, to much requests, maybe cache the image, or move to storage
 
@@ -26,8 +20,7 @@ import { UserProfile, UserProfileInterface, PLACEHOLDER_AVATAR_URL, getProjectsC
 export class UserService {
   private firestore: Firestore = inject(Firestore);
   private authService: AuthService = inject(AuthService);
-  private projectService: ProjectService = inject(ProjectService);
-  private settingsService: SettingsService = inject(SettingsService);
+  private healService: HealService = inject(HealService);
   private storage = inject(Storage);
 
   private currentUserProfile = new BehaviorSubject<UserProfile>(null);
@@ -41,7 +34,7 @@ export class UserService {
 
   /**
    * Returns the current user's profile data synchronously.
-   * If the user is not logged in, returns null.
+   * If the user is not logged in, it returns null.
    */
   public get currentUser(): UserProfile {
     return this.currentUserProfile.value;
@@ -69,7 +62,7 @@ export class UserService {
           if (!authUser) {
             return of(null);
           }
-          await this.checkAndCreateUserProfile(authUser);
+          await this.healService.checkAndCreateUserProfile(authUser, this.currentUser);
 
           return docData(doc(this.firestore, `${USERS_COLLECTION}/${authUser.uid}`), {
             idField: 'id',
@@ -79,71 +72,8 @@ export class UserService {
       )
       .subscribe((profile) => {
         this.currentUserProfile.next(profile);
+        this.healService.healUserProfileEmail(this.authService.userSnapshot!, profile).then();
       });
-  }
-
-  /**
-   * Creates a profile document for a new user in Firestore.
-   * Also creates a default "Inbox" project for the user.
-   * Runs healing logic to ensure that the user's profile is not corrupted.
-   * @param user - User object received from Firebase Auth
-   */
-  private async checkAndCreateUserProfile(user: User): Promise<void> {
-    const userRef = doc(this.firestore, `${USERS_COLLECTION}/${user.uid}`);
-    const docSnap = await getDoc(userRef);
-
-    if (!docSnap.exists()) {
-      const userData: UserProfileInterface = {
-        id: user.uid,
-        email: user.email!,
-        username: user.displayName || user.email!.split('@')[0],
-        avatarUrl: user.photoURL || PLACEHOLDER_AVATAR_URL,
-        supporter: false,
-        createdAt: serverTimestamp() as Timestamp, // unreliable
-      };
-      await setDoc(userRef, userData, { merge: true });
-      await this.projectService.createDefaultInbox(user.uid);
-      await this.settingsService.createDefaultSettings(user.uid);
-    }
-
-    // check for missing default data and heal if necessary
-    await this.healDefaultData(user);
-  }
-
-  private async healDefaultData(user: User): Promise<void> {
-    await Promise.all([
-      this.healDefaultInbox(user),
-      this.healDefaultSettings(user),
-      this.healUserProfileEmail(user),
-    ]);
-  }
-
-  private async healDefaultInbox(user: User): Promise<void> {
-    const inboxRef = doc(this.firestore, `${getProjectsCollectionPath(user.uid)}/${INBOX_ID}`);
-    const inboxSnap = await getDoc(inboxRef);
-
-    if (!inboxSnap.exists()) {
-      await this.projectService.createDefaultInbox(user.uid);
-    }
-  }
-
-  private async healDefaultSettings(user: User): Promise<void> {
-    const settingsRef = doc(this.firestore, `${getSettingsCollectionPath(user.uid)}/${SETTINGS_DOCUMENT_ID}`);
-    const settingsSnap = await getDoc(settingsRef);
-
-    if (!settingsSnap.exists()) {
-      await this.settingsService.createDefaultSettings(user.uid);
-    }
-  }
-
-  // Also updates the user's email if it was changed manually in settings
-  private async healUserProfileEmail(user: User) {
-    const firestoreEmail = this.currentUserProfile.value?.email;
-    if (user.email && firestoreEmail !== user.email) {
-      const userRef = doc(this.firestore, `${USERS_COLLECTION}/${user.uid}`);
-      await updateDoc(userRef, { email: user.email });
-      console.log('Synced Firestore email with new Auth email');
-    }
   }
 
   /**
