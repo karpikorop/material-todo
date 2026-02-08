@@ -29,7 +29,7 @@ export class EntryService {
    * Retrieves a real-time list of tasks for a specific project.
    * @param projectId - The ID (string) of the project to get tasks from.
    */
-  getTodosByProject(projectId: string): Observable<Task[]> {
+  public getTasksByProject(projectId: string): Observable<Task[]> {
     if (!projectId) {
       return of([]);
     }

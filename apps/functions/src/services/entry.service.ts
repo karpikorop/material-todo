@@ -23,8 +23,8 @@ export class EntryService {
       query = query.select(...columns);
     }
 
-    const todoSnapshots = await query.get();
-    return todoSnapshots.docs
+    const entriesSnapshot = await query.get();
+    return entriesSnapshot.docs
       .map((doc) => mapFirestoreSnapshot<Task>(doc))
       .filter((task) => !!task);
   }

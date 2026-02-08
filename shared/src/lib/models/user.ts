@@ -1,9 +1,9 @@
 import { Timestamp } from '@firebase/firestore';
-import {WithId} from './withId';
+import { WithId } from './withId';
 
-export interface UserProfileInterface extends WithId{
+export interface UserProfileInterface extends WithId {
   /**
-   * If possible, use email from Auth Service currentUser$ instead as the source of truth.
+   * @deprecated If possible, use email from Auth Service currentUser$ instead as the source of truth.
    */
   email: string;
   username: string;

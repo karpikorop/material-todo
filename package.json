@@ -9,7 +9,11 @@
     "test": "nx test",
     "format": "prettier --write \"**/*.{ts,js,json,css,scss,html}\"",
     "format:check": "prettier --check \"**/*.{ts,js,json,css,scss,html}\"",
-    "postinstall": "node scripts/ensure-env.js"
+    "postinstall": "node scripts/ensure-env.js",
+    "firestore:deploy": "firebase deploy --only firestore",
+    "firestore:indexes": "firebase deploy --only firestore:indexes",
+    "firestore:rules": "firebase deploy --only firestore:rules",
+    "firestore:indexes:list": "firebase firestore:indexes"
   },
   "private": true,
   "dependencies": {

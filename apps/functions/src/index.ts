@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { createCall } from './utils/di.setup';
 
 /**
- * Deletes a project and all associated todos.
+ * Deletes a project and all associated entries.
  */
 export const deleteProjectAndTodos = createCall(
   {

@@ -59,6 +59,10 @@ export class AuthService {
     return this.currentUser.value || null;
   }
 
+  get primaryEmail(): string | null {
+    return this.userSnapshot?.email || null;
+  }
+
   public getPasswordEmail(user = this.userSnapshot): string | null {
     const passProvider = user?.providerData.find((p) => p.providerId === AuthProvider.Password);
     return passProvider?.email || null;
@@ -107,6 +111,9 @@ export class AuthService {
     }
   }
 
+  /** Re-authenticates the user with the given password.
+   * Used for sensitive operations like changing email or password, or deleting an account.
+   * **/
   public async reauthenticate(password: string, user = this.userSnapshot): Promise<void> {
     if (!user?.email) {
       throw new Error('No user logged in to re-authenticate.');

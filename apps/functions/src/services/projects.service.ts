@@ -20,8 +20,8 @@ export class ProjectsService {
       .collection(getEntriesCollectionPath(uid))
       .where('projectId', '==', projectId);
 
-    const todoSnapshots = await entriesQuery.get();
-    const actions: BatchAction[] = todoSnapshots.docs.map((doc) => ({
+    const entriesSnapshot = await entriesQuery.get();
+    const actions: BatchAction[] = entriesSnapshot.docs.map((doc) => ({
       type: 'delete',
       ref: doc.ref,
     }));
@@ -46,9 +46,9 @@ export class ProjectsService {
       .where('userId', '==', uid)
       .where('projectId', '==', projectId);
 
-    const todoSnapshots = await entriesQuery.get();
+    const entriesSnapshot = await entriesQuery.get();
 
-    const actions: BatchAction[] = todoSnapshots.docs.map((doc) => ({
+    const actions: BatchAction[] = entriesSnapshot.docs.map((doc) => ({
       type: 'delete',
       ref: doc.ref,
     }));
@@ -60,7 +60,7 @@ export class ProjectsService {
 
     await this.batchSave.executeBatch(actions);
 
-    logger.info(`Successfully deleted project and ${todoSnapshots.size} todos.`, {
+    logger.info(`Successfully deleted project and ${entriesSnapshot.size} entries.`, {
       uid,
       projectId,
     });
