@@ -18,7 +18,7 @@ import {
   verifyBeforeUpdateEmail,
   sendPasswordResetEmail,
 } from '@angular/fire/auth';
-import { NotificationService } from '../notification-service/notification.service';
+import { NotificationService } from '../../../services/notification-service/notification.service';
 
 export enum AuthProvider {
   Password = 'password',

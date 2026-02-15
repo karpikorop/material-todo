@@ -6,7 +6,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { IS_MOBILE, IS_EMULATOR } from './tokens';
-import { LayoutService } from './services/layout-service/layout.service';
+import { LayoutService } from './core/services/layout-service/layout.service';
 
 import { getAuth, provideAuth, connectAuthEmulator } from '@angular/fire/auth';
 import { getFirestore, provideFirestore, connectFirestoreEmulator } from '@angular/fire/firestore';

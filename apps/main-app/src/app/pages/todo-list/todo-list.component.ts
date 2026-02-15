@@ -6,17 +6,20 @@ import { Observable, map, take, firstValueFrom } from 'rxjs';
 import { TodoItemComponent } from '../../components/todo-item/todo-item.component';
 import { AddTodoComponent } from '../../components/add-todo/add-todo.component';
 import { EntryService } from '../../services/entry-service/entry.service';
-import { AuthService } from '../../services/auth-service/auth.service';
+import { AuthService } from '../../core/services/auth-service/auth.service';
 import { NotificationService } from '../../services/notification-service/notification.service';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { shareReplay, switchMap } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../../components/dialogs/confirmation-dialog/confirmation-dialog.component';
+import {
+  ConfirmationDialogComponent,
+  ConfirmDialogData,
+} from '../../components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { ProjectService } from '../../services/project-service/project.service';
-import { Task } from '@shared';
+import { INBOX_ID, Task, TaskStatus } from '@shared';
+import { DialogService } from '../../components/dialogs/dialog-service/dialog.service';
 
 @Component({
   selector: 'app-todo-list',
@@ -39,7 +42,7 @@ export class TodoListComponent {
   private authService = inject(AuthService);
   private notificationService = inject(NotificationService);
   private projectService = inject(ProjectService);
-  private dialog = inject(MatDialog);
+  private dialogService = inject(DialogService);
 
   @ViewChild(AddTodoComponent) addTodoComponent!: AddTodoComponent;
 
@@ -53,7 +56,7 @@ export class TodoListComponent {
     map((todos) =>
       todos.sort((a, b) => {
         if (a.status === b.status) return 0;
-        return a.status === 'done' ? 1 : -1;
+        return a.status === TaskStatus.DONE ? 1 : -1;
       })
     ),
     shareReplay(1)
@@ -97,29 +100,30 @@ export class TodoListComponent {
       this.notificationService.showError('Could not get project ID.');
       return;
     }
-    // TODO improve check for inbox project
-    if (currentProjectId === 'inbox') {
+
+    if (currentProjectId === INBOX_ID) {
       this.notificationService.showError('Cannot delete Inbox project.');
       return;
     }
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: {
+    const result = await this.dialogService.openDialog<ConfirmDialogData, boolean>(
+      ConfirmationDialogComponent,
+      {
         title: 'Delete Project',
         message: 'Are you sure you want to delete this project?',
         mainButtonText: 'Delete',
       },
-      width: '400px',
-    });
-
-    dialogRef.afterClosed().subscribe(async (result: boolean) => {
-      if (result) {
-        try {
-          await this.router.navigate(['/app/project', 'inbox']);
-          await this.projectService.deleteProject(currentProjectId); // TODO delete only todos, not project
-        } catch (error: any) {
-          this.notificationService.showError('Failed to delete project.', error);
-        }
+      {
+        width: '400px',
       }
-    });
+    );
+
+    if (result) {
+      try {
+        await this.router.navigate(['/app/project', 'inbox']);
+        await this.projectService.deleteProject(currentProjectId); // TODO delete only todos, not project
+      } catch (error: any) {
+        this.notificationService.showError('Failed to delete project.', error);
+      }
+    }
   }
 }

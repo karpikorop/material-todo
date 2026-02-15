@@ -1,5 +1,5 @@
-import { Timestamp } from '@firebase/firestore';
 import { WithId } from './withId';
+import { FireTimestamp } from './fire-timestamp';
 
 export interface BaseEntry extends WithId {
   userId: string;
@@ -10,8 +10,8 @@ export interface BaseEntry extends WithId {
 
   isAllDay?: boolean;
 
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
+  createdAt: FireTimestamp;
+  updatedAt: FireTimestamp;
 }
 
 export interface DateRange {

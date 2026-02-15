@@ -13,7 +13,7 @@ import {
   updateDoc,
   where,
 } from '@angular/fire/firestore';
-import { AuthService } from '../auth-service/auth.service';
+import { AuthService } from '../../core/services/auth-service/auth.service';
 import { Observable, of } from 'rxjs';
 import { shareReplay, switchMap } from 'rxjs/operators';
 import { newTaskData, Task, getEntriesCollectionPath } from '@shared';

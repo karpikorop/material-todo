@@ -11,7 +11,7 @@ import {
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { take } from 'rxjs/operators';
 import { EntryService } from '../../services/entry-service/entry.service';
-import { AuthService } from '../../services/auth-service/auth.service';
+import { AuthService } from '../../core/services/auth-service/auth.service';
 import { NotificationService } from '../../services/notification-service/notification.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';

@@ -1,22 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { doc, docData, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
-import { AuthService } from '../auth-service/auth.service';
+import { AuthService } from '../../core/services/auth-service/auth.service';
 import { distinctUntilChanged, Observable, of } from 'rxjs';
 import { map, shareReplay, switchMap } from 'rxjs/operators';
-import { getTimeZonesList, SETTINGS_DOCUMENT_ID, Themes, UserSettings } from '@shared';
-import {TimeZone} from '@vvo/tzdb';
-
+import { defaultSettings, getTimeZonesList, SETTINGS_DOCUMENT_ID, UserSettings } from '@shared';
+import { TimeZone } from '@vvo/tzdb';
+// TODO full refactor
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
   private firestore: Firestore = inject(Firestore);
   private authService: AuthService = inject(AuthService);
-
-  private readonly defaultSettings: UserSettings = {
-    theme: Themes.LIGHT,
-    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
-  };
 
   /**
    * An observable that streams the current user's settings profile.
@@ -40,7 +35,7 @@ export class SettingsService {
       // The values from the DB will overwrite the default values.
       // EXPERIMENTAL
       if (settingsFromDb) {
-        return { ...this.defaultSettings, ...settingsFromDb };
+        return { ...defaultSettings, ...settingsFromDb };
       }
       return null;
     }),
@@ -55,7 +50,7 @@ export class SettingsService {
    */
   async createDefaultSettings(userId: string): Promise<void> {
     const settingsRef = doc(this.firestore, `users/${userId}/settings/preferences`);
-    return setDoc(settingsRef, this.defaultSettings);
+    return setDoc(settingsRef, defaultSettings);
   }
 
   /**

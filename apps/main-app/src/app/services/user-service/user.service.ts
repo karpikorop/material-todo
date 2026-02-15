@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, doc, docData, updateDoc } from '@angular/fire/firestore';
-import { AuthProvider, AuthService } from '../auth-service/auth.service';
-import { BehaviorSubject, Observable, of, switchAll } from 'rxjs';
+import { AuthProvider, AuthService } from '../../core/services/auth-service/auth.service';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { HealService } from '../heal-service/heal-service';
+import { DataHealService } from '../../core/services/data-heal-service/data-heal.service';
 import { getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
 import {
   UserProfile,
@@ -20,7 +20,7 @@ import {
 export class UserService {
   private firestore: Firestore = inject(Firestore);
   private authService: AuthService = inject(AuthService);
-  private healService: HealService = inject(HealService);
+  private healService: DataHealService = inject(DataHealService);
   private storage = inject(Storage);
 
   private currentUserProfile = new BehaviorSubject<UserProfile>(null);
@@ -58,21 +58,17 @@ export class UserService {
   constructor() {
     this.authService.currentUser$
       .pipe(
-        switchMap(async (authUser) => {
+        switchMap((authUser) => {
           if (!authUser) {
             return of(null);
           }
-          await this.healService.checkAndCreateUserProfile(authUser, this.currentUser);
-
           return docData(doc(this.firestore, `${USERS_COLLECTION}/${authUser.uid}`), {
             idField: 'id',
           }) as Observable<UserProfile>;
-        }),
-        switchAll()
+        })
       )
       .subscribe((profile) => {
         this.currentUserProfile.next(profile);
-        this.healService.healUserProfileEmail(this.authService.userSnapshot!, profile).then();
       });
   }
 

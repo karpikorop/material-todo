@@ -17,7 +17,7 @@ import {
   PasswordDialogData,
   PasswordInputDialogComponent,
 } from '../../components/dialogs/password-input-dialog/password-input-dialog.component';
-import { AuthService } from '../../services/auth-service/auth.service';
+import { AuthService } from '../../core/services/auth-service/auth.service';
 import { DialogService } from '../../components/dialogs/dialog-service/dialog.service';
 import { UserProfileInterface } from '@shared';
 

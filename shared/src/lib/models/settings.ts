@@ -12,3 +12,8 @@ export interface UserSettings {
   theme?: Themes;
   timeZone: string; // IANA Time Zone Name (e.g., 'Europe/Kyiv')
 }
+
+export const defaultSettings: UserSettings = {
+  theme: Themes.LIGHT,
+  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
+};
