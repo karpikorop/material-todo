@@ -5,7 +5,7 @@ import { RouterLink, Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth-service/auth.service';
+import { AuthService } from '../../core/services/auth-service/auth.service';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { NotificationService } from '../../services/notification-service/notification.service';

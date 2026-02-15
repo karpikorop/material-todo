@@ -55,8 +55,6 @@ export class HeaderComponent {
   protected menu_icon = signal<'menu' | 'close'>('menu');
   protected isMobileView = inject(IS_MOBILE);
 
-  constructor() {}
-
   toggleDropdown() {
     this.showDropdown.set(!this.showDropdown());
     if (this.showDropdown()) {

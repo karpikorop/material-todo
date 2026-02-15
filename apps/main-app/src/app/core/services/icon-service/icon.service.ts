@@ -38,12 +38,12 @@ export class IconService {
   }
 
   private loadIcons(iconKeys: string[], iconUrl: string): void {
-    if (!iconKeys || iconKeys.length === 0) {
+    if (!iconKeys?.length) {
       console.warn('No icon keys provided for registration');
       return;
     }
 
-    if (!iconUrl || iconUrl.trim() === '') {
+    if (!iconUrl?.trim()) {
       console.error('Invalid icon URL provided');
       return;
     }
@@ -51,7 +51,7 @@ export class IconService {
 
     iconKeys.forEach((key) => {
       try {
-        if (!key || key.trim() === '') {
+        if (!key?.trim()) {
           console.warn('Skipping empty or invalid icon key');
           return;
         }

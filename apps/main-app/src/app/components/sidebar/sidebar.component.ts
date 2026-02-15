@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
-import { AuthService } from '../../services/auth-service/auth.service';
+import { AuthService } from '../../core/services/auth-service/auth.service';
 import { NotificationService } from '../../services/notification-service/notification.service';
 import { ProjectListItemComponent } from '../project-list-item/project-list-item.component';
 import { MatTooltipModule } from '@angular/material/tooltip';

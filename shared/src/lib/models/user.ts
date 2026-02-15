@@ -1,15 +1,15 @@
-import { Timestamp } from '@firebase/firestore';
 import { WithId } from './withId';
+import { FireTimestamp } from './fire-timestamp';
 
 export interface UserProfileInterface extends WithId {
   /**
-   * @deprecated If possible, use email from Auth Service currentUser$ instead as the source of truth.
+   * If possible, use email from Auth Service currentUser$ instead as the source of truth.
    */
   email: string;
   username: string;
   avatarUrl: string;
   supporter: boolean;
-  createdAt: Timestamp;
+  createdAt: FireTimestamp;
 }
 
 export type UserProfile = UserProfileInterface | null;

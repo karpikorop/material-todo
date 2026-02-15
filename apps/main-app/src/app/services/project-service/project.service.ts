@@ -12,11 +12,16 @@ import {
   Timestamp,
   updateDoc,
 } from '@angular/fire/firestore';
-import { AuthService } from '../auth-service/auth.service';
+import { AuthService } from '../../core/services/auth-service/auth.service';
 import { Observable, of } from 'rxjs';
 import { shareReplay, switchMap } from 'rxjs/operators';
 import { Functions, httpsCallable } from '@angular/fire/functions';
-import {INBOX_ID, Project, getProjectsCollectionPath, DELETE_PROJECT_AND_TODOS_FUNCTION} from '@shared';
+import {
+  INBOX_ID,
+  Project,
+  getProjectsCollectionPath,
+  DELETE_PROJECT_AND_TODOS_FUNCTION,
+} from '@shared';
 
 @Injectable({
   providedIn: 'root',
