@@ -3,7 +3,6 @@ import { Firestore, doc, docData, updateDoc } from '@angular/fire/firestore';
 import { AuthProvider, AuthService } from '../../core/services/auth-service/auth.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { DataHealService } from '../../core/services/data-heal-service/data-heal.service';
 import { getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
 import {
   UserProfile,
@@ -20,7 +19,6 @@ import {
 export class UserService {
   private firestore: Firestore = inject(Firestore);
   private authService: AuthService = inject(AuthService);
-  private healService: DataHealService = inject(DataHealService);
   private storage = inject(Storage);
 
   private currentUserProfile = new BehaviorSubject<UserProfile>(null);
