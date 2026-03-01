@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { AppLayoutComponent } from './layouts/app-layout/app-layout.component';
-import { TodoListComponent } from './pages/todo-list/todo-list.component';
-import { SettingsComponent } from './pages/settings/settings.component';
+import { AppLayoutComponent } from 'private-layout-feature';
+import { TodoListComponent } from 'tasks-feature';
+import { SettingsComponent } from 'settings-feature';
 
 export const PRIVATE_ROUTES: Routes = [
   {
