@@ -1,8 +1,8 @@
 @use '@angular/material' as mat;
-@use 'app/styles/_theme-colors' as app;
-@use 'app/styles/material-styles';
-@use 'app/styles/custom-styles';
-@use 'app/styles/ng-select-custom';
+@use '../../../libs/shared-styles/_theme-colors' as app;
+@use '../../../libs/shared-styles/material-styles';
+@use '../../../libs/shared-styles/custom-styles';
+@use '../../../libs/shared-styles/ng-select-custom';
 @import url('tailwindcss');
 
 // Angular material theme variables

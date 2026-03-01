@@ -15,8 +15,18 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@shared": ["shared/src/index.ts"],
-      "@shared/*": ["shared/src/lib/*"]
+      "@shared": ["libs/shared/src/index.ts"],
+      "@shared/*": ["libs/shared/src/lib/*"],
+      "web-public-ui": ["libs/web-public-ui/src/index.ts"],
+      "auth-data-access": ["libs/auth-data-access/src/index.ts"],
+      "core-data-access": ["libs/core-data-access/src/index.ts"],
+      "entries-data-access": ["libs/entries-data-access/src/index.ts"],
+      "tasks-feature": ["libs/tasks-feature/src/index.ts"],
+      "settings-feature": ["libs/settings-feature/src/index.ts"],
+      "shared-ui": ["libs/shared-ui/src/index.ts"],
+      "private-layout-feature": ["libs/private-layout-feature/src/index.ts"],
+      "auth-feature": ["libs/auth-feature/src/index.ts"],
+      "web-public-feature": ["libs/web-public-feature/src/index.ts"]
     },
     "strict": true,
     "noImplicitOverride": true,

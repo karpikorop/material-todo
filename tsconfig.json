@@ -8,7 +8,7 @@
       "path": "./apps/functions"
     },
     {
-      "path": "./shared"
+      "path": "./libs/shared"
     }
   ]
 }

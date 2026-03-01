@@ -1,0 +1,129 @@
+<div class="about-section text-center container mx-auto px-6 py-16 md:py-20">
+  <h1 class="text-4xl md:text-5xl font-bold mb-8">More than just a To-Do App.</h1>
+  <p class="text-lg md:text-xl text-secondary max-w-3xl mx-auto">
+    In a world of complex and expensive productivity tools, I wanted to create something different:
+    a simple, beautiful, and free tool that just works. This project started as a learning journey
+    and a passion for building useful things.
+  </p>
+  <div class="mt-20 text-left max-w-3xl mx-auto">
+    <h3 class="text-2xl font-semibold mb-6 text-center">My goal is simple:</h3>
+    <ul class="space-y-4">
+      <li class="flex items-start gap-3">
+        <mat-icon class="text-primary flex-shrink-0 mt-0.5">check</mat-icon>
+        <span>
+          <strong>Focus on Essentials:</strong> I only include features that you actually need,
+          making the app fast and easy to use.
+        </span>
+      </li>
+      <li class="flex items-start gap-3">
+        <mat-icon class="text-primary flex-shrink-0 mt-0.5">check</mat-icon>
+        <span>
+          <strong>Open & Transparent:</strong> The code is open-source. You can see exactly how it
+          works and be sure your data is safe.
+        </span>
+      </li>
+      <li class="flex items-start gap-3">
+        <mat-icon class="text-primary flex-shrink-0 mt-0.5">check</mat-icon>
+        <span>
+          <strong>Free Forever:</strong> The core functionality will always be free for everyone.
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Block 2 -->
+<div class="about-section team-section">
+  <div class="container mx-auto px-6 py-16 md:py-20">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+      <div class="author-avatar flex justify-center">
+        <img
+          ngSrc="https://avatars.githubusercontent.com/u/32931818?v=4"
+          alt="Developer Avatar"
+          class="rounded-full"
+          width="200"
+          height="200"
+        />
+      </div>
+      <div class="md:col-span-2">
+        <h2 class="text-3xl font-bold mb-4">About Me</h2>
+        <p class="text-lg text-secondary mb-6">
+          Hi! I'm web developer working with Angular and Google Cloud.
+          I started building this app in my free time to practice with Angular and Firebase.
+          I needed a simple todo app and figured others might find it useful too, so I made it
+          open-source and free to use.
+        </p>
+        <div class="social-links flex space-x-4">
+          <a matMiniFab
+            href="https://github.com/karpikorop"
+            target="_blank"
+          >
+            <mat-icon svgIcon="github"></mat-icon>
+          </a>
+          <a
+            matMiniFab
+            href="https://www.linkedin.com/in/karpikorop/"
+            target="_blank"
+            aria-label="LinkedIn Profile"
+          >
+            <mat-icon svgIcon="linkedin"></mat-icon>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Block 3 -->
+<div class="about-section container mx-auto px-6 py-16 md:py-20">
+  <h2 class="text-3xl font-bold text-center mb-12">Join the Journey</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+    <!-- Card 1 -->
+    <mat-card class="journey-card">
+      <mat-card-content>
+        <mat-icon class="journey-icon">bug_report</mat-icon>
+        <h3 class="text-xl font-semibold my-4">Report a Bug</h3>
+        <p class="text-secondary mb-4">
+          Found something that doesn't work as expected? Open an issue on GitHub and help us
+          improve.
+        </p>
+        <a
+          matButton
+          href="https://github.com/karpikorop/material-todo/issues/new?labels=bug&title=[Bug%20Report]:%20"
+        >
+          Report a Bug
+        </a>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Card 2 -->
+    <mat-card class="journey-card">
+      <mat-card-content>
+        <mat-icon class="journey-icon">lightbulb</mat-icon>
+        <h3 class="text-xl font-semibold my-4">Suggest a Feature</h3>
+        <p class="text-secondary mb-4">
+          Have a great idea for a new feature? We'd love to hear it. Share it with the community.
+        </p>
+        <a
+          matButton
+          href="https://github.com/karpikorop/material-todo/issues/new?labels=enhancement&title=[Feature%20Request]:%20"
+        >
+          Suggest a Feature
+        </a>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Card 3 -->
+    <mat-card class="journey-card">
+      <mat-card-content>
+        <mat-icon class="journey-icon">favorite</mat-icon>
+        <h3 class="text-xl font-semibold my-4">Support the Project</h3>
+        <p class="text-secondary mb-4">
+          If you find this app useful, consider becoming a Supporter. Your contribution helps cover
+          server costs.
+        </p>
+        <button matButton routerLink="/pricing">Become a Supporter</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

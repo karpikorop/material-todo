@@ -1,10 +1,12 @@
 // src/app/public.routes.ts
 import { Routes } from '@angular/router';
-import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
-import { HomeComponent } from './pages/home/home.component';
-import { AboutComponent } from './pages/about/about.component';
-import { PricingComponent } from './pages/pricing/pricing.component';
-import { DownloadsComponent } from './pages/downloads/downloads.component';
+import {
+  HomeComponent,
+  AboutComponent,
+  PricingComponent,
+  DownloadsComponent,
+  PublicLayoutComponent,
+} from 'web-public-feature';
 
 export const PUBLIC_ROUTES: Routes = [
   {

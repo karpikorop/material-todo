@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { IconService } from './core/services/icon-service/icon.service';
+import { IconService, IS_EMULATOR } from 'core-data-access';
 import { MatIconRegistry } from '@angular/material/icon';
 import { OnInit } from '@angular/core';
 import { inject } from '@angular/core';
-import { UserService } from './services/user-service/user.service';
-import { IS_EMULATOR } from './tokens';
-import { NotificationService } from './services/notification-service/notification.service';
-import { ThemeService } from './services/theme-service/theme.service';
-import { DataHealService } from './core/services/data-heal-service/data-heal.service';
+import { UserService } from 'auth-data-access';
+import { NotificationService } from 'core-data-access';
+import { ThemeService } from 'core-data-access';
+import { DataHealService } from 'core-data-access';
 
 @Component({
   selector: 'app-root',
@@ -55,3 +54,4 @@ export class AppComponent implements OnInit {
     }
   }
 }
+// todo setup Module Boundaries for nx
