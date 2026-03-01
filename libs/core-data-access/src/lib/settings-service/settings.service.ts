@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { doc, docData, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
+import { doc, docData, Firestore, updateDoc } from '@angular/fire/firestore';
 import { AuthService } from 'auth-data-access';
 import { distinctUntilChanged, Observable, of } from 'rxjs';
 import { map, shareReplay, switchMap } from 'rxjs/operators';
@@ -42,16 +42,6 @@ export class SettingsService {
     distinctUntilChanged(),
     shareReplay(1)
   );
-
-  /**
-   * Creates the default settings document for a new user.
-   * This should be called during profile creation.
-   * @param userId The ID of the new user.
-   */
-  async createDefaultSettings(userId: string): Promise<void> {
-    const settingsRef = doc(this.firestore, `users/${userId}/settings/preferences`);
-    return setDoc(settingsRef, defaultSettings);
-  }
 
   /**
    * Updates the user's settings document in Firestore.
